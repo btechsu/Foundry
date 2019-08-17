@@ -95,6 +95,18 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .btn{
   background-color: #D55821!important;
 }
+.topper{
+  padding: 20px;
+  border-radius: 20px;
+  background-color: #656565;
+
+}
+.time{
+  font-weight: bold;
+}
+.user{
+  font-weight: bold;
+}
 a:hover{
   font-weight:bold;
 }

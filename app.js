@@ -34,6 +34,7 @@ admin.initializeApp({
 });
 const db = firebase.database();
 const ref = db.ref();
+const moment = require('moment')
 
 
 const freshmen = ref.child("freshmenPosts");
@@ -44,24 +45,33 @@ const seniors = ref.child("seniorPosts");
 function addFreshmen(content) {
   freshmen.push({
     post: content,
+    time: moment().format(),
+    author: firebase.auth().currentUser.email,
   });
 }
 
 function addSophomores(content) {
   sophomores.push({
     post: content,
+    time: moment().format(),
+    author: firebase.auth().currentUser.email,
+
   });
 }
 
 function addJuniors(content) {
   juniors.push({
     post: content,
+    time: moment().format(),
+    author: firebase.auth().currentUser.email,
   });
 }
 
 function addSeniors(content) {
   seniors.push({
     post: content,
+    time: moment().format(),
+    author: firebase.auth().currentUser.email,
   });
 }
 

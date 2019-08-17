@@ -11,14 +11,16 @@ block content
 block code
   script(src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js')
   script(type="text/javascript").
+    var posts = !{JSON.stringify(seniorPosts)};
+    var counter = 0;
     var converter = new showdown.Converter()
     $(document).ready(function(){
     $(".changeToHTML").each(function(index, element) {
     console.log($(this))
     console.log($(this).text())
-     $(".changeToHTML").remove();
-    $('#markdown').append('<div class="item">' + converter.makeHtml($(this).text()) + '</div>')
+    $(".changeToHTML").remove();
+    $('#markdown').append('<div class="item">' +'<div class="topper">' + '<h6 class="user">' + 'User: ' + posts[counter].author + '</h6>' + '<h6 class="time">' + 'Time: ' + posts[counter].time + '</h6>' +'</div>'+ converter.makeHtml($(this).text()) + '</div>')
+    counter=counter+1;
     }
-
     );
     });
