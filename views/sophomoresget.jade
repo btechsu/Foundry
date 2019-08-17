@@ -1,0 +1,24 @@
+extends ./template.jade
+
+block content
+  div(class="container")
+    h1.center Sophomore SGO Posts
+    each val in sophomorePosts
+      div
+        h1(class="changeToHTML")=val.post
+
+  div(class="container", id="markdown")
+block code
+  script(src='https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.0/showdown.min.js')
+  script(type="text/javascript").
+    var converter = new showdown.Converter()
+    $(document).ready(function(){
+    $(".changeToHTML").each(function(index, element) {
+    console.log($(this))
+    console.log($(this).text())
+     $(".changeToHTML").remove();
+    $('#markdown').append('<div class="item">' + converter.makeHtml($(this).text()) + '</div>')
+    }
+
+    );
+    });
