@@ -439,6 +439,7 @@ app.get("/clubs/:position", (req, res) => {
   } else {
     res.redirect('/404')
   }
+  clubName = [];
 });
 
 app.get('/clubs', function(req, res) {
