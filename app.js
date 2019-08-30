@@ -347,6 +347,7 @@ let sophomorePostss = [];
 let juniorPostss = [];
 let seniorPostss = [];
 let clubs = [];
+let clubName = [];
 
 async function getData(data, ref) {
   var query = firebase.database().ref(ref).orderByKey();
@@ -432,14 +433,14 @@ app.get('/clubs', function(req, res) {
 //change to post
 app.get("/clubs/:position", (req, res) => {
   let position = req.params.position;
-  let clubName = clubs.map(({ name }) => name)
-
+  clubName = clubs.map(({ name }) => name)
   if (clubName.includes(position)) {
-    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>VERSION 0.0.3</h2>`);
-  } else {
+    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>All clubs: ${clubName}</h2><br><h2>VERSION 0.0.3</h2>`);
+  } else if (clubName.includes(position)==false){
     res.redirect('/404')
   }
   clubName = [];
+
 });
 
 app.get('/clubs', function(req, res) {
@@ -488,12 +489,14 @@ app.get('/makePoll', function(req, res) {
   }
 
 });
+
+
 app.post('/postClub', (req, res) => {
   console.log(req.body)
-  let name = req.body.club_name;
-  let description = req.body.desc;
-  let drive = req.body.drive;
-  let calendar = req.body.calendar;
+  let name = req.body.club_name.trim();
+  let description = req.body.desc.trim();
+  let drive = req.body.drive.trim();
+  let calendar = req.body.calendar.trim();
   addClub(name, description, drive, calendar)
   //TODO: do some function to add club to database
   res.render('clubs', {
