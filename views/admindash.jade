@@ -1,38 +1,46 @@
-extends ./template.jade
+extends ./testtemplate.jade
 
 block content
   div.container
     h1(class="red error") #{error}
     h1(class="green success") #{success}
     h1 Welcome administrator #{email}!
-    h6 For help or to suggest new features, contact
+    h6.colwhite For help or to suggest new features, contact
       a(href="mailto:mbilik0726@bths.edu")  mbilik0726@bths.edu
     h3 Add admin user
     form(action="/addAdmin", method="POST")
-          | User Email:
-          input(type='email', name='addEm')
-          input(type='submit', value="submit", class="btn")
+      .form-group
+        label.colwhite(for='') User Email:
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="addEm")
+      button.btn.btn-light.btn-lg.action-button(type='submit',value="submit") Submit
     h3 Remove admin user (Careful, you can do this to yourself.)
     form(action="/removeAdmin", method="POST")
-          | User Email:
-          input(type='email', name='removeEm')
-          input(type='submit', value="submit", class="btn")
+      .form-group
+        label.colwhite(for='') User Email:
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="removeEm")
+      button.btn.btn-light.btn-lg.action-button(type='submit',value="submit") Submit
+
     h3 Add message and choose place:
     textarea(id="MyID")
     div
-      h1
-        a(href="#",id="freshmen").
-              Post in the Freshmen forum
-      h1
-        a(href="#",id="sophomore").
-              Post in the Sophomore forum
-      h1
-        a(href="#",id="juniors").
-              Post in the Junior forum
-      h1
-        a(href="#",id="senior").
-              Post in the Senior forum
+        a(href="#",id="freshmen", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Freshmen forum
+        a(href="#",id="sophomore", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Sophomore forum
+        a(href="#",id="juniors", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Junior forum
+        a(href="#",id="senior", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Senior forum
 block code
+  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+  script(type='text/javascript').
+    var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
+    console.log(simplemde.value());
+
   script(type='text/javascript').
     $('#freshmen').click(function() {
     alert( "Posted.");

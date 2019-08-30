@@ -1,0 +1,9 @@
+extends ./testtemplate.jade
+
+block content
+  div.container
+    h1(class="red error") #{error}
+    h1(class="green success") #{success}
+    h6.whitecol UNDER CONSTRUCTION
+    a(href="/makePoll")
+        button.btn.btn-primary.btn-orange Create a poll!

@@ -36,11 +36,24 @@ const db = firebase.database();
 const ref = db.ref();
 const moment = require('moment')
 
+const clubss = ref.child("clubs");
 
 const freshmen = ref.child("freshmenPosts");
 const sophomores = ref.child("sophomorePosts");
 const juniors = ref.child("juniorPosts");
 const seniors = ref.child("seniorPosts");
+
+function addClub(name, description, drive, calendar){
+  clubss.push({
+    name: name,
+    description: description,
+    drive: drive,
+    calendar: calendar,
+    creator: firebase.auth().currentUser.email,
+    time: moment().format(),
+  })
+}
+
 
 function addFreshmen(content) {
   freshmen.push({
@@ -123,7 +136,6 @@ async function removeMod(email, emailCurrentUser) {
     }
   });
 };
-addMod('matthew@techhacks.nyc', 'matthewsings5@gmail.com');
 
 
 
@@ -148,9 +160,13 @@ app.post('/postSignUp', function(req, res) {
       //console.log(errorMessage)
       // ...
     }).then(data => {
-      //some sort of error
+      removeMod(firebase.auth().currentUser.email,'matthewsings5@gmail.com')
+      res.render('login', {
+        success: success
+      })
     })
     .catch(error => {
+      removeMod(firebase.auth().currentUser.email,'matthewsings5@gmail.com')
       res.render('login', {
         success: success
       })
@@ -163,22 +179,21 @@ app.get('/login', function(req, res) {
 app.get('/logout', function(req, res) {
   let user = firebase.auth().currentUser;
   if (user) {
-  firebase.auth().signOut().then(function() {
-    res.render('login', {
-      success: 'Logged out!'
+    firebase.auth().signOut().then(function() {
+      res.render('login', {
+        success: 'Logged out!'
+      })
+    }, function(error) {
+      console.log(error);
+      res.render('login', {
+        error: 'Log in first.'
+      })
     })
-  }, function(error) {
-    console.log(error);
+  } else {
     res.render('login', {
       error: 'Log in first.'
     })
-  })
-}
-else{
-  res.render('login', {
-    error: 'Log in first.'
-   })
-}
+  }
 });
 app.post('/postSignIn', function(req, res) {
   console.log(req.body);
@@ -232,7 +247,7 @@ app.get('/admin', function(req, res) {
           error: 'Request unauthorized.'
         })
       }
-    });
+    })
   } else {
     res.render('login', {
       error: 'Login first.'
@@ -243,24 +258,36 @@ app.get('/admin', function(req, res) {
 //TODO: Catch errors and successes
 app.post('/addAdmin', function(req, res) {
   let addEm = req.body.addEm;
-  addMod(addEm, firebase.auth().currentUser.email).catch(function(error){
-    res.render('admindash', {error:'Did not work. User may not exist or permission may not be valid.'});
-  }).then(data => {
-    res.render('admindash', {success:'User added!'})
-  })
-  .catch(error => {
-    res.render('admindash', {success:'User added!'})
-  });
+  addMod(addEm, firebase.auth().currentUser.email).catch(function(error) {
+      res.render('admindash', {
+        error: 'Did not work. User may not exist or permission may not be valid.'
+      });
+    }).then(data => {
+      res.render('admindash', {
+        success: 'User added!'
+      })
+    })
+    .catch(error => {
+      res.render('admindash', {
+        success: 'User added!'
+      })
+    });
 })
 app.post('/removeAdmin', function(req, res) {
   let removeEm = req.body.removeEm;
-  removeMod(removeEm, firebase.auth().currentUser.email).catch(function(error){
-    res.render('admindash', {error:'Did not work. User may not exist or permission may not be valid.'});
-  }).then(data => {
-    res.render('admindash', {success:'User removed!'})
+  removeMod(removeEm, firebase.auth().currentUser.email).catch(function(error) {
+      res.render('admindash', {
+        error: 'Did not work. User may not exist or permission may not be valid.'
+      });
+    }).then(data => {
+      res.render('admindash', {
+        success: 'User removed!'
+      })
     })
     .catch(error => {
-      res.render('admindash', {success:'User removed!'})
+      res.render('admindash', {
+        success: 'User removed!'
+      })
     });
 })
 // blog shenanigans
@@ -319,6 +346,7 @@ let freshmenPostss = [];
 let sophomorePostss = [];
 let juniorPostss = [];
 let seniorPostss = [];
+let clubs = [];
 
 async function getData(data, ref) {
   var query = firebase.database().ref(ref).orderByKey();
@@ -339,6 +367,7 @@ async function getData(data, ref) {
       });
     })
 }
+getData(clubs, "clubs")
 getData(freshmenPostss, "freshmenPosts")
 getData(sophomorePostss, "sophomorePosts")
 getData(juniorPostss, "juniorPosts")
@@ -377,7 +406,109 @@ app.get('/seniorsget', function(req, res) {
   getData(seniorPostss, "seniorPosts")
 
 })
+app.get('/userdash', function(req, res) {
+  if (firebase.auth().currentUser) {
+    res.render('userdash', {
+      user: firebase.auth().currentUser.email
+    })
 
+  } else {
+    res.render('login', {
+      error: 'Login first.'
+    })
+
+  }
+});
+app.get('/clubs', function(req, res) {
+  res.render('clubs', {
+    clubs: clubs,
+  })
+  clubs = [];
+  getData(clubs, "clubs")
+
+
+});
+
+//change to post
+app.get("/clubs/:position", (req, res) => {
+  let position = req.params.position;
+  let clubName = clubs.map(({ name }) => name)
+
+  if (clubName.includes(position)) {
+    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>VERSION 0.0.3</h2>`);
+  } else {
+    res.redirect('/404')
+  }
+});
+
+app.get('/clubs', function(req, res) {
+  res.render('individualclub', {  })
+
+});
+
+
+
+app.get('/makeClub', function(req, res) {
+  if (firebase.auth().currentUser) {
+    res.render('makeClub')
+
+  } else {
+    res.render('clubs', {
+      error: 'Login first.',
+      clubs: clubs,
+    })
+
+  }
+});
+app.get('/vote', function(req, res) {
+  res.render('polls')
+})
+// testing different styles
+app.get('/privacy', function(req, res) {
+  res.render('testprivacy')
+})
+app.get('/about', function(req, res) {
+  res.render('testabout')
+})
+
+
+
+// end test
+//maybe this should be an admin only feature?
+app.get('/makePoll', function(req, res) {
+  if (firebase.auth().currentUser) {
+    res.send('<h1>Feature is currently incomplete! Updates are coming soon!</h1><br><h2>VERSION 0.0.3</h2>')
+
+  } else {
+    res.render('polls', {
+      error: 'Login first.'
+    })
+
+  }
+
+});
+app.post('/postClub', (req, res) => {
+  console.log(req.body)
+  let name = req.body.club_name;
+  let description = req.body.desc;
+  let drive = req.body.drive;
+  let calendar = req.body.calendar;
+  addClub(name, description, drive, calendar)
+  //TODO: do some function to add club to database
+  res.render('clubs', {
+    success: "Club made! Click on clubs tab to see changes.",
+    clubs: clubs,
+  })
+  clubs = [];
+  getData(clubs, "clubs")
+
+});
+app.get('/*', function(req, res) {
+  res.render('404')
+})
+app.get('/404', function(req, res) {
+  res.render('404')
+})
 app.listen(8000, () => {
   console.log('*NOS ORTUM SUPRA*');
 });

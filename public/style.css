@@ -101,6 +101,12 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
   background-color: #656565;
 
 }
+.submit{
+  margin: 20px;
+}
+.inner{
+  background-color: #696463!important;
+}
 .time{
   font-weight: bold;
 }

@@ -1,102 +1,107 @@
 doctype html
-html(lang='en', dir='ltr')
+html
   head
     meta(charset='utf-8')
-    title The Foundry
-    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
-    link(rel='stylesheet', href='style.css')
-    link(href='https://fonts.googleapis.com/css?family=Noto+Sans&display=swap', rel='stylesheet')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title Foundry
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css')
+
+    link(rel='stylesheet', href='/fonts/fontawesome5-overrides.min.css')
+
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
+
+    link(rel='stylesheet', href='/css/fontawesome-all.min.css')
+
+    link(rel='stylesheet', href='/css/Footer-Basic.css')
+
+    link(rel='stylesheet', href='/css/Header-Blue.css')
+
+    link(rel='stylesheet', href='/css/Login-Form-Dark.css')
+
+    link(rel='stylesheet', href='/css/Page-Loader.css')
+
+    link(rel='stylesheet', href='/css/styles.css')
   body
-    .backgroundUp
-      nav.z-depth-0
-        .nav-wrapper
-          a(href='/')
-            img.logo.brand-logo(src='foundrylogo.svg', alt='')
-          ul#nav-mobile.right.hide-on-med-and-down
-            li
-              a(href='/studyguides') Study Guides
-            li
-              a(href='/clubs') Clubs
-            li
-              a(href='https://www.facebook.com/ConfessionsBTHS/', target='_blank') Tech Confessions
-            li
-              a(href='/vote') Vote
+    div
+      .header-blue
+        .page-loader.page-loader-show
+          .page-loader__spinner
+            svg(xmlns='http://www.w3.org/2000/svg', width='135', height='135', viewbox='0 0 135 135', fill='#fff')
+              path(d='M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z', transform='rotate(-121.013 67 67)')
+                animatetransform(attributename='transform', type='rotate', from='0 67 67', to='-360 67 67', dur='2.5s', repeatcount='indefinite')
+              path(d='M28.19 40.31c6.627 0 12-5.374 12-12 0-6.628-5.373-12-12-12-6.628 0-12 5.372-12 12 0 6.626 5.372 12 12 12zm30.72-19.825c4.686 4.687 12.284 4.687 16.97 0 4.686-4.686 4.686-12.284 0-16.97-4.686-4.687-12.284-4.687-16.97 0-4.687 4.686-4.687 12.284 0 16.97zm35.74 7.705c0 6.627 5.37 12 12 12 6.626 0 12-5.373 12-12 0-6.628-5.374-12-12-12-6.63 0-12 5.372-12 12zm19.822 30.72c-4.686 4.686-4.686 12.284 0 16.97 4.687 4.686 12.285 4.686 16.97 0 4.687-4.686 4.687-12.284 0-16.97-4.685-4.687-12.283-4.687-16.97 0zm-7.704 35.74c-6.627 0-12 5.37-12 12 0 6.626 5.373 12 12 12s12-5.374 12-12c0-6.63-5.373-12-12-12zm-30.72 19.822c-4.686-4.686-12.284-4.686-16.97 0-4.686 4.687-4.686 12.285 0 16.97 4.686 4.687 12.284 4.687 16.97 0 4.687-4.685 4.687-12.283 0-16.97zm-35.74-7.704c0-6.627-5.372-12-12-12-6.626 0-12 5.373-12 12s5.374 12 12 12c6.628 0 12-5.373 12-12zm-19.823-30.72c4.687-4.686 4.687-12.284 0-16.97-4.686-4.686-12.284-4.686-16.97 0-4.687 4.686-4.687 12.284 0 16.97 4.686 4.687 12.284 4.687 16.97 0z', transform='rotate(262.816 67 67)')
+                animatetransform(attributename='transform', type='rotate', from='0 67 67', to='360 67 67', dur='8s', repeatcount='indefinite')
+        nav.navbar.navbar-dark.navbar-expand-md.navigation-clean-search
+          .container
+            a.navbar-brand(href='#') Foundry
+            button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+              span.sr-only Toggle navigation
+              span.navbar-toggler-icon
+            #navcol-1.collapse.navbar-collapse
+              ul.nav.navbar-nav
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='http://thebp.herokuapp.com/') News
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/clubs') Clubs
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/vote') Vote
 
-            li
-              a(href='/transparency') School Transparency
-
-            li
-              a(href='http://thebp.herokuapp.com', target='_blank') The Blueprint
-
-            li
-              a(href='http://thebp.herokuapp.com/humor', target='_blank') The Radish
-
-            li
-              a(href='/login')
-                b Log In
-            li
-              a(href='/logout')
-                b Log Out
-
-      section.top
-        .contentAbs.center
-          h1
-            b Welcome to The Foundry
-
-          h5 Scroll Down
-
-    section.fullBar.firstSection
-      .content
-        .center.pad
-          h1 Year Selection
-
-          h4 SGO updates can be found here.
-
-        .navImages.center.hide-on-med-and-down
-          a(href='/freshmenget')
-            img(src='freshman2.png')
-            p Freshmen
-
-          a(href='/sophomoresget')
-            img(src='sophomores2.png')
-            p Sophomores
-
-          a(href='/juniorsget')
-            img(src='juniors2.png')
-            p Juniors
-
-          a(href='/seniorsget')
-            img(src='seniors2.png')
-            p Seniors
-
-        .margin.content.hide-on-large-only
-          .center
-            a(href='/freshmenget')
-              h2 Freshmen
-
-            a(href='/sophomoresget')
-              h2 Sophomores
-
-            a(href='/juniorsget')
-              h2 Juniors
-
-            a(href='/seniorsget')
-              h2 Seniors
-
-    section.fullBar.sectionColor
-      .container
-        h1.center.title Note from the Creator
-
-        p.center ALPHA 0.0.1
-        p.center THIS APP IS IN EARLY STAGES OF RELEASE
-
-        h4.center.pad Welcome to The Foundry! Here you can find everything Brooklyn Tech. Join / find new clubs, vote on pervasive issues in the Tech community, and stay up to date on current news. The Foundry was named for the giant abandoned foundry in 7C2. Schedule a historic visit with the
-          a(href='/tours')
-            span.underline  NHS Tours Committee
-          ! Feel free to click on your respective year above to get more comprehensive updates on grade-based events and happenings from SGO executives.
-
-    footer.sectionColor
-      h5.center
-        b Created with &#x2764;&#xFE0F; by Matthew Bilik, 21&apos;
-
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
+                li.dropdown.nav-item
+                  a.dropdown-toggle.nav-link(data-toggle='dropdown', aria-expanded='false', href='#') Announcements
+                  .dropdown-menu(role='menu')
+                    a.dropdown-item(role='presentation', href='/freshmenget') Freshmen
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;
+                    a.dropdown-item(role='presentation', href='/sophomoresget') Sophomores
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;
+                    a.dropdown-item(role='presentation', href='/juniorsget') Juniors
+                    a.dropdown-item(role='presentation', href='/seniorsget') Seniors
+              form.form-inline.mr-auto(target='_self')
+                .form-group
+                  label(for='search-field')
+                    i.fa.fa-search
+                  input#search-field.form-control.search-field(type='search', name='search')
+              span.navbar-text
+                a.login(href='/userdash') Console
+                a.login(href='/logout') Log Out
+              a.btn.btn-light.action-button(role='button', href='/login') Login In or Sign Up
+        .container.hero
+          .row
+            .col-12.col-lg-6.col-xl-5.offset-xl-1
+              h1.big Brooklyn Tech&apos;s student platform.
+              p
+                | Welcome to The Foundry! Here you can find everything Brooklyn Tech. Join / find new clubs, vote on pervasive issues in the Tech community, and stay up to date on current news. Feel free to click on your respective year in the announcements
+                | dropwdown to get comprehensive updates on grade-based events and happenings from SGO executives.&nbsp;
+                br
+              a.btn.btn-light.btn-lg.action-button(href='/about') Learn More
+            .col-md-5.col-lg-5.offset-lg-1.offset-xl-0.d-none.d-lg-block.phone-holder
+              .iphone-mockup
+                img.device(src='/img/iphone.svg')
+                .screen
+                  iframe(src='https://www.bths.edu/m/')
+    .footer-basic
+      footer
+        ul.list-inline
+          li.list-inline-item
+            a(href='/privacy') Privacy Policy
+        p.copyright
+          | Created by
+          a(href='http://mattbilik.tech/')  Matthew Bilik
+          | , Junior | SGO Software Development Director
+        p.copyright 🔭 The Foundry &copy; 2019
+        p.copyright
+          a(href="https://bths.edu/") bths.edu
+      p
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js')
+    script(src='/js/DashBoard-light-boostrap-2.js')
+    script(src='/js/DashBoard-light-boostrap.js')
+    script(src='/js/DashBoard-light-boostrap-1.js')
+    script(src='/js/DashBoard-light-boostrap-4.js')
+    script(src='/js/DashBoard-light-boostrap-3.js')
+    script(src='/js/bs-charts.js')
+    script(src='/js/chart.min-1.js')
+    script(src='/js/chart.min.js')
+    script(src='/js/Page-Loader.js')

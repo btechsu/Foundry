@@ -1,0 +1,21 @@
+extends ./testtemplate.jade
+
+block content
+  div.container
+    h1(class="red error") #{error}
+    h1(class="green success") #{success}
+    div.form-box
+      form(method="POST", action="/postClub")
+        .form-group
+          label(for='text') Club Name
+          input#name.form-control(type='text',placeholder='Enter club name',name="club_name")
+        .form-group
+          label(for='text') Google Drive URL
+          input#drive.form-control(type='text',placeholder='Enter drive',name="drive")
+        .form-group
+          label(for='text') Description
+          input#desc.form-control(name="desc",type='text', style='',placeholder='Enter description')
+        .form-group
+          label(for='text', style='') Calender Link
+          input#calendar.form-control(name="calendar",type='text', style='',placeholder='Enter calendar')
+        button.btn.btn-primary.btn-orange(name='', style='color: white;', type="submit", action="/postClub", value="Submit!") Submit!

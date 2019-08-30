@@ -1,0 +1,17 @@
+extends ./testtemplate.jade
+
+block content
+  div.container
+    h1(class="red error") #{error}
+    h1(class="green success") #{success}
+    a.btn.btn-light.btn-lg.action-button(href="/makeClub", class=" submit ").
+          Create a club!
+    h1.center Clubs
+      each val in clubs.reverse()
+          .card
+            .card-body.black
+              h1(class="card-title")=val.name
+              h4(class="card-subtitle mb-2 text-muted")="President: " + val.creator
+              h4(class="card-text")=val.description
+              a(href="/clubs/#{val.name}")
+                button.btn.btn-primary.btn-orange="Request to join " + val.name + "!"

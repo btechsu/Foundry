@@ -1,8 +1,9 @@
-extends ./template.jade
+extends ./testtemplate.jade
 block content
   div(class="container")
     h1.center Freshman SGO Posts
-    each val in freshmenPosts
+    each val in freshmenPosts.reverse()
+
       div
         h1(class="changeToHTML")=val.post
 
@@ -18,7 +19,7 @@ block code
     console.log($(this))
     console.log($(this).text())
     $(".changeToHTML").remove();
-    $('#markdown').append('<div class="item">' +'<div class="topper">' + '<h6 class="user">' + 'User: ' + posts[counter].author + '</h6>' + '<h6 class="time">' + 'Time: ' + posts[counter].time + '</h6>' +'</div>'+ converter.makeHtml($(this).text()) + '</div>')
+    $('#markdown').append('<div class=" card">' +'<div class="card-body">' + '<h5 class="card-title">' + 'User: ' + posts[counter].author + '</h5>' + '<h6 class="card-subtitle mb-2 text-muted">' + 'Time: ' + posts[counter].time + '</h6>' +'</div>'+ ' <hr>  ' + '<div class="black">' + converter.makeHtml($(this).text()) + '</div>' + '</div>')
     counter=counter+1;
     }
 

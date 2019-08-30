@@ -1,25 +1,35 @@
-extends ./template.jade
+extends ./testtemplate.jade
 
 block content
-  div.container
-    h1(class="red error") #{error}
-    h1(class="green success") #{success}
-    h1 Sign In
+  h1(class="red error") #{error}
+  h1(class="green success") #{success}
+  h1 Sign in!
+  div.form-box
     form(action="/postSignIn",method="POST")
-          | Email:
-          input(type='email', name='email')
-          | Password:
-          input(type='password', name='password')
-          input(type='submit', value="submit", class="btn")
-    h1 Sign Up
+      .form-group
+        label(for='exampleInputEmail1') Email address
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="email")
+      .form-group
+        label(for='exampleInputPassword1') Password
+        input.form-control(type='password',placeholder='Password',name="password")
+      button.btn.btn-primary.btn-orange(type='submit',value="submit") Submit
+  h1 Sign up!
+  div.form-box
     form(action="/postSignUp",method="POST")
-          | Email:
-          input(type='email', name='email')
-          | Password:
-          input(type='password', name='password')
-          input(type='submit', value="submit", class="btn")
+      .form-group
+        label(for='exampleInputEmail1') Email address
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="email")
+        small.form-text.text-muted We&apos;ll never share your email with anyone outside of the platform.
+      .form-group
+        label(for='exampleInputPassword1') Password
+        input.form-control(type='password',placeholder='Password',name="password")
+      button.btn.btn-primary.btn-orange(type='submit',value="submit") Submit
+  h1 Options
+  div.form-box
     h1
       a(href="/logout") Log Out
+    h1
+      a(href="/userdash") User Dashboard
 
     h1
       a(href="/admin") Admin Dashboard

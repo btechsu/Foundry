@@ -1,0 +1,104 @@
+doctype html
+html(lang='en', dir='ltr')
+  head
+    meta(charset='utf-8')
+    title The Foundry
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css')
+    link(rel='stylesheet', href='style.css')
+    link(href='https://fonts.googleapis.com/css?family=Noto+Sans&display=swap', rel='stylesheet')
+  body
+    .backgroundUp
+      nav.z-depth-0
+        .nav-wrapper
+          a(href='/')
+            img.logo.brand-logo(src='foundrylogo.svg', alt='')
+          ul#nav-mobile.right.hide-on-med-and-down
+            li
+              a(href='/studyguides') Study Guides
+            li
+              a(href='/clubs') Clubs
+            li
+              a(href='https://www.facebook.com/ConfessionsBTHS/', target='_blank') Tech Confessions
+            li
+              a(href='/vote') Vote
+
+            li
+              a(href='/transparency') School Transparency
+
+            li
+              a(href='http://thebp.herokuapp.com', target='_blank') The Blueprint
+
+            li
+              a(href='http://thebp.herokuapp.com/humor', target='_blank') The Radish
+
+            li
+              a(href='/login')
+                b Log In
+            li
+              a(href='/logout')
+                b Log Out
+
+      section.top
+        .contentAbs.center
+          h1
+            b Welcome to The Foundry
+
+          h5 Scroll Down
+
+    section.fullBar.firstSection
+      .content
+        .center.pad
+          h1 Year Selection
+
+          h4 SGO updates can be found here.
+
+        .navImages.center.hide-on-med-and-down
+          a(href='/freshmenget')
+            img(src='freshman2.png')
+            p Freshmen
+
+          a(href='/sophomoresget')
+            img(src='sophomores2.png')
+            p Sophomores
+
+          a(href='/juniorsget')
+            img(src='juniors2.png')
+            p Juniors
+
+          a(href='/seniorsget')
+            img(src='seniors2.png')
+            p Seniors
+
+        .margin.content.hide-on-large-only
+          .center
+            a(href='/freshmenget')
+              h2 Freshmen
+
+            a(href='/sophomoresget')
+              h2 Sophomores
+
+            a(href='/juniorsget')
+              h2 Juniors
+
+            a(href='/seniorsget')
+              h2 Seniors
+
+    section.fullBar.sectionColor
+      .container
+        h1.center.title Note from the Creator
+
+        p.center ALPHA 0.0.2
+        p.center THIS APP IS IN EARLY STAGES OF RELEASE
+        p.center
+          a(href="#") Change Log
+
+        h4.center.pad Welcome to The Foundry! Here you can find everything Brooklyn Tech. Join / find new clubs, vote on pervasive issues in the Tech community, and stay up to date on current news. The Foundry was named for the giant abandoned foundry in 7C2. Schedule a historic visit with the
+          a(href='/tours')
+            span.underline  NHS Tours Committee
+          ! Feel free to click on your respective year above to get more comprehensive updates on grade-based events and happenings from SGO executives.
+
+    footer.sectionColor
+      h5.center
+        b Created with &#x2764;&#xFE0F; by Matthew Bilik, 21&apos;
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js')
