@@ -157,8 +157,7 @@ app.post('/postSignUp', function(req, res) {
       res.render('login', {
         error: errorMessage
       });
-      //console.log(errorMessage)
-      // ...
+
     }).then(data => {
       removeMod(firebase.auth().currentUser.email,'matthewsings5@gmail.com')
       res.render('login', {
@@ -201,7 +200,6 @@ app.post('/postSignIn', function(req, res) {
   let email = req.body.email;
   let user = firebase.auth().currentUser;
   if (user) {
-    //TODO: Show user info is correct and redirect
     success = "You're already logged in!";
     res.render('login', {
       success: success
@@ -220,7 +218,6 @@ app.post('/postSignIn', function(req, res) {
       ).catch(
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            //TODO: Show user info is correct and redirect
             success = "You're logged in!";
             res.render('login', {
               success: success
