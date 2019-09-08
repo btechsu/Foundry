@@ -1,5 +1,7 @@
 //TODO: LOAD IN ALL CONFESSIONS USING FACEBOOK API RATHER THAN LINKING TO THE FB PAGE!
-
+//TODO: REPLACE ALL .currentUser questions with COOKIES!!!!!!
+//req.signedCookies['session']
+const cookieParser = require('cookie-parser');
 var express = require('express')
 var app = express()
 app.listen(process.env.PORT || 8080);
@@ -25,6 +27,7 @@ var config = {
   appId: "1:392224309755:web:acf32c4d649a80a4"
 };
 firebase.initializeApp(config);
+app.use(cookieParser('jdhsuiydsa98ody8sa09dsad892193933hd9eu9d9wqhdgqwahzgchjxdsafkycsy8ukE78o;qw2itywtytiqwuttiyqesud'));
 
 
 
@@ -43,48 +46,48 @@ const sophomores = ref.child("sophomorePosts");
 const juniors = ref.child("juniorPosts");
 const seniors = ref.child("seniorPosts");
 
-function addClub(name, description, drive, calendar){
+function addClub(name, description, drive, calendar, creator){
   clubss.push({
     name: name,
     description: description,
     drive: drive,
     calendar: calendar,
-    creator: firebase.auth().currentUser.email,
+    creator: creator,
     time: moment().format(),
   })
 }
 
 
-function addFreshmen(content) {
+function addFreshmen(content, author) {
   freshmen.push({
     post: content,
     time: moment().format(),
-    author: firebase.auth().currentUser.email,
+    author: author,
   });
 }
 
-function addSophomores(content) {
+function addSophomores(content, author) {
   sophomores.push({
     post: content,
     time: moment().format(),
-    author: firebase.auth().currentUser.email,
+    author: author,
 
   });
 }
 
-function addJuniors(content) {
+function addJuniors(content, author) {
   juniors.push({
     post: content,
     time: moment().format(),
-    author: firebase.auth().currentUser.email,
+    author: author,
   });
 }
 
-function addSeniors(content) {
+function addSeniors(content, author) {
   seniors.push({
     post: content,
     time: moment().format(),
-    author: firebase.auth().currentUser.email,
+    author: author,
   });
 }
 
@@ -159,13 +162,13 @@ app.post('/postSignUp', function(req, res) {
       });
 
     }).then(data => {
-      removeMod(firebase.auth().currentUser.email,'matthewsings5@gmail.com')
+      removeMod(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'),'matthewsings5@gmail.com')
       res.render('login', {
         success: success
       })
     })
     .catch(error => {
-      removeMod(firebase.auth().currentUser.email,'matthewsings5@gmail.com')
+      removeMod(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'),'matthewsings5@gmail.com')
       res.render('login', {
         success: success
       })
@@ -176,17 +179,13 @@ app.get('/login', function(req, res) {
   res.render('login')
 })
 app.get('/logout', function(req, res) {
-  let user = firebase.auth().currentUser;
+  let user = req.signedCookies['session'];
+  console.log(user)
   if (user) {
-    firebase.auth().signOut().then(function() {
+      res.clearCookie("session")
       res.render('login', {
         success: 'Logged out!'
-      })
-    }, function(error) {
-      console.log(error);
-      res.render('login', {
-        error: 'Log in first.'
-      })
+
     })
   } else {
     res.render('login', {
@@ -198,7 +197,7 @@ app.post('/postSignIn', function(req, res) {
   console.log(req.body);
   let password = req.body.password;
   let email = req.body.email;
-  let user = firebase.auth().currentUser;
+  let user = req.signedCookies['session'];
   if (user) {
     success = "You're already logged in!";
     res.render('login', {
@@ -219,9 +218,12 @@ app.post('/postSignIn', function(req, res) {
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
             success = "You're logged in!";
+            res.cookie('session', firebase.auth().currentUser, { signed: true, maxAge: 900000, httpOnly: true });
+            res.set('cache-control', 'max-age=0, private') // may not be needed. Good to have if behind a CDN.
             res.render('login', {
               success: success
             })
+            return firebase.auth().signOut(); //clears session from memory
           } else {
             res.render('login', {
               error: errorMessage
@@ -232,10 +234,10 @@ app.post('/postSignIn', function(req, res) {
   }
 })
 app.get('/admin', function(req, res) {
-  if (firebase.auth().currentUser) {
-    checkRole(firebase.auth().currentUser.email).then(check => {
+  if (req.signedCookies['session']) {
+    checkRole(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')).then(check => {
       if (check == true) {
-        email = firebase.auth().currentUser.email;
+        email = req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1');
         res.render('admindash', {
           email: email
         })
@@ -255,7 +257,7 @@ app.get('/admin', function(req, res) {
 //TODO: Catch errors and successes
 app.post('/addAdmin', function(req, res) {
   let addEm = req.body.addEm;
-  addMod(addEm, firebase.auth().currentUser.email).catch(function(error) {
+  addMod(addEm, req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')).catch(function(error) {
       res.render('admindash', {
         error: 'Did not work. User may not exist or permission may not be valid.'
       });
@@ -272,7 +274,7 @@ app.post('/addAdmin', function(req, res) {
 })
 app.post('/removeAdmin', function(req, res) {
   let removeEm = req.body.removeEm;
-  removeMod(removeEm, firebase.auth().currentUser.email).catch(function(error) {
+  removeMod(removeEm, req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')).catch(function(error) {
       res.render('admindash', {
         error: 'Did not work. User may not exist or permission may not be valid.'
       });
@@ -293,26 +295,26 @@ app.post('/removeAdmin', function(req, res) {
 app.post('/freshmen', function(req, res) {
   console.log(req.body);
   let content = req.body.content;
-  addFreshmen(content)
+  addFreshmen(content,req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'))
   res.redirect('/admin');
 })
 app.post('/sophomores', function(req, res) {
   console.log(req.body);
   let content1 = req.body.content1;
-  addSophomores(content1)
+  addSophomores(content1,req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'))
   res.redirect('/admin');
 })
 app.post('/juniors', function(req, res) {
   console.log(req.body);
   let content2 = req.body.content2;
-  addJuniors(content2)
+  addJuniors(content2,req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'))
 
   res.redirect('/admin');
 })
 app.post('/seniors', function(req, res) {
   console.log(req.body);
   let content3 = req.body.content3;
-  addSeniors(content3)
+  addSeniors(content3,req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'))
 
   res.redirect('/admin');
 })
@@ -405,9 +407,9 @@ app.get('/seniorsget', function(req, res) {
 
 })
 app.get('/userdash', function(req, res) {
-  if (firebase.auth().currentUser) {
+  if (req.signedCookies['session']) {
     res.render('userdash', {
-      user: firebase.auth().currentUser.email
+      user: req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')
     })
 
   } else {
@@ -448,7 +450,8 @@ app.get('/clubs', function(req, res) {
 
 
 app.get('/makeClub', function(req, res) {
-  if (firebase.auth().currentUser) {
+  console.log("cookie: " + req.signedCookies['session'])
+  if (req.signedCookies['session']) {
     res.render('makeClub')
 
   } else {
@@ -475,7 +478,7 @@ app.get('/about', function(req, res) {
 // end test
 //maybe this should be an admin only feature?
 app.get('/makePoll', function(req, res) {
-  if (firebase.auth().currentUser) {
+  if (req.signedCookies['session']) {
     res.send('<h1>Feature is currently incomplete! Updates are coming soon!</h1><br><h2>VERSION 0.0.3</h2>')
 
   } else {
@@ -494,7 +497,9 @@ app.post('/postClub', (req, res) => {
   let description = req.body.desc.trim();
   let drive = req.body.drive.trim();
   let calendar = req.body.calendar.trim();
-  addClub(name, description, drive, calendar)
+  let creator = req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1');
+  console.log("creator" + JSON.stringify(creator))
+  addClub(name, description, drive, calendar, creator)
   //TODO: do some function to add club to database
   res.render('clubs', {
     success: "Club made! Click on clubs tab to see changes.",
