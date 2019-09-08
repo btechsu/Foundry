@@ -434,7 +434,7 @@ app.get("/clubs/:position", (req, res) => {
   let position = req.params.position;
   clubName = clubs.map(({ name }) => name)
   if (clubName.includes(position)) {
-    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>All clubs: ${clubName}</h2><br><h2>VERSION 0.0.3</h2>`);
+    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>All clubs: ${clubName}</h2><br><h2>VERSION 0.1.2</h2>`);
   } else if (clubName.includes(position)==false){
     res.redirect('/404')
   }
@@ -479,7 +479,7 @@ app.get('/about', function(req, res) {
 //maybe this should be an admin only feature?
 app.get('/makePoll', function(req, res) {
   if (req.signedCookies['session']) {
-    res.send('<h1>Feature is currently incomplete! Updates are coming soon!</h1><br><h2>VERSION 0.0.3</h2>')
+    res.send('<h1>Feature is currently incomplete! Updates are coming soon!</h1><br><h2>VERSION 0.1.2</h2>')
 
   } else {
     res.render('polls', {
