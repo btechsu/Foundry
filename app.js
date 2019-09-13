@@ -1,6 +1,7 @@
 //TODO: LOAD IN ALL CONFESSIONS USING FACEBOOK API RATHER THAN LINKING TO THE FB PAGE!
 //TODO: REPLACE ALL .currentUser questions with COOKIES!!!!!!
 //req.signedCookies['session']
+//Survey API -> http://surveybths.com/wp-json/wp/v2/posts/23
 const cookieParser = require('cookie-parser');
 var express = require('express')
 var app = express()
