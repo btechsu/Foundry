@@ -154,28 +154,32 @@ app.post('/postSignUp', function(req, res) {
   console.log(req.body);
   let password = req.body.password;
   let email = req.body.email;
-  firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
-      // Handle Errors here.
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      res.render('login', {
-        error: errorMessage
-      });
+    firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        console.log(errorMessage);
+        res.render('login', {
+          error: errorMessage
+        })
+  }).then(
 
-    }).then(data => {
-      removeMod(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'),'matthewsings5@gmail.com')
-      res.render('login', {
-        success: success
-      })
+  ).catch(
+    // cannot check cookies as they do not exist yet.
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        success = "You've successfully registered!";
+        res.cookie('session', firebase.auth().currentUser, { signed: true, maxAge: 900000, httpOnly: true });
+        res.set('cache-control', 'max-age=0, private') // may not be needed. Good to have if behind a CDN.
+        removeMod(firebase.auth().currentUser.email.replace(/^"(.*)"$/, '$1'),'matthewsings5@gmail.com')
+        res.render('login', {
+          success: success
+        })
+        return firebase.auth().signOut(); //clears session from memory
+      }
     })
-    .catch(error => {
-      removeMod(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'),'matthewsings5@gmail.com')
-      res.render('login', {
-        success: success
-      })
-    });
+  )
 })
-
 app.get('/login', function(req, res) {
   res.render('login')
 })
