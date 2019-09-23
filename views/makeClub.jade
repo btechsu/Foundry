@@ -8,14 +8,32 @@ block content
       form(method="POST", action="/postClub")
         .form-group
           label(for='text') Club Name
-          input#name.form-control(type='text',placeholder='Enter club name',name="club_name")
+          input#name.form-control(type='text',placeholder='Enter club name',name="club_name" required)
         .form-group
           label(for='text') Google Drive URL
           input#drive.form-control(type='text',placeholder='Enter drive',name="drive")
         .form-group
           label(for='text') Description
-          input#desc.form-control(name="desc",type='text', style='',placeholder='Enter description')
+          textarea#desc.form-control(name="desc",type='text', style='',placeholder='Enter description')
+        .form-group
+          label(for='text') How is your club unique?
+          textarea#desc.form-control(name="unique",type='text', style='',placeholder='Enter text')
+
         .form-group
           label(for='text', style='') Calender Link
           input#calendar.form-control(name="calendar",type='text', style='',placeholder='Enter calendar')
+        .form-group
+          label(for='text', style='') Club Type
+          select.form-control(name="type", multiple)
+            option STEM
+            option Organization
+            option Team
+            option Public Speaking
+            option Art
+            option Music
+            option Cultural
+            option Volunteering & Community Service
+            option Publication
+            option Academic
+
         button.btn.btn-primary.btn-orange(name='', style='color: white;', type="submit", action="/postClub", value="Submit!") Submit!

@@ -3,6 +3,14 @@
 //req.signedCookies['session']
 //Survey API -> http://surveybths.com/wp-json/wp/v2/posts/23
 const cookieParser = require('cookie-parser');
+const algoliasearch = require('algoliasearch');
+const dotenv = require('dotenv');
+dotenv.config();
+const algolia = algoliasearch(
+  process.env.ALGOLIA_APP_ID,
+  process.env.ALGOLIA_API_KEY
+);
+const index = algolia.initIndex(process.env.ALGOLIA_INDEX_NAME);
 var express = require('express')
 var app = express()
 app.listen(process.env.PORT || 8080);
@@ -47,7 +55,65 @@ const sophomores = ref.child("sophomorePosts");
 const juniors = ref.child("juniorPosts");
 const seniors = ref.child("seniorPosts");
 
-function addClub(name, description, drive, calendar, creator){
+
+//Search functions
+const contactsRef = db.ref('/clubs');
+contactsRef.on('child_added', addOrUpdateIndexRecord);
+contactsRef.on('child_changed', addOrUpdateIndexRecord);
+contactsRef.on('child_removed', deleteIndexRecord);
+
+function addOrUpdateIndexRecord(contact) {
+  // Get Firebase object
+  const record = contact.val();
+  // Specify Algolia's objectID using the Firebase object key
+  record.objectID = contact.key;
+  // Add or update object
+  index
+    .saveObject(record)
+    .then(() => {
+      console.log('Firebase object indexed in Algolia', record.objectID);
+    })
+    .catch(error => {
+      console.error('Error when indexing contact into Algolia', error);
+      process.exit(1);
+    });
+}
+
+function deleteIndexRecord({key}) {
+  // Get Algolia's objectID from the Firebase object key
+  const objectID = key;
+  // Remove the object from Algolia
+  index
+    .deleteObject(objectID)
+    .then(() => {
+      console.log('Firebase object deleted from Algolia', objectID);
+    })
+    .catch(error => {
+      console.error('Error when deleting contact from Algolia', error);
+      process.exit(1);
+    });
+}
+
+//end
+
+//nodemailer start
+var nodemailer = require('nodemailer');
+
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'thefoundrybot@gmail.com',
+    pass: '3zB[.y_a?!2M/ybv'
+  }
+});
+
+var mailOptions = {
+};
+//end
+
+
+
+function addClub(name, description, drive, calendar, creator, unique, type){
   clubss.push({
     name: name,
     description: description,
@@ -55,6 +121,8 @@ function addClub(name, description, drive, calendar, creator){
     calendar: calendar,
     creator: creator,
     time: moment().format(),
+    uniquedesc: unique,
+    type: type,
   })
 }
 
@@ -91,7 +159,6 @@ function addSeniors(content, author) {
     author: author,
   });
 }
-
 
 //check if admin
 async function checkRole(email) {
@@ -424,6 +491,7 @@ app.get('/userdash', function(req, res) {
 
   }
 });
+// add club approval feature
 app.get('/clubs', function(req, res) {
   res.render('clubs', {
     clubs: clubs,
@@ -434,12 +502,61 @@ app.get('/clubs', function(req, res) {
 
 });
 
-//change to post
+
+async function checkClubSend(array, name, req){
+  console.log('starting')
+  array.forEach(function(club) {
+    if(club.name == name){
+       mailOptions = {
+        from: 'thefoundrybot@gmail.com',
+        to: req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1'),
+        subject: `${req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')} wants to join ${name}!`,
+        text: `Hey ${club.creator}! A student wants to join ${name}! Email them (${req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')}) to accept or reject their request!`
+      };
+
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+
+        });
+      }
+    })
+}
+
+
+app.get('/join/:position', (req, res) => {
+    let position = req.params.position;
+    clubNameJoin = clubs.map(({ name }) => name)
+
+  if (clubNameJoin.includes(position)) {
+
+    if (req.signedCookies['session']) {
+      checkClubSend(clubs, position, req);
+      res.render('clubdash', {clubName: position, allClubs: clubNameJoin, clubs: clubs, success: 'Request sent by email!'})
+
+    }
+    else{
+      res.render('clubdash', {clubName: position, allClubs: clubNameJoin, clubs: clubs, error: 'Log in first.'})
+    }
+  }
+  else if (clubNameJoin.includes(position)==false){
+    res.redirect('/404')
+    console.log("bork")
+  }
+  clubNameJoin = [];
+});
+
+
 app.get("/clubs/:position", (req, res) => {
   let position = req.params.position;
   clubName = clubs.map(({ name }) => name)
   if (clubName.includes(position)) {
-    res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>All clubs: ${clubName}</h2><br><h2>VERSION 0.1.2</h2>`);
+    res.render('clubdash', {clubName: position, allClubs: clubName, clubs: clubs});
+
+    //res.send(`<h1>${position} exists, but we're working on this feature. Please email the president to join at this moment. Updates are coming soon!</h1><br><h2>All clubs: ${clubName}</h2><br><h2>VERSION 0.1.2</h2>`);
   } else if (clubName.includes(position)==false){
     res.redirect('/404')
   }
@@ -495,16 +612,17 @@ app.get('/makePoll', function(req, res) {
 
 });
 
-
 app.post('/postClub', (req, res) => {
   console.log(req.body)
+  let unique = req.body.unique.trim();
+  let type = req.body.type;
   let name = req.body.club_name.trim();
   let description = req.body.desc.trim();
   let drive = req.body.drive.trim();
   let calendar = req.body.calendar.trim();
   let creator = req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1');
   console.log("creator" + JSON.stringify(creator))
-  addClub(name, description, drive, calendar, creator)
+  addClub(name, description, drive, calendar, creator, unique, type)
   //TODO: do some function to add club to database
   res.render('clubs', {
     success: "Club made! Click on clubs tab to see changes.",

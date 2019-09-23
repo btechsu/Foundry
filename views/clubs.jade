@@ -4,14 +4,78 @@ block content
   div.container
     h1(class="red error") #{error}
     h1(class="green success") #{success}
-    a.btn.btn-light.btn-lg.action-button(href="/makeClub", class=" submit ").
+    a.btn.btn-light.btn-lg.action-button.margins(href="/makeClub", class=" submit ").
           Create a club!
+    button.btn.btn-light.btn-lg.action-button.margins(id="toggleref") Show / hide refinements
     h1.center Clubs
-      each val in clubs.reverse()
-          .card
-            .card-body.black
-              h1(class="card-title")=val.name
-              h4(class="card-subtitle mb-2 text-muted")="President: " + val.creator
-              h4(class="card-text")=val.description
-              a(href="/clubs/#{val.name}")
-                button.btn.btn-primary.btn-orange="Request to join " + val.name + "!"
+      div
+        .container(id="searchbox")
+        .container(id="refinement-list", class="card flex-row")
+        div(id="hits")
+block code
+  script(src='https://cdn.jsdelivr.net/npm/algoliasearch@3.33.0/dist/algoliasearchLite.min.js' integrity='sha256-3Laj91VXexjTlFLgL8+vvIq27laXdRmFIcO2miulgEs=' crossorigin='anonymous')
+  script(src='https://cdn.jsdelivr.net/npm/instantsearch.js@3.4.0/dist/instantsearch.production.min.js' integrity='sha256-pM0n88cBFRHpSn0N26ETsQdwpA7WAXJDvkHeCLh3ujI=' crossorigin='anonymous')
+  script(type="text/javascript").
+    $('body').click(function(){
+    $('.type').each(function() {
+    console.log('BORKENSTEIN');
+    var string = $(this).html();
+    $(this).html(string.replace(/,/g , ', '));
+    })
+    }
+    );
+
+    $("#toggleref").click(function(){
+    $("#refinement-list").toggle();
+    });
+
+    $(window).on('load', function() {
+    $('.type').each(function() {
+      var string = $(this).html();
+      $(this).html(string.replace(/,/g , ', '));
+      });
+    });
+
+    const searchClient = algoliasearch('1BHYAR56VX', '432ec87ed16db1805c6aa814c4b9e89f');
+
+    const search = instantsearch({
+    indexName: 'clubs',
+    searchClient,
+    });
+
+    search.addWidget(
+    instantsearch.widgets.searchBox({
+      container: '#searchbox',
+      showSubmit: false,
+      placeholder: 'Search for clubs!',
+      showReset: false,
+    })
+    );
+    search.addWidget(
+      instantsearch.widgets.refinementList({
+        container: '#refinement-list',
+        attribute: 'type',
+      })
+    );
+    search.addWidget(
+      instantsearch.widgets.hits({
+        container: '#hits',
+        templates: {
+          item: `
+            <div class="card">
+                <div class="card-body black">
+                <h1 class="card-title">
+                  \{{name}}
+                </h1>
+                <h4 class="card-subtitle mb-2 text-muted">President: \{{creator}}</h4>
+                <h4 class="card-subtitle mb-2 text-muted type">\{{type}}</h4>
+                <a href="/clubs/{{name}}">
+                  <button class="btn btn-primary btn-orange">View the \{{name}} page!</button>
+                </a>
+              </div>
+            </div>
+          `,
+        },
+      })
+    );
+    search.start();
