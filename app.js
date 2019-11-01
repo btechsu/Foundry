@@ -103,7 +103,8 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'thefoundrybot@gmail.com',
-    pass: '3zB[.y_a?!2M/ybv'
+    pass: 'mzNdDQPBhyMkGrFb6qwk5EDEu5Q79JyzLj7m2dh4NJUYWYyQhBufLn4Ka78nwDmGb9BwDBsuEqkhTFSMfzSWJj2d232jx'
+	
   }
 });
 
