@@ -35,6 +35,17 @@ block content
         a(href="#",id="senior", class="btn submit")
           button.btn.btn-light.btn-lg.action-button
               | Post in the Senior forum
+    h1 SGO Suggestions
+    each val in suggestions.reverse()
+      div.card
+        div(class="card-body black")
+          h4(class="card-subtitle mb-2 text-muted")="Name: " + val.name
+          h4(class="card-subtitle mb-2 text-muted")="OSIS: " + val.osis
+          h4(class="card-subtitle mb-2 text-muted")="Type: " + val.type
+          hr
+          h4(class="card-subtitle mb-2 text-muted")=val.description
+
+
 block code
   script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
   script(type='text/javascript').

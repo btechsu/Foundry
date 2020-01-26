@@ -48,6 +48,8 @@ html
                   a.nav-link.active(href='/clubs') Clubs
                 li.nav-item(role='presentation')
                   a.nav-link.active(href='/vote') Vote
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/suggestions') SGO Suggestions
 
                 li.dropdown.nav-item
                   a.dropdown-toggle.nav-link(data-toggle='dropdown', aria-expanded='false', href='#') Announcements
@@ -59,10 +61,6 @@ html
                     a.dropdown-item(role='presentation', href='/juniorsget') Juniors
                     a.dropdown-item(role='presentation', href='/seniorsget') Seniors
               form.form-inline.mr-auto(target='_self')
-                .form-group
-                  label(for='search-field')
-                    i.fa.fa-search
-                  input#search-field.form-control.search-field(type='search', name='search')
               span.navbar-text
                 a.login(href='/userdash') Console
                 a.login(href='/logout') Log Out

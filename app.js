@@ -1,8 +1,10 @@
 //TODO: LOAD IN ALL CONFESSIONS USING FACEBOOK API RATHER THAN LINKING TO THE FB PAGE!
-//TODO: REPLACE ALL .currentUser questions with COOKIES!!!!!!
 //req.signedCookies['session']
+// USE CONFIG FOR API KEYS
+// process.env.
 //Survey API -> http://surveybths.com/wp-json/wp/v2/posts/23
 const cookieParser = require('cookie-parser');
+const cookieEncrypter = require('cookie-encrypter')
 const algoliasearch = require('algoliasearch');
 const dotenv = require('dotenv');
 dotenv.config();
@@ -27,16 +29,17 @@ var firebase = require('firebase')
 var admin = require('firebase-admin');
 var serviceAccount = require("./thefffoundry-firebase-adminsdk-dy2sw-9622fa9200.json");
 var config = {
-  apiKey: "AIzaSyCNPi3w9i8aLseBI8wW4fMq59ZSw6eWois",
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: "thefffoundry.firebaseapp.com",
   databaseURL: "https://thefffoundry.firebaseio.com",
   projectId: "thefffoundry",
   storageBucket: "",
-  messagingSenderId: "392224309755",
-  appId: "1:392224309755:web:acf32c4d649a80a4"
+  messagingSenderId: process.env.FIREBASE_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
 };
 firebase.initializeApp(config);
-app.use(cookieParser('jdhsuiydsa98ody8sa09dsad892193933hd9eu9d9wqhdgqwahzgchjxdsafkycsy8ukE78o;qw2itywtytiqwuttiyqesud'));
+app.use(cookieParser(process.env.COOKIE_SECRET));
+app.use(cookieEncrypter(process.env.COOKIE_SECRET));
 
 
 
@@ -55,7 +58,7 @@ const sophomores = ref.child("sophomorePosts");
 const juniors = ref.child("juniorPosts");
 const seniors = ref.child("seniorPosts");
 
-
+const suggestionss = ref.child("suggestions");
 //Search functions
 const contactsRef = db.ref('/clubs');
 contactsRef.on('child_added', addOrUpdateIndexRecord);
@@ -103,8 +106,8 @@ var transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'thefoundrybot@gmail.com',
-    pass: 'mzNdDQPBhyMkGrFb6qwk5EDEu5Q79JyzLj7m2dh4NJUYWYyQhBufLn4Ka78nwDmGb9BwDBsuEqkhTFSMfzSWJj2d232jx'
-	
+    pass: process.env.FOUNDRY_EMAIL_PASS
+
   }
 });
 
@@ -112,7 +115,14 @@ var mailOptions = {
 };
 //end
 
-
+function addSuggestion(name, osis, description, type){
+  suggestionss.push({
+    name: name,
+    osis: osis,
+    description: description,
+    type: type,
+  })
+}
 
 function addClub(name, description, drive, calendar, creator, unique, type){
   clubss.push({
@@ -311,9 +321,13 @@ app.get('/admin', function(req, res) {
     checkRole(req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1')).then(check => {
       if (check == true) {
         email = req.signedCookies['session'].email.replace(/^"(.*)"$/, '$1');
+
         res.render('admindash', {
-          email: email
+          email: email,
+          suggestions: suggestions,
         })
+        suggestions = [];
+        getData(suggestions, "suggestions")
       } else {
         res.render('login', {
           error: 'Request unauthorized.'
@@ -322,7 +336,7 @@ app.get('/admin', function(req, res) {
     })
   } else {
     res.render('login', {
-      error: 'Login first.'
+      error: 'Log in first.'
     })
 
   }
@@ -392,6 +406,25 @@ app.post('/seniors', function(req, res) {
   res.redirect('/admin');
 })
 
+
+app.post('/postSuggestion', (req, res) => {
+  console.log(req.body);
+  let name = req.body.name.trim();
+  let osis = req.body.osis.trim();
+  let description = req.body.desc.trim();
+  let type = req.body.type;
+
+  if (req.signedCookies['session']) {
+    addSuggestion(name, osis, description, type)
+    res.render("suggestions", {success: "Suggestion sent!"})
+  } else {
+    res.render('suggestions', {
+      error: 'Log in first.'
+    })
+
+  }
+});
+
 //get
 //TODO: Finish!!!
 //TODO: Load in posts!
@@ -420,6 +453,7 @@ let juniorPostss = [];
 let seniorPostss = [];
 let clubs = [];
 let clubName = [];
+let suggestions = [];
 
 async function getData(data, ref) {
   var query = firebase.database().ref(ref).orderByKey();
@@ -445,6 +479,8 @@ getData(freshmenPostss, "freshmenPosts")
 getData(sophomorePostss, "sophomorePosts")
 getData(juniorPostss, "juniorPosts")
 getData(seniorPostss, "seniorPosts")
+getData(suggestions, "suggestions")
+
 
 //end test
 //TODO: FINISH
@@ -487,7 +523,7 @@ app.get('/userdash', function(req, res) {
 
   } else {
     res.render('login', {
-      error: 'Login first.'
+      error: 'Log in first.'
     })
 
   }
@@ -565,12 +601,10 @@ app.get("/clubs/:position", (req, res) => {
 
 });
 
-app.get('/clubs', function(req, res) {
-  res.render('individualclub', {  })
+app.get('/suggestions',  (req, res) => {
+  res.render('suggestions', {})
 
 });
-
-
 
 app.get('/makeClub', function(req, res) {
   console.log("cookie: " + req.signedCookies['session'])
@@ -579,7 +613,7 @@ app.get('/makeClub', function(req, res) {
 
   } else {
     res.render('clubs', {
-      error: 'Login first.',
+      error: 'Log in first.',
       clubs: clubs,
     })
 
@@ -606,7 +640,7 @@ app.get('/makePoll', function(req, res) {
 
   } else {
     res.render('polls', {
-      error: 'Login first.'
+      error: 'Log in first.'
     })
 
   }
