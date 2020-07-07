@@ -1,10 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
 import { ROUTES } from '@utils';
+import { RichText, Elements } from 'prismic-reactjs';
 
 // styles
 import styled from 'styled-components';
-import { mixins } from '@styles';
+import { mixins, Container } from '@styles';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -26,42 +28,51 @@ const PrivacyLink = styled(Link)`
   ${mixins.inlineLink};
 `;
 
-const Footer = () => {
+const propsWithUniqueKey = function (props, key) {
+  return Object.assign(props || {}, { key });
+};
+const sectionSerializer = function (type, element, content, children, key) {
+  var props = {};
+  switch (type) {
+    case Elements.hyperlink:
+      return React.createElement(
+        StyledLink,
+        propsWithUniqueKey(props, key),
+        children
+      );
+    default:
+      return null;
+  }
+};
+
+const Footer = ({ data }) => {
   var d = new Date();
   var thisYear = d.getFullYear();
+  const footerArray = data.footer[0];
 
   return (
     <FooterWrapper>
       <StyledFooter>
-        <p>
-          <span role="img" aria-label="Discover more.">
-            🔭
-          </span>{' '}
-          The Foundry &copy; {thisYear} |{' '}
-          <PrivacyLink to={ROUTES.PRIVACY}>Privacy Policy</PrivacyLink>
-        </p>
-        <p>
-          Created and designed by{' '}
-          <StyledLink
-            href={`https://kyryloorlov.com/?utm_source=foundry&utm_medium=footer&utm_campaign=link`}
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-          >
-            Kyrylo Orlov
-          </StyledLink>{' '}
-          and{' '}
-          <StyledLink
-            href="http://mattbilik.tech"
-            target="_blank"
-            rel="nofollow noopener noreferrer"
-          >
-            Matthew Bilik
-          </StyledLink>
-          .
-        </p>
+        <Container normal>
+          <p>
+            <span role="img" aria-label="Discover more.">
+              🔭
+            </span>{' '}
+            The Foundry &copy; {thisYear} |{' '}
+            <PrivacyLink to={ROUTES.PRIVACY}>Privacy Policy</PrivacyLink>
+          </p>
+          <RichText
+            render={footerArray.text}
+            htmlSerializer={sectionSerializer}
+          />
+        </Container>
       </StyledFooter>
     </FooterWrapper>
   );
 };
 
 export default Footer;
+
+Footer.propTypes = {
+  data: PropTypes.array.isRequired,
+};

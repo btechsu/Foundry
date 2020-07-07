@@ -22,17 +22,32 @@ const Layout = ({ children }) => {
               description
             }
           }
+          prismic {
+            allHomepages {
+              edges {
+                node {
+                  footer {
+                    text
+                  }
+                }
+              }
+            }
+          }
         }
       `}
-      render={(site) => (
-        <>
-          <Head metadata={site.site.siteMetadata} />
-          <GlobalStyle />
-          <Nav />
-          <div id="content">{children}</div>
-          <Footer />
-        </>
-      )}
+      render={(site) => {
+        const doc = site.prismic.allHomepages.edges.slice(0, 1).pop();
+
+        return (
+          <>
+            <Head metadata={site.site.siteMetadata} />
+            <GlobalStyle />
+            <Nav />
+            <div id="content">{children}</div>
+            <Footer data={doc.node} />
+          </>
+        );
+      }}
     />
   );
 };
