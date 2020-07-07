@@ -1,0 +1,63 @@
+extends ./testtemplate.jade
+
+block content
+  h1(class="red error") #{error}
+  h1(class="green success") #{success}
+  h3 Welcome user #{user}!
+  h6.whitecol UNDER CONSTRUCTION
+  h1 Clubs
+  table.special-table.table.table-dark
+        thead.thead-light
+          tr
+            th(scope='col') #
+            th(scope='col') Name
+            th(scope='col') President
+            th(scope='col') Members
+        tbody
+          tr
+            th(scope='row') 1
+            td
+            td
+            td
+          tr
+            th(scope='row') 2
+            td
+            td
+            td
+          tr
+            th(scope='row') 3
+            td
+            td
+            td
+  h1 Polls
+  table.table.table-dark.special-table
+          thead.thead-light
+            tr
+              th(scope='col') #
+              th(scope='col') Name
+              th(scope='col') Votes for
+              th(scope='col') Votes against
+          tbody
+            tr
+              th(scope='row') 1
+              td
+              td
+              td
+            tr
+              th(scope='row') 2
+              td
+              td
+              td
+            tr
+              th(scope='row') 3
+              td
+              td
+              td
+    div.form-box
+              h1
+                a(href="/logout") Log Out
+              h1
+                a(href="/userdash") User Dashboard
+
+              h1
+                a(href="/admin") Admin Dashboard

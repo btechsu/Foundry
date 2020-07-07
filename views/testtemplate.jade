@@ -1,0 +1,118 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1.0, shrink-to-fit=no')
+    title Foundry
+
+    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/instantsearch.css@7.3.1/themes/reset-min.css' integrity='sha256-t2ATOGCtAIZNnzER679jwcFcKYfLlw01gli6F6oszk8=' crossorigin='anonymous')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.7.1/css/all.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css')
+    link(rel='stylesheet', href='/fonts/fontawesome5-overrides.min.css')
+    link(rel='stylesheet', href='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css')
+
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700')
+
+    link(rel='stylesheet', href='/css/fontawesome-all.min.css')
+
+    link(rel='stylesheet', href='/css/Footer-Basic.css')
+
+    link(rel='stylesheet', href='/css/Header-Blue.css')
+
+    link(rel='stylesheet', href='/css/Login-Form-Dark.css')
+
+    link(rel='stylesheet', href='/css/Page-Loader.css')
+
+    link(rel='stylesheet', href='/css/styles.css')
+  body
+    div
+      .header-blue
+        .page-loader.page-loader-show
+          .page-loader__spinner
+            svg(xmlns='http://www.w3.org/2000/svg', width='135', height='135', viewbox='0 0 135 135', fill='#fff')
+              path(d='M67.447 58c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm9.448 9.447c0 5.523 4.477 10 10 10 5.522 0 10-4.477 10-10s-4.478-10-10-10c-5.523 0-10 4.477-10 10zm-9.448 9.448c-5.523 0-10 4.477-10 10 0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zM58 67.447c0-5.523-4.477-10-10-10s-10 4.477-10 10 4.477 10 10 10 10-4.477 10-10z', transform='rotate(-121.013 67 67)')
+                animatetransform(attributename='transform', type='rotate', from='0 67 67', to='-360 67 67', dur='2.5s', repeatcount='indefinite')
+
+              path(d='M28.19 40.31c6.627 0 12-5.374 12-12 0-6.628-5.373-12-12-12-6.628 0-12 5.372-12 12 0 6.626 5.372 12 12 12zm30.72-19.825c4.686 4.687 12.284 4.687 16.97 0 4.686-4.686 4.686-12.284 0-16.97-4.686-4.687-12.284-4.687-16.97 0-4.687 4.686-4.687 12.284 0 16.97zm35.74 7.705c0 6.627 5.37 12 12 12 6.626 0 12-5.373 12-12 0-6.628-5.374-12-12-12-6.63 0-12 5.372-12 12zm19.822 30.72c-4.686 4.686-4.686 12.284 0 16.97 4.687 4.686 12.285 4.686 16.97 0 4.687-4.686 4.687-12.284 0-16.97-4.685-4.687-12.283-4.687-16.97 0zm-7.704 35.74c-6.627 0-12 5.37-12 12 0 6.626 5.373 12 12 12s12-5.374 12-12c0-6.63-5.373-12-12-12zm-30.72 19.822c-4.686-4.686-12.284-4.686-16.97 0-4.686 4.687-4.686 12.285 0 16.97 4.686 4.687 12.284 4.687 16.97 0 4.687-4.685 4.687-12.283 0-16.97zm-35.74-7.704c0-6.627-5.372-12-12-12-6.626 0-12 5.373-12 12s5.374 12 12 12c6.628 0 12-5.373 12-12zm-19.823-30.72c4.687-4.686 4.687-12.284 0-16.97-4.686-4.686-12.284-4.686-16.97 0-4.687 4.686-4.687 12.284 0 16.97 4.686 4.687 12.284 4.687 16.97 0z', transform='rotate(262.816 67 67)')
+                animatetransform(attributename='transform', type='rotate', from='0 67 67', to='360 67 67', dur='8s', repeatcount='indefinite')
+        nav.navbar.navbar-dark.navbar-expand-md.navigation-clean-search
+          .container
+            a.navbar-brand(href='/') Foundry
+            button.navbar-toggler(data-toggle='collapse', data-target='#navcol-1')
+              span.sr-only Toggle navigation
+              span.navbar-toggler-icon
+
+            #navcol-1.collapse.navbar-collapse
+              ul.nav.navbar-nav
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='http://news.bths.social/') News
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/clubs') Clubs
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/vote') Vote
+                li.nav-item(role='presentation')
+                  a.nav-link.active(href='/suggestions') SGO Suggestions
+                li.dropdown.nav-item
+                  a.dropdown-toggle.nav-link(data-toggle='dropdown', aria-expanded='false', href='#') Announcements
+
+                  .dropdown-menu(role='menu')
+                    a.dropdown-item(role='presentation', href='/freshmenget') Freshmen
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;
+                    a.dropdown-item(role='presentation', href='/sophomoresget') Sophomores
+                    | &#x9;&#x9;&#x9;&#x9;&#x9;
+                    a.dropdown-item(role='presentation', href='/juniorsget') Juniors
+
+                    a.dropdown-item(role='presentation', href='/seniorsget') Seniors
+
+              form.form-inline.mr-auto(target='_self')
+              span.navbar-text
+                a.login(href='/userdash') Console
+                a.login(href='/logout') Log Out
+              a.btn.btn-light.action-button(role='button', href='/login') Login In or Sign Up
+
+        .container.hero
+          .row
+            .col-12
+              block content
+
+    .footer-basic
+      footer
+        ul.list-inline
+          li.list-inline-item
+            a(href='/privacy') Privacy Policy
+
+        p.copyright
+          | Created by
+          a(href='http://mattbilik.tech/')  Matthew Bilik
+          | , Junior | SGO Software Development Director
+
+        p.copyright 🔭 The Foundry &copy; 2019
+        p.copyright
+          a(href="https://bths.edu/") bths.edu
+
+      p
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js')
+
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js')
+
+    script(src='/js/DashBoard-light-boostrap-2.js')
+
+    script(src='/js/DashBoard-light-boostrap.js')
+
+    script(src='/js/DashBoard-light-boostrap-1.js')
+
+    script(src='/js/DashBoard-light-boostrap-4.js')
+
+    script(src='/js/DashBoard-light-boostrap-3.js')
+
+    script(src='/js/bs-charts.js')
+
+    script(src='/js/chart.min-1.js')
+
+    script(src='/js/chart.min.js')
+
+    script(src='/js/Page-Loader.js')
+    block code

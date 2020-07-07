@@ -1,0 +1,75 @@
+extends ./testtemplate.jade
+
+block content
+  div.container
+    h1(class="red error") #{error}
+    h1(class="green success") #{success}
+    h1 Welcome administrator #{email}!
+    h6.colwhite For help or to suggest new features, contact
+      a(href="mailto:mbilik0726@bths.edu")  mbilik0726@bths.edu
+    h3 Add admin user
+    form(action="/addAdmin", method="POST")
+      .form-group
+        label.colwhite(for='') User Email:
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="addEm")
+      button.btn.btn-light.btn-lg.action-button(type='submit',value="submit") Submit
+    h3 Remove admin user (Careful, you can do this to yourself.)
+    form(action="/removeAdmin", method="POST")
+      .form-group
+        label.colwhite(for='') User Email:
+        input.form-control(type='email',aria-describedby='emailHelp',placeholder='Enter email',name="removeEm")
+      button.btn.btn-light.btn-lg.action-button(type='submit',value="submit") Submit
+
+    h3 Add message and choose place:
+    textarea(id="MyID")
+    div
+        a(href="#",id="freshmen", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Freshmen forum
+        a(href="#",id="sophomore", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Sophomore forum
+        a(href="#",id="juniors", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Junior forum
+        a(href="#",id="senior", class="btn submit")
+          button.btn.btn-light.btn-lg.action-button
+              | Post in the Senior forum
+    h1 SGO Suggestions
+    each val in suggestions.reverse()
+      div.card
+        div(class="card-body black")
+          h4(class="card-subtitle mb-2 text-muted")="Name: " + val.name
+          h4(class="card-subtitle mb-2 text-muted")="OSIS: " + val.osis
+          h4(class="card-subtitle mb-2 text-muted")="Type: " + val.type
+          hr
+          h4(class="card-subtitle mb-2 text-muted")=val.description
+
+
+block code
+  script(src='https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js')
+  script(type='text/javascript').
+    var simplemde = new SimpleMDE({ element: document.getElementById("MyID") });
+    console.log(simplemde.value());
+
+  script(type='text/javascript').
+    $('#freshmen').click(function() {
+    alert( "Posted.");
+    console.log(simplemde.value());
+    $.post("/freshmen", {content: simplemde.value()});
+    });
+    $('#sophomore').click(function() {
+    alert( "Posted.");
+    console.log(simplemde.value());
+    $.post("/sophomores", {content1: simplemde.value()});
+    });
+    $('#juniors').click(function() {
+    alert( "Posted.");
+    console.log(simplemde.value());
+    $.post("/juniors", {content2: simplemde.value()});
+    });
+    $('#senior').click(function() {
+    alert( "Posted.");
+    console.log(simplemde.value());
+    $.post("/seniors", {content3: simplemde.value()});
+    });

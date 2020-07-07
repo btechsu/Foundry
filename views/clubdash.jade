@@ -1,0 +1,20 @@
+extends ./testtemplate.jade
+
+block content
+  h1(class="red error") #{error}
+  h1(class="green success") #{success}
+  div.card.black
+    h1 #{clubName}
+    each val in clubs
+      if (val.name == clubName)
+        h3="Created: " + val.time
+        h4
+          a(href="#{val.calendar}")="Calendar: " + val.calendar
+        h4
+          a(href="#{val.drive}")="Drive: " + val.drive
+        h3(class="marginalize") Description:
+        h4(style="")=val.description
+        h3(class="marginalize")="What makes " + clubName + " unique?"
+        h4(style="")=val.uniquedesc
+        a(href="/join/#{val.name}")
+          button(class="btn btn-primary btn-orange")="Request to join " + clubName + "!"
