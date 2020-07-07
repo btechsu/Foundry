@@ -8,7 +8,14 @@ import Nav from '@components/nav';
 import Footer from '@components/footer';
 
 // styles
+import styled from 'styled-components';
 import { GlobalStyle } from '@styles';
+
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 10rem);
+`;
 
 const Layout = ({ children }) => {
   return (
@@ -43,7 +50,7 @@ const Layout = ({ children }) => {
             <Head metadata={site.site.siteMetadata} />
             <GlobalStyle />
             <Nav />
-            <div id="content">{children}</div>
+            <PageContainer>{children}</PageContainer>
             <Footer data={doc.node} />
           </>
         );

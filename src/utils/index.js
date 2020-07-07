@@ -1,4 +1,5 @@
 import config from './config';
+import linkResolver from './linkResolver';
 import * as ROUTES from './routes';
 
 export const throttle = (func, wait = 100) => {
@@ -18,4 +19,4 @@ export const hex2rgba = (hex, alpha = 1) => {
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
-export { config, ROUTES };
+export { config, ROUTES, linkResolver };
