@@ -1,22 +1,31 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import { graphql } from 'gatsby';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+// sections
+import { Hero } from '@components/Home';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+export default ({ data }) => {
+  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
+  if (!doc) return null;
 
-export default IndexPage
+  return <Hero data={doc.node} />;
+};
+
+export const query = graphql`
+  {
+    prismic {
+      allHomepages {
+        edges {
+          node {
+            hero {
+              image
+              label
+              title
+              description
+            }
+          }
+        }
+      }
+    }
+  }
+`;
