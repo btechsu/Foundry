@@ -35,6 +35,7 @@ const FormGroup = styled.div`
 
   span {
     color: var(--color-error);
+    margin-top: 0.75rem;
   }
 `;
 

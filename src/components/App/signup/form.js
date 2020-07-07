@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import serializeHyperlink from '@components/serializeHyperlink';
-import { RichText, Elements } from 'prismic-reactjs';
+import { RichText } from 'prismic-reactjs';
 
 // styles
 import styled from 'styled-components';
-import { FormGroup, FormInput, ClickableButton, mixins, theme } from '@styles';
+import { FormGroup, FormInput, ClickableButton, mixins } from '@styles';
 
 // form logic
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-
-const { fontSizes } = theme;
 
 const SignUpFormContainer = styled.div`
   padding-top: 0;
@@ -46,33 +44,24 @@ const FormSchema = Yup.object().shape({
       '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])',
       'Password must contain at least one lower case letter, upper case letter, number, and special character'
     ),
-  recaptcha: Yup.string().required(),
 });
 
 const SignupForm = ({ tos, serializer }) => {
-  console.log(tos);
   return (
     <SignUpFormContainer>
       <FormContainer>
         <RegistrationContainer>
           <Formik
             initialValues={{
-              email: undefined,
-              password: undefined,
-              recaptcha: undefined,
+              email: '',
+              password: '',
             }}
             validationSchema={FormSchema}
             onSubmit={(values, { setSubmitting }) => {
               console.log(values);
             }}
           >
-            {({
-              isSubmitting,
-              isValid,
-              setFieldValue,
-              dirty,
-              setFieldError,
-            }) => (
+            {({ isSubmitting, dirty }) => (
               <Form>
                 <FormGroup>
                   <label htmlFor="email">Email</label>
@@ -91,13 +80,15 @@ const SignupForm = ({ tos, serializer }) => {
                     type="password"
                     name="password"
                     placeholder="Password"
-                    autoComplete="username"
+                    autoComplete="new-password"
                     component={FormInput}
                   />
-                  <ErrorMessage component="span" name="email" />
+                  <ErrorMessage component="span" name="password" />
                 </FormGroup>
                 <div>
-                  <FormButton>Sign up</FormButton>
+                  <FormButton disabled={!dirty || isSubmitting} type="submit">
+                    Sign up
+                  </FormButton>
                   <RichText
                     render={tos}
                     serializeHyperlink={serializeHyperlink}
