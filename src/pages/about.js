@@ -27,11 +27,13 @@ const StyledLabel = styled.h3`
   padding: 0;
   ${media.phablet`font-size: ${fontSizes.md};`};
 `;
-const LeftCol = styled.div`
+const BaseCol = styled.div`
   position: relative;
   width: 100%;
   padding-right: 15px;
   padding-left: 15px;
+`;
+const LeftCol = styled(BaseCol)`
   img {
     width: 100%;
     user-select: none;
@@ -47,11 +49,7 @@ const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
-const RightCol = styled.div`
-  position: relative;
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
+const RightCol = styled(BaseCol)`
   ${media.tablet`margin-top: 1.5rem;`};
 
   @media (min-width: 768px) {
@@ -77,6 +75,28 @@ const StyledDescription = styled.p`
   margin: 0;
   padding: 0;
 `;
+const InfoWrapper = styled(AboutWrapper)`
+  justify-content: center;
+`;
+const StyledMD3 = styled(BaseCol)`
+  text-align: center;
+  margin-top: 3rem;
+  img {
+    width: 100%;
+  }
+
+  @media (min-width: 768px) {
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    max-width: 25%;
+    margin-top: 5rem;
+  }
+`;
+const StyledInfoHeading = styled.h2`
+  font-size: ${fontSizes.xxl};
+  ${media.desktop`font-size: ${fontSizes.xl};`};
+  ${media.tablet`font-size: ${fontSizes.xxl};`};
+`;
 
 const propsWithUniqueKey = function (props, key) {
   return Object.assign(props || {}, { key });
@@ -96,6 +116,12 @@ const sectionSerializer = function (type, element, content, children, key) {
         propsWithUniqueKey(props, key),
         children
       );
+    case Elements.heading2:
+      return React.createElement(
+        StyledInfoHeading,
+        propsWithUniqueKey(props, key),
+        children
+      );
     default:
       return null;
   }
@@ -105,6 +131,7 @@ export default ({ data }) => {
   const doc = data.prismic.allAboutpages.edges.slice(0, 1).pop();
   const bannerArray = doc.node.banner[0];
   const aboutArray = doc.node.hero[0];
+  const infoArray = doc.node.info;
   if (!doc) return null;
 
   return (
@@ -140,6 +167,21 @@ export default ({ data }) => {
               </ContentWrapper>
             </RightCol>
           </AboutWrapper>
+          <InfoWrapper>
+            {infoArray.map((reference, i) => (
+              <StyledMD3 key={i}>
+                <img src={reference.image.url} alt={reference.image.alt} />
+                <RichText
+                  render={reference.title}
+                  htmlSerializer={sectionSerializer}
+                />
+                <RichText
+                  render={reference.description}
+                  htmlSerializer={sectionSerializer}
+                />
+              </StyledMD3>
+            ))}
+          </InfoWrapper>
         </Container>
       </AboutContainer>
     </>
@@ -161,6 +203,11 @@ export const query = graphql`
               title
               description
               image
+            }
+            info {
+              image
+              title
+              description
             }
           }
         }
