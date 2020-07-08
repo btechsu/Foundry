@@ -1,3 +1,4 @@
+const path = require('path');
 const config = require('./src/utils/config');
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,
@@ -25,8 +26,7 @@ module.exports = {
       options: {
         repositoryName: 'foundry',
         defaultLang: 'en-us',
-        accessToken:
-          'MC5Yd1BGSlJBQUFDTUF5dEdu.77-977-977-977-9QAQw77-9KSbvv73vv70FZ--_ve-_ve-_ve-_vXHvv71qExHvv73vv70277-9H0Hvv70x77-9',
+        accessToken: process.env.GATSBY_PRISMIC_API,
         path: '/preview',
         previews: true,
       },
