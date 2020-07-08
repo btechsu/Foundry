@@ -22,6 +22,10 @@ module.exports = {
     `gatsby-plugin-robots-txt`,
     `gatsby-plugin-dark-mode`,
     {
+      resolve: `gatsby-plugin-create-client-paths`,
+      options: { prefixes: [`/app/*`] },
+    },
+    {
       resolve: '@prismicio/gatsby-source-prismic-graphql',
       options: {
         repositoryName: 'foundry',

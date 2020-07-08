@@ -114,7 +114,7 @@ const sectionSerializer = function (type, element, content, children, key) {
   }
 };
 
-const HeroSection = ({ data }) => {
+const Hero = ({ data }) => {
   const heroArray = data.hero[0];
 
   return (
@@ -147,28 +147,4 @@ const HeroSection = ({ data }) => {
   );
 };
 
-export default ({ data }) => {
-  const data = graphql`
-    {
-      prismic {
-        allHomepages {
-          edges {
-            node {
-              hero {
-                image
-                label
-                title
-                description
-              }
-            }
-          }
-        }
-      }
-    }
-  `;
-
-  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
-  if (!doc) return null;
-
-  return <HeroSection data={doc.node} />;
-};
+export default Hero;
