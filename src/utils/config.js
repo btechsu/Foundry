@@ -31,7 +31,7 @@ module.exports = {
       url: '/suggestions',
     },
   ],
-  backgroundColor: '#FDFFFC',
-  themeColor: '#013976',
-  textColor: '#131200',
+  backgroundColor: '#FFFFFF',
+  themeColor: '#4433FF',
+  textColor: '#0A0C10',
 };
