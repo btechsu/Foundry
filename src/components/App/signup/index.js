@@ -14,6 +14,7 @@ const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 3rem 0;
 `;
 const ResponsiveWrapper = styled.div`
   display: flex;
@@ -24,13 +25,12 @@ const LeftCol = styled.div`
   img {
     width: 100%;
   }
+
   display: flex;
   flex: 1 0 50%;
   position: relative;
   overflow: hidden;
-  max-width: 50rem;
-  justify-content: center;
-  align-items: center;
+  max-width: 80rem;
   ${media.tablet`display: none;`};
 `;
 const RightCol = styled.div`

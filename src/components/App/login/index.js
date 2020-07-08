@@ -14,6 +14,7 @@ const MainContainer = styled.main`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 3rem 0;
 `;
 const StyledHeader = styled.h1`
   color: var(--color-text);
