@@ -1,4 +1,3 @@
-//! This file is for the 'Forgot password' page
 import React from 'react';
 
 // styles

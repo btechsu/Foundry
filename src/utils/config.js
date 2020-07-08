@@ -16,19 +16,19 @@ module.exports = {
   navLinks: [
     {
       name: 'News',
-      url: '/news',
+      url: '/app/news',
     },
     {
       name: 'Clubs',
-      url: '/clubs',
+      url: '/app/clubs',
     },
     {
       name: 'Vote',
-      url: '/vote',
+      url: '/app/vote',
     },
     {
       name: 'SGO Suggestions',
-      url: '/suggestions',
+      url: '/app/suggestions',
     },
   ],
   backgroundColor: '#FFFFFF',
