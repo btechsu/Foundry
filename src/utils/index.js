@@ -19,4 +19,16 @@ export const hex2rgba = (hex, alpha = 1) => {
   return `rgba(${r},${g},${b},${alpha})`;
 };
 
+export const isloggedin = () => {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('authUser')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  return false;
+};
+
 export { config, ROUTES, linkResolver };
