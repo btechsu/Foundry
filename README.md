@@ -46,7 +46,7 @@
 
 5.  **Open the source code and start editing!**
 
-    The site is now running at `http://localhost:8000` for development and `http://localhost:9000` for production!
+    The site is now running at `http://localhost:8000` for development and `http://localhost:9000` for production.
 
 ## 🧐 What's inside?
 
