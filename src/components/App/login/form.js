@@ -1,7 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import serializeHyperlink from '@components/serializeHyperlink';
-import { RichText } from 'prismic-reactjs';
+import { Link } from 'gatsby';
 
 // styles
 import styled from 'styled-components';
@@ -11,7 +9,7 @@ import { FormGroup, ClickableButton, mixins } from '@styles';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-const SignUpFormContainer = styled.div`
+const LoginFormContainer = styled.div`
   padding-top: 0;
   padding-bottom: 0;
   flex-grow: 1;
@@ -29,33 +27,28 @@ const FormButton = styled(ClickableButton)`
   ${mixins.primaryButton};
   ${mixins.bigButton};
   width: 100%;
-  margin-bottom: 1rem;
+  margin: 1rem 0;
 
   :disabled {
     cursor: default;
   }
 `;
+const StyledLink = styled(Link)`
+  ${mixins.inlineLink};
+`;
+const ForgotContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
 
 const FormSchema = Yup.object().shape({
-  email: Yup.string()
-    .required('Email field is required')
-    .email('Please enter a valid email address')
-    .matches(
-      '^[A-Za-z0-9._%+-]+@bths.edu$',
-      'Please use your Brooklyn Tech email'
-    ),
-  password: Yup.string()
-    .required('Password field is required')
-    .max(100)
-    .matches(
-      /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
-      'Password must contain 8 characters, at least one lower case letter, upper case letter, and number'
-    ),
+  email: Yup.string().required('Email field is required'),
+  password: Yup.string().required('Password field is required'),
 });
 
-const SignupForm = ({ tos }) => {
+const LoginForm = () => {
   return (
-    <SignUpFormContainer>
+    <LoginFormContainer>
       <FormContainer>
         <RegistrationContainer>
           <Formik
@@ -92,25 +85,20 @@ const SignupForm = ({ tos }) => {
                   <ErrorMessage component="span" name="password" />
                 </FormGroup>
                 <div>
+                  <ForgotContainer>
+                    <StyledLink>I forgot my password</StyledLink>
+                  </ForgotContainer>
                   <FormButton disabled={!dirty || isSubmitting} type="submit">
-                    Sign up
+                    Login
                   </FormButton>
-                  <RichText
-                    render={tos}
-                    serializeHyperlink={serializeHyperlink}
-                  />
                 </div>
               </Form>
             )}
           </Formik>
         </RegistrationContainer>
       </FormContainer>
-    </SignUpFormContainer>
+    </LoginFormContainer>
   );
 };
 
-export default SignupForm;
-
-SignupForm.propTypes = {
-  tos: PropTypes.string.isRequired,
-};
+export default LoginForm;

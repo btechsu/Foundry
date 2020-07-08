@@ -48,14 +48,17 @@ const StyledHeader = styled.h2`
   margin-bottom: 2rem;
   font-weight: var(--font-weight-bold);
 `;
-const StyledLink = styled.a`
-  ${mixins.inlineLink};
-`;
-const StyledTos = styled.p`
-  font-size: ${fontSizes.sm};
-  color: var(--color-gray-700);
-  margin-top: 0;
-  margin-bottom: 1rem;
+const FormWrapper = styled.div`
+  p {
+    font-size: ${fontSizes.sm};
+    color: var(--color-gray-700);
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    ${mixins.inlineLink}
+  }
 `;
 
 const propsWithUniqueKey = function (props, key) {
@@ -64,18 +67,6 @@ const propsWithUniqueKey = function (props, key) {
 const sectionSerializer = function (type, element, content, children, key) {
   var props = {};
   switch (type) {
-    case Elements.paragraph:
-      return React.createElement(
-        StyledTos,
-        propsWithUniqueKey(props, key),
-        children
-      );
-    case Elements.hyperlink:
-      return React.createElement(
-        StyledLink,
-        propsWithUniqueKey(props, key),
-        children
-      );
     case Elements.heading2:
       return React.createElement(
         StyledHeader,
@@ -95,10 +86,10 @@ const Signup = ({ data }) => {
           <img src={data.image.url} alt={data.image.alt} />
         </LeftCol>
         <RightCol>
-          <div>
+          <FormWrapper>
             <RichText render={data.title} htmlSerializer={sectionSerializer} />
-            <SignupForm tos={data.label} serializer={sectionSerializer} />
-          </div>
+            <SignupForm tos={data.label} />
+          </FormWrapper>
         </RightCol>
       </ResponsiveWrapper>
     </MainContainer>

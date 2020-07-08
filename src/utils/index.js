@@ -1,5 +1,5 @@
 import config from './config';
-import linkResolver from './linkResolver';
+import { linkResolver } from './linkResolver';
 import * as ROUTES from './routes';
 
 export const throttle = (func, wait = 100) => {
