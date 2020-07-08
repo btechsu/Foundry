@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'gatsby';
+import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -86,7 +87,9 @@ const LoginForm = () => {
                 </FormGroup>
                 <div>
                   <ForgotContainer>
-                    <StyledLink>I forgot my password</StyledLink>
+                    <StyledLink to={ROUTES.FORGOT_PASSWORD}>
+                      I forgot my password
+                    </StyledLink>
                   </ForgotContainer>
                   <FormButton disabled={!dirty || isSubmitting} type="submit">
                     Login

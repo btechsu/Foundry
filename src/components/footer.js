@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
-import { ROUTES } from '@utils';
-import { RichText, Elements } from 'prismic-reactjs';
+import { ROUTES, linkResolver } from '@utils';
+import { RichText, Elements, Link as PrismicLink } from 'prismic-reactjs';
 
 // styles
 import styled from 'styled-components';
@@ -35,11 +35,33 @@ const sectionSerializer = function (type, element, content, children, key) {
   var props = {};
   switch (type) {
     case Elements.hyperlink:
-      return React.createElement(
-        StyledLink,
-        propsWithUniqueKey(props, key),
-        children
-      );
+      let result = '';
+      const url = PrismicLink.url(element.data, linkResolver);
+      if (element.data.link_type === 'Document') {
+        result = (
+          <Link to={url} key={key}>
+            {content}
+          </Link>
+        );
+      } else {
+        const targetAttr = element.data.target
+          ? { target: element.data.target }
+          : {};
+        const relAttr = element.data.target ? { rel: 'noopener' } : {};
+        props = Object.assign(
+          {
+            href: element.data.url || linkResolver(element.data),
+          },
+          targetAttr,
+          relAttr
+        );
+        result = React.createElement(
+          StyledLink,
+          propsWithUniqueKey(props, key),
+          children
+        );
+      }
+      return result;
     default:
       return null;
   }
