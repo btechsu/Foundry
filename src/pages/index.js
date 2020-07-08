@@ -1,7 +1,9 @@
 import React from 'react';
 import { graphql } from 'gatsby';
+import { Router } from '@reach/router';
+import { ROUTES } from '@utils';
 
-// sections
+// components
 import { Hero } from '@components/Home';
 
 export default ({ data }) => {

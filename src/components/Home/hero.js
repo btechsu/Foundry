@@ -1,5 +1,5 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { graphql } from 'gatsby';
 import { RichText, Elements } from 'prismic-reactjs';
 import { ROUTES } from '@utils';
 
@@ -114,7 +114,7 @@ const sectionSerializer = function (type, element, content, children, key) {
   }
 };
 
-const Hero = ({ data }) => {
+const HeroSection = ({ data }) => {
   const heroArray = data.hero[0];
 
   return (
@@ -147,8 +147,28 @@ const Hero = ({ data }) => {
   );
 };
 
-export default Hero;
+export default ({ data }) => {
+  const data = graphql`
+    {
+      prismic {
+        allHomepages {
+          edges {
+            node {
+              hero {
+                image
+                label
+                title
+                description
+              }
+            }
+          }
+        }
+      }
+    }
+  `;
 
-Hero.propTypes = {
-  data: PropTypes.array.isRequired,
+  const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
+  if (!doc) return null;
+
+  return <HeroSection data={doc.node} />;
 };
