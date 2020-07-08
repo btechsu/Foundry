@@ -1,6 +1,7 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { RichText, Elements } from 'prismic-reactjs';
+import Title from '@components/Title';
 import Hero from '@components/hero';
 
 // styles
@@ -87,6 +88,7 @@ export default ({ data }) => {
 
   return (
     <>
+      <Title>Privacy</Title>
       <Hero
         title="Privacy Policy"
         subtitle={`Last updated: ` + split[1] + '/' + split[2] + '/' + split[0]}
