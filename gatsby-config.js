@@ -1,4 +1,3 @@
-const path = require('path');
 const config = require('./src/utils/config');
 require('dotenv').config({
   path: `.env.${process.env.NODE_ENV}`,

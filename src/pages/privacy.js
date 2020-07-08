@@ -78,12 +78,12 @@ const sectionSerializer = function (type, element, content, children, key) {
 };
 
 export default ({ data }) => {
+  if (!doc) return null;
+
   const doc = data.prismic.allPrivacys.edges.slice(0, 1).pop();
   const policyText = doc.node.policy[0].text;
   const bannerArray = doc.node.banner[0];
   const split = bannerArray.date.split('-');
-
-  if (!doc) return null;
 
   return (
     <>
