@@ -128,9 +128,9 @@ const sectionSerializer = function (type, element, content, children, key) {
 };
 
 export default ({ data }) => {
+  const doc = data.prismic.allAboutpages.edges.slice(0, 1).pop();
   if (!doc) return null;
 
-  const doc = data.prismic.allAboutpages.edges.slice(0, 1).pop();
   const bannerArray = doc.node.banner[0];
   const aboutArray = doc.node.hero[0];
   const infoArray = doc.node.info;
