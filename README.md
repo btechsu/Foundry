@@ -10,10 +10,10 @@
   Brooklyn Tech's premier student platform., built with <a href="https://www.gatsbyjs.org" target="_blank">Gatsby</a> and hosted with <a href="https://www.netlify.com" target="_blank">Netlify</a>.
 </p>
 <p align="center">
-  <a href="https://api.netlify.com/api/v1/badges/d3c57aab-00f3-458c-a531-2a3b8caf2936/deploy-status" target="_blank">
+  <a href="https://app.netlify.com/sites/foundry-dev/deploys" target="_blank">
     <img src="https://api.netlify.com/api/v1/badges/18439ca7-a095-40f4-b3d3-b943fb1bc67b/deploy-status" alt="Netlify status" />
-    <a href="https://deepscan.io/dashboard#view=project&tid=9434&pid=12754&bid=201901"><img src="https://deepscan.io/api/teams/9434/projects/12754/branches/201901/badge/grade.svg" alt="DeepScan grade"></a>
   </a>
+  <a href="https://deepscan.io/dashboard#view=project&tid=9434&pid=12754&bid=201901"><img src="https://deepscan.io/api/teams/9434/projects/12754/branches/201901/badge/grade.svg" alt="DeepScan grade"></a>
 </p>
 
 ![hero](https://i.imgur.com/5nWpWEk.png)
