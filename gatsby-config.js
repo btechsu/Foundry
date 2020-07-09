@@ -11,7 +11,6 @@ module.exports = {
     siteUrl: config.siteUrl,
   },
   plugins: [
-    `gatsby-plugin-offline`,
     `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
