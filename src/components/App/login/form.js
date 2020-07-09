@@ -69,7 +69,6 @@ const LoginForm = () => {
             initialValues={{
               email: undefined,
               password: undefined,
-              recaptcha: undefined,
             }}
             validationSchema={FormSchema}
             onSubmit={(values, { setSubmitting, setStatus }) => {
@@ -95,7 +94,10 @@ const LoginForm = () => {
                         'Invalid username or password. Please check your credentials.'
                       );
                     } else {
-                      setStatus(err.message || 'Something went wrong...');
+                      setStatus(
+                        err.message ||
+                          'An unknown error occured. Try refreshing the page.'
+                      );
                     }
                     setSubmitting(false);
                     NProgress.done(true);
@@ -111,7 +113,7 @@ const LoginForm = () => {
               }
             }}
           >
-            {({ isSubmitting, dirty, submitCount, setFieldValue, status }) => (
+            {({ isSubmitting, dirty, submitCount, status }) => (
               <Form>
                 <FormGroup>
                   {/* eslint-disable-next-line jsx-a11y/label-has-for */}
@@ -147,8 +149,6 @@ const LoginForm = () => {
                     name="recatchpa"
                     size="invisible"
                     sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
-                    onExpired={() => setFieldValue('recaptcha', undefined)}
-                    onChange={(value) => setFieldValue('recaptcha', value)}
                   />
                   {!!status && <FormError>{status}</FormError>}
                   <FormButton

@@ -5,7 +5,7 @@ import { Router } from '@reach/router';
 
 // components
 import ErrorPage from './404';
-import { Login, Signup, ResetPassword } from '@app';
+import { Login, Signup, ResetPassword, PasswordSent } from '@app';
 
 const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
@@ -16,6 +16,7 @@ const App = ({ data }) => {
       <Login path="/login" />
       <Signup data={signupDoc.node} path="/signup" />
       <ResetPassword path="/secret/new" />
+      <PasswordSent path="/secret/sent" />
     </Router>
   );
 };

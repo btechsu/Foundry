@@ -95,7 +95,10 @@ const SignupForm = ({ tos }) => {
                     NProgress.done(true);
                   })
                   .catch((err) => {
-                    setStatus(err.message || undefined);
+                    setStatus(
+                      err.message ||
+                        'An unknown error occured. Try refreshing the page.'
+                    );
                     setSubmitting(false);
                     NProgress.done(true);
                   });
