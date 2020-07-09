@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'gatsby';
-import { ROUTES, config } from '@utils';
+import { ROUTES, config, isloggedin } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -112,9 +112,11 @@ const Menu = ({ menuOpen, toggleMenu }) => {
                   <NavLink to={url}>{name}</NavLink>
                 </NavListItem>
               ))}
-            <NavListItem>
-              <StyledButton to={ROUTES.SIGNUP}>Sign up</StyledButton>
-            </NavListItem>
+            {!isloggedin() && (
+              <NavListItem>
+                <StyledButton to={ROUTES.SIGNUP}>Sign up</StyledButton>
+              </NavListItem>
+            )}
           </NavList>
         </NavLinks>
       </Sidebar>

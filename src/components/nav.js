@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'gatsby';
-import { throttle, ROUTES, config } from '@utils';
+import { throttle, ROUTES, config, isloggedin } from '@utils';
 import Menu from './menu';
 
 // styles
@@ -158,6 +158,16 @@ const StyledLink = styled(Link)`
     color: var(--color-tertiary);
   }
 `;
+const LogOutButton = styled.button`
+  text-decoration: none;
+  font-family: var(--font-family-mono);
+  color: var(--color-text);
+  font-size: ${fontSizes.md};
+
+  :hover {
+    color: var(--color-tertiary);
+  }
+`;
 
 class Nav extends Component {
   state = { menuOpen: false };
@@ -209,12 +219,21 @@ class Nav extends Component {
                 </ListWrapper>
               </SectionLeft>
               <SectionRight>
-                <ListItem>
-                  <StyledLink to={ROUTES.LOGIN}>Log in</StyledLink>
-                </ListItem>
-                <MobileHideWrapper>
-                  <StyledButton to={ROUTES.SIGNUP}>Sign up</StyledButton>
-                </MobileHideWrapper>
+                {!isloggedin() && (
+                  <>
+                    <ListItem>
+                      <StyledLink to={ROUTES.LOGIN}>Log in</StyledLink>
+                    </ListItem>
+                    <MobileHideWrapper>
+                      <StyledButton to={ROUTES.SIGNUP}>Sign up</StyledButton>
+                    </MobileHideWrapper>
+                  </>
+                )}
+                {isloggedin() && (
+                  <ListItem>
+                    <LogOutButton>Log out</LogOutButton>
+                  </ListItem>
+                )}
                 <StyledHamburger onClick={this.toggleMenu}>
                   <StyledHamburgerBox>
                     <StyledHamburgerInner menuOpen={menuOpen} />
