@@ -17,6 +17,7 @@
     "gatsby-plugin-google-fonts": "^1.0.1",
     "gatsby-plugin-manifest": "^2.4.14",
     "gatsby-plugin-nprogress": "^2.3.10",
+    "gatsby-plugin-offline": "^3.2.17",
     "gatsby-plugin-react-helmet": "^3.3.6",
     "gatsby-plugin-remove-trailing-slashes": "^2.3.10",
     "gatsby-plugin-robots-txt": "^1.5.1",
