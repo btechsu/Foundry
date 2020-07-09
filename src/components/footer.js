@@ -96,5 +96,5 @@ const Footer = ({ data }) => {
 export default Footer;
 
 Footer.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.any.isRequired,
 };

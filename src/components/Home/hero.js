@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql } from 'gatsby';
 import { RichText, Elements } from 'prismic-reactjs';
 import { ROUTES } from '@utils';
 

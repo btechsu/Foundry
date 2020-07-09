@@ -11,7 +11,7 @@ exports.onCreateWebpackConfig = ({ actions }) => {
         '@styles': path.resolve(__dirname, 'src/styles'),
         '@utils': path.resolve(__dirname, 'src/utils'),
         '@app': path.resolve(__dirname, 'src/components/App'),
-        '@firebase': path.resolve(__dirname, 'src/components/Firebase'),
+        '@Firebase': path.resolve(__dirname, 'src/components/Firebase'),
       },
     },
   });

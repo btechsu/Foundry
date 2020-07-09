@@ -38,6 +38,6 @@ export const query = graphql`
 `;
 
 App.propTypes = {
-  location: PropTypes.any.isRequired,
-  data: PropTypes.array.isRequired,
+  location: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };

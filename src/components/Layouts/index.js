@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
+import { FirebaseContext, useAuth } from '@Firebase';
 
 // components
 import Head from './Head';
@@ -18,6 +19,8 @@ const PageContainer = styled.div`
 `;
 
 const Layout = ({ children }) => {
+  const { user, firebase, loading } = useAuth();
+
   return (
     <StaticQuery
       query={graphql`
@@ -46,13 +49,13 @@ const Layout = ({ children }) => {
         const doc = site.prismic.allHomepages.edges.slice(0, 1).pop();
 
         return (
-          <>
+          <FirebaseContext.Provider value={{ user, firebase, loading }}>
             <Head metadata={site.site.siteMetadata} />
             <GlobalStyle />
             <Nav />
             <PageContainer>{children}</PageContainer>
             <Footer data={doc.node} />
-          </>
+          </FirebaseContext.Provider>
         );
       }}
     />

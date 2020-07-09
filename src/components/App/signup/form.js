@@ -112,5 +112,5 @@ const SignupForm = ({ tos }) => {
 export default SignupForm;
 
 SignupForm.propTypes = {
-  tos: PropTypes.string.isRequired,
+  tos: PropTypes.array.isRequired,
 };

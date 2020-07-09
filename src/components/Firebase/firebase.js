@@ -12,15 +12,17 @@ const config = {
 class Firebase {
   constructor(app) {
     if (!firebaseInstance) {
-      app.initializeApp(config);
-      // app.analytics();
+      const App = app.firebase;
 
-      this.auth = app.auth();
-      this.db = app.firestore();
-      this.functions = app.functions();
-      this.storage = app.storage();
-      // this.analytics = app.analytics();
-      // this.perf = app.performance();
+      App.initializeApp(config);
+      App.analytics();
+
+      this.auth = App.auth();
+      this.db = App.firestore();
+      this.functions = App.functions();
+      this.storage = App.storage();
+      this.analytics = App.analytics();
+      this.perf = App.performance();
     }
   }
 

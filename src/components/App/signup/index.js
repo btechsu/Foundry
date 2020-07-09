@@ -106,5 +106,5 @@ const Signup = ({ data }) => {
 export default Signup;
 
 Signup.propTypes = {
-  data: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };
