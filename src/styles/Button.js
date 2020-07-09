@@ -31,7 +31,7 @@ const ClickableButton = styled.button`
   user-select: none;
   padding: 0.375rem 1rem;
   line-height: 1.5;
-  min-width: 8rem;
+  min-width: 8rem;w
   transition: all 0.1s ease-in-out;
 `;
 

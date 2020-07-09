@@ -55,6 +55,7 @@ class ThemeToggle extends React.Component {
     return (
       <ThemeSwitchWrapper>
         <ThemeToggler>
+          {/* eslint-disable jsx-a11y/label-has-for */}
           {({ theme, toggleTheme }) => (
             <label>
               <input
@@ -68,6 +69,7 @@ class ThemeToggle extends React.Component {
             </label>
           )}
         </ThemeToggler>
+        {/* eslint-enable jsx-a11y/label-has-for */}
       </ThemeSwitchWrapper>
     );
   }

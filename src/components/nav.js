@@ -1,11 +1,15 @@
-import React, { Component } from 'react';
-import { Link } from 'gatsby';
+import React, { Component, useContext } from 'react';
+import { Link, navigate } from 'gatsby';
 import { throttle, ROUTES, config, isloggedin } from '@utils';
 import Menu from './menu';
 
 // styles
 import styled from 'styled-components';
 import { Container, theme, media, mixins, ThemeToggle, Button } from '@styles';
+
+// logic
+import { FirebaseContext } from '@Firebase';
+
 const { fontSizes } = theme;
 
 const StyledContainer = styled.header`
@@ -159,6 +163,8 @@ const StyledLink = styled(Link)`
   }
 `;
 const LogOutButton = styled.button`
+  ${mixins.resetButton};
+  cursor: pointer;
   text-decoration: none;
   font-family: var(--font-family-mono);
   color: var(--color-text);
@@ -168,6 +174,20 @@ const LogOutButton = styled.button`
     color: var(--color-tertiary);
   }
 `;
+
+const Logout = (props) => {
+  const { firebase } = useContext(FirebaseContext);
+
+  function handleLogoutClick() {
+    firebase.doSignOut().then(() => navigate('/login'));
+  }
+
+  return (
+    <LogOutButton {...props} onClick={handleLogoutClick}>
+      Log out
+    </LogOutButton>
+  );
+};
 
 class Nav extends Component {
   state = { menuOpen: false };
@@ -231,7 +251,7 @@ class Nav extends Component {
                 )}
                 {isloggedin() && (
                   <ListItem>
-                    <LogOutButton>Log out</LogOutButton>
+                    <Logout />
                   </ListItem>
                 )}
                 <StyledHamburger onClick={this.toggleMenu}>

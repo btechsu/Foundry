@@ -72,6 +72,7 @@ export default () => (
               {({ isSubmitting, dirty }) => (
                 <Form>
                   <FormGroup>
+                    {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                     <label htmlFor="email">Email</label>
                     <Field
                       type="email"

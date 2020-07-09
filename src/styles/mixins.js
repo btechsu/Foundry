@@ -11,7 +11,6 @@ const mixins = {
     font-family: var(--font-family-mono);
     user-select: none;
     border: 1px solid transparent;
-    cursor: pointer;
     transition: box-shadow 0.3s ease;
 
     :hover {
@@ -24,7 +23,6 @@ const mixins = {
     font-family: var(--font-family-mono);
     user-select: none;
     border: 1px solid var(--color-gray-700);
-    cursor: pointer;
     transition: opacity 0.3s ease;
 
     :hover {
@@ -46,7 +44,6 @@ const mixins = {
     text-decoration: none;
     text-decoration-skip-ink: auto;
     position: relative;
-    cursor: pointer;
     color: var(--color-primary);
 
     :hover,
@@ -61,6 +58,25 @@ const mixins = {
     color: var(--color-text);
     font-size: ${fontSizes.md};
     font-family: var(--font-family-mono);
+  `,
+  resetButton: css`
+    border: none;
+    margin: 0;
+    padding: 0;
+    width: auto;
+    overflow: visible;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    line-height: normal;
+    -webkit-font-smoothing: inherit;
+    -moz-osx-font-smoothing: inherit;
+    -webkit-appearance: none;
+
+    &::-moz-focus-inner {
+      border: 0;
+      padding: 0;
+    }
   `,
 };
 

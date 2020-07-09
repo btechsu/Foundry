@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useContext, createRef } from 'react';
 import PropTypes from 'prop-types';
-import serializeHyperlink from '@components/serializeHyperlink';
-import { RichText } from 'prismic-reactjs';
+import { navigate } from 'gatsby';
+import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
 import { FormGroup, ClickableButton, mixins } from '@styles';
+import serializeHyperlink from '@components/serializeHyperlink';
+import { RichText } from 'prismic-reactjs';
+import NProgress from 'nprogress';
 
 // form logic
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { FirebaseContext } from '@Firebase';
 
 const SignUpFormContainer = styled.div`
   padding-top: 0;
@@ -35,13 +40,18 @@ const FormButton = styled(ClickableButton)`
     cursor: default;
   }
 `;
+const FormError = styled.span`
+  color: var(--color-error);
+  display: inline-block;
+  margin-bottom: 1rem;
+`;
 
 const FormSchema = Yup.object().shape({
   email: Yup.string()
     .required('Email field is required')
     .email('Please enter a valid email address')
     .matches(
-      '^[A-Za-z0-9._%+-]+@bths.edu$',
+      /^[A-Za-z0-9._%+-]+@bths.edu$/,
       'Please use your Brooklyn Tech email'
     ),
   password: Yup.string()
@@ -54,6 +64,10 @@ const FormSchema = Yup.object().shape({
 });
 
 const SignupForm = ({ tos }) => {
+  const { firebase } = useContext(FirebaseContext) || {};
+  const recaptchaRef = createRef();
+  if (!firebase) return null;
+
   return (
     <SignUpFormContainer>
       <FormContainer>
@@ -64,13 +78,42 @@ const SignupForm = ({ tos }) => {
               password: undefined,
             }}
             validationSchema={FormSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values));
+            onSubmit={(values, { setSubmitting, setStatus }) => {
+              recaptchaRef.current.execute();
+              function signup() {
+                setSubmitting(true);
+                NProgress.start();
+
+                firebase
+                  .doCreateUserWithEmailAndPassword({
+                    email: values.email,
+                    password: values.password,
+                  })
+                  .then(() => {
+                    navigate(ROUTES.DASHBOARD);
+                    setSubmitting(false);
+                    NProgress.done(true);
+                  })
+                  .catch((err) => {
+                    setStatus(err.message || undefined);
+                    setSubmitting(false);
+                    NProgress.done(true);
+                  });
+              }
+
+              if (recaptchaRef.current.getValue() === undefined) {
+                recaptchaRef.current.executeAsync().then(() => {
+                  return signup();
+                });
+              } else {
+                return signup();
+              }
             }}
           >
-            {({ isSubmitting, dirty }) => (
+            {({ isSubmitting, dirty, submitCount, status }) => (
               <Form>
                 <FormGroup>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                   <label htmlFor="email">Email</label>
                   <Field
                     type="email"
@@ -82,6 +125,7 @@ const SignupForm = ({ tos }) => {
                   <ErrorMessage component="span" name="email" />
                 </FormGroup>
                 <FormGroup>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                   <label htmlFor="password">Password</label>
                   <Field
                     type="password"
@@ -92,7 +136,17 @@ const SignupForm = ({ tos }) => {
                   <ErrorMessage component="span" name="password" />
                 </FormGroup>
                 <div>
-                  <FormButton disabled={!dirty || isSubmitting} type="submit">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    name="recatchpa"
+                    size="invisible"
+                    sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
+                  />
+                  {!!status && <FormError>{status}</FormError>}
+                  <FormButton
+                    disabled={!dirty || isSubmitting || submitCount >= 5}
+                    type="submit"
+                  >
                     Sign up
                   </FormButton>
                   <RichText

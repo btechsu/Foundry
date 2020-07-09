@@ -1,14 +1,17 @@
-import React from 'react';
-import { Link } from 'gatsby';
+import React, { useContext, createRef } from 'react';
+import { Link, navigate } from 'gatsby';
 import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
 import { FormGroup, ClickableButton, mixins } from '@styles';
+import NProgress from 'nprogress';
 
 // form logic
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import ReCAPTCHA from 'react-google-recaptcha';
+import { FirebaseContext } from '@Firebase';
 
 const LoginFormContainer = styled.div`
   padding-top: 0;
@@ -16,6 +19,7 @@ const LoginFormContainer = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 `;
 const FormContainer = styled.div`
   max-width: 96vw;
@@ -41,6 +45,11 @@ const ForgotContainer = styled.div`
   position: relative;
   width: 100%;
 `;
+const FormError = styled.span`
+  color: var(--color-error);
+  display: inline-block;
+  margin-top: 1rem;
+`;
 
 const FormSchema = Yup.object().shape({
   email: Yup.string().required('Email field is required'),
@@ -48,6 +57,10 @@ const FormSchema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const { firebase } = useContext(FirebaseContext) || {};
+  const recaptchaRef = createRef();
+  if (!firebase) return null;
+
   return (
     <LoginFormContainer>
       <FormContainer>
@@ -56,15 +69,52 @@ const LoginForm = () => {
             initialValues={{
               email: undefined,
               password: undefined,
+              recaptcha: undefined,
             }}
             validationSchema={FormSchema}
-            onSubmit={(values, { setSubmitting }) => {
-              alert(JSON.stringify(values));
+            onSubmit={(values, { setSubmitting, setStatus }) => {
+              function login() {
+                setSubmitting(true);
+                NProgress.start();
+                firebase
+                  .doSignInWithEmailAndPassword({
+                    email: values.email,
+                    password: values.password,
+                  })
+                  .then(() => {
+                    navigate(ROUTES.DASHBOARD);
+                    setSubmitting(false);
+                    NProgress.done(true);
+                  })
+                  .catch((err) => {
+                    if (
+                      err.code === 'auth/user-not-found' ||
+                      err.code === 'auth/wrong-password'
+                    ) {
+                      setStatus(
+                        'Invalid username or password. Please check your credentials.'
+                      );
+                    } else {
+                      setStatus(err.message || 'Something went wrong...');
+                    }
+                    setSubmitting(false);
+                    NProgress.done(true);
+                  });
+              }
+
+              if (recaptchaRef.current.getValue() === undefined) {
+                recaptchaRef.current.executeAsync().then(() => {
+                  return login();
+                });
+              } else {
+                return login();
+              }
             }}
           >
-            {({ isSubmitting, dirty }) => (
+            {({ isSubmitting, dirty, submitCount, setFieldValue, status }) => (
               <Form>
                 <FormGroup>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                   <label htmlFor="email">Email</label>
                   <Field
                     type="email"
@@ -76,6 +126,7 @@ const LoginForm = () => {
                   <ErrorMessage component="span" name="email" />
                 </FormGroup>
                 <FormGroup>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                   <label htmlFor="password">Password</label>
                   <Field
                     type="password"
@@ -91,7 +142,19 @@ const LoginForm = () => {
                       I forgot my password
                     </StyledLink>
                   </ForgotContainer>
-                  <FormButton disabled={!dirty || isSubmitting} type="submit">
+                  <ReCAPTCHA
+                    ref={recaptchaRef}
+                    name="recatchpa"
+                    size="invisible"
+                    sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
+                    onExpired={() => setFieldValue('recaptcha', undefined)}
+                    onChange={(value) => setFieldValue('recaptcha', value)}
+                  />
+                  {!!status && <FormError>{status}</FormError>}
+                  <FormButton
+                    disabled={!dirty || isSubmitting || submitCount >= 5}
+                    type="submit"
+                  >
                     Login
                   </FormButton>
                 </div>

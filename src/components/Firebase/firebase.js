@@ -26,10 +26,14 @@ class Firebase {
     }
   }
 
-  doSignInWithEmailAndPassword = (email, password) =>
+  doSignOut = () => this.auth.signOut();
+  doSignInWithEmailAndPassword = ({ email, password }) =>
     this.auth.signInWithEmailAndPassword(email, password);
   doSendVerificationEmail = () => this.auth.currentUser.sendEmailVerification();
-  doSendPasswordResetEmail = (email) => this.auth.sendPasswordResetEmail(email);
+  doSendPasswordResetEmail = ({ email }) =>
+    this.auth.sendPasswordResetEmail(email);
+  doCreateUserWithEmailAndPassword = ({ email, password }) =>
+    this.auth.createUserWithEmailAndPassword(email, password);
 }
 
 let firebaseInstance;

@@ -6,7 +6,7 @@ import { Router } from '@reach/router';
 import ErrorPage from './404';
 import { Login, Signup, ResetPassword } from '@app';
 
-const App = ({ location, data }) => {
+const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
 
   return (
@@ -38,6 +38,5 @@ export const query = graphql`
 `;
 
 App.propTypes = {
-  location: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
 };
