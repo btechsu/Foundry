@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Title from '@components/Title';
 import { RichText, Elements } from 'prismic-reactjs';
 import SignupForm from './form';
 
@@ -81,25 +80,19 @@ const sectionSerializer = function (type, element, content, children, key) {
 
 const Signup = ({ data }) => {
   return (
-    <>
-      <Title>Sign up</Title>
-      <MainContainer>
-        <ResponsiveWrapper>
-          <LeftCol>
-            <img src={data.image.url} alt={data.image.alt} />
-          </LeftCol>
-          <RightCol>
-            <FormWrapper>
-              <RichText
-                render={data.title}
-                htmlSerializer={sectionSerializer}
-              />
-              <SignupForm tos={data.label} />
-            </FormWrapper>
-          </RightCol>
-        </ResponsiveWrapper>
-      </MainContainer>
-    </>
+    <MainContainer>
+      <ResponsiveWrapper>
+        <LeftCol>
+          <img src={data.image.url} alt={data.image.alt} />
+        </LeftCol>
+        <RightCol>
+          <FormWrapper>
+            <RichText render={data.title} htmlSerializer={sectionSerializer} />
+            <SignupForm tos={data.label} />
+          </FormWrapper>
+        </RightCol>
+      </ResponsiveWrapper>
+    </MainContainer>
   );
 };
 

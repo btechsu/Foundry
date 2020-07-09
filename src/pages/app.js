@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { Router } from '@reach/router';
+import UnprivateRoute from '@components/UnprivateRoute';
 
 // components
 import ErrorPage from './404';
@@ -13,10 +14,23 @@ const App = ({ data }) => {
   return (
     <Router basepath="/app" component={React.Fragment}>
       <ErrorPage default />
-      <Login path="/login" />
-      <Signup data={signupDoc.node} path="/signup" />
-      <ResetPassword path="/secret/new" />
-      <PasswordSent path="/secret/sent" />
+      <UnprivateRoute path="/login" component={Login} title="Login" />
+      <UnprivateRoute
+        path="/signup"
+        component={Signup}
+        title="Signup"
+        data={signupDoc.node}
+      />
+      <UnprivateRoute
+        path="/secret/new"
+        component={ResetPassword}
+        title="Reset your password"
+      />
+      <UnprivateRoute
+        path="/secret/sent"
+        component={PasswordSent}
+        title="Password reset sent"
+      />
     </Router>
   );
 };

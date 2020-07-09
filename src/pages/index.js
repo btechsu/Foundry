@@ -1,5 +1,6 @@
 import React from 'react';
-import { graphql } from 'gatsby';
+import { graphql, navigate } from 'gatsby';
+import { ROUTES, isloggedin } from '@utils';
 
 // components
 import { Hero } from '@components/Home';
@@ -11,6 +12,10 @@ const RenderBody = ({ data }) => {
 export default ({ data }) => {
   const doc = data.prismic.allHomepages.edges.slice(0, 1).pop();
   if (!doc) return null;
+  if (isloggedin()) {
+    navigate(ROUTES.DASHBOARD);
+    return null;
+  }
 
   return <RenderBody data={doc.node} />;
 };

@@ -27,8 +27,6 @@ export const isloggedin = () => {
       return false;
     }
   }
-
-  return false;
 };
 
 export { config, ROUTES, linkResolver };

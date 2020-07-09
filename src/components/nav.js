@@ -227,7 +227,9 @@ class Nav extends Component {
             <StyledNav>
               <SectionLeft>
                 <LogoWrapper>
-                  <Link to={ROUTES.LANDING}>Foundry</Link>
+                  <Link to={isloggedin() ? ROUTES.DASHBOARD : ROUTES.LANDING}>
+                    Foundry
+                  </Link>
                 </LogoWrapper>
                 <ListWrapper>
                   {config.navLinks &&
