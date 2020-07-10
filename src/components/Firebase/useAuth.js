@@ -20,10 +20,6 @@ function useAuth() {
             localStorage.setItem('authUser', JSON.stringify(userResult));
           }
 
-          //   firebaseInstance.getUsernameByUID(userResult.uid).then((doc) => {
-          //     return firebaseInstance.checkValidConnection(doc.data().username);
-          //   });
-
           userUnsubscribe = firebaseInstance.getUserProfile({
             userID: userResult.uid,
             onSnapshot: (r) => {

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { Router } from '@reach/router';
 import UnprivateRoute from '@components/UnprivateRoute';
+import PrivateRoute from '@components/PrivateRoute';
 
 // components
 import ErrorPage from './404';
-import { Login, Signup, ResetPassword, PasswordSent } from '@app';
+import { Login, Signup, ResetPassword, PasswordSent, Dashboard } from '@app';
 
 const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
@@ -31,6 +32,7 @@ const App = ({ data }) => {
         component={PasswordSent}
         title="Password reset sent"
       />
+      <PrivateRoute path="/dashboard" component={Dashboard} title="Dashboard" />
     </Router>
   );
 };

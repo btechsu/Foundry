@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import Title from '@components/Title';
 import { ROUTES } from '@utils';
 import LoginForm from './form';
 
@@ -32,20 +31,17 @@ const StyledLink = styled(Link)`
 
 const Login = ({ data }) => {
   return (
-    <>
-      <Title>Login</Title>
-      <MainContainer>
-        <Container normal>
-          <StyledHeader>Log in to the Foundry</StyledHeader>
-          <LoginForm />
-          <LinkContainer>
-            <StyledLink to={ROUTES.SIGNUP}>
-              Not a member yet? <b>Sign up now</b>
-            </StyledLink>
-          </LinkContainer>
-        </Container>
-      </MainContainer>
-    </>
+    <MainContainer>
+      <Container normal>
+        <StyledHeader>Log in to the Foundry</StyledHeader>
+        <LoginForm />
+        <LinkContainer>
+          <StyledLink to={ROUTES.SIGNUP}>
+            Not a member yet? <b>Sign up now</b>
+          </StyledLink>
+        </LinkContainer>
+      </Container>
+    </MainContainer>
   );
 };
 

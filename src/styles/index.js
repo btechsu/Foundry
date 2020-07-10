@@ -7,3 +7,4 @@ export { Button, ClickableButton } from './Button';
 export { default as mixins } from './mixins';
 export { default as ThemeToggle } from './themetoggle';
 export { FormGroup, LinkContainer } from './Form';
+export { default as Card } from './card';

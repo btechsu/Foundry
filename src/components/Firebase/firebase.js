@@ -34,6 +34,9 @@ class Firebase {
     this.auth.sendPasswordResetEmail(email);
   doCreateUserWithEmailAndPassword = ({ email, password }) =>
     this.auth.createUserWithEmailAndPassword(email, password);
+
+  getUserProfile = ({ userID, onSnapshot }) =>
+    this.db.collection('users').doc(userID).onSnapshot(onSnapshot);
 }
 
 let firebaseInstance;

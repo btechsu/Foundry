@@ -49,7 +49,6 @@ const mixins = {
     :hover,
     :focus,
     :active {
-      color: var(--color-primary);
       outline: 0;
       text-decoration: underline;
     }

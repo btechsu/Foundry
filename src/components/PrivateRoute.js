@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { navigate } from 'gatsby';
-import { ROUTES, isloggedin } from '@utils/routes';
+import { ROUTES, isloggedin } from '@utils';
 import Title from './Title';
 
 const PrivateRoute = ({ component: Component, location, title, ...rest }) => {
   if (typeof window !== 'undefined') {
-    if (!isloggedin() && location.pathname !== ROUTES.LOGIN) {
+    if (!isloggedin()) {
       navigate(ROUTES.LOGIN);
       return null;
     }
