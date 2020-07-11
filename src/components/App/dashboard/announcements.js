@@ -231,7 +231,7 @@ const AnnouncementsCard = () => {
               </ButtonWrapper>
               <DropDown open={isOpen} toggleMenu={toggleMenu} title="Sort by">
                 <Formik initialValues={{ radioGroup: 'all' }}>
-                  {({}) => (
+                  {() => (
                     <Form>
                       <ChoicesWrapper>
                         <div>
@@ -241,6 +241,7 @@ const AnnouncementsCard = () => {
                             value="all"
                             id="inlineRadio1"
                           />{' '}
+                          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                           <label htmlFor="inlineRadio1">All</label>
                         </div>
                         <div>
@@ -250,6 +251,7 @@ const AnnouncementsCard = () => {
                             value="clubs"
                             id="inlineRadio2"
                           />{' '}
+                          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                           <label htmlFor="inlineRadio2">Only my clubs</label>
                         </div>
                         <div>
@@ -259,6 +261,7 @@ const AnnouncementsCard = () => {
                             value="grade"
                             id="inlineRadio3"
                           />{' '}
+                          {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                           <label htmlFor="inlineRadio3">Only my grade</label>
                         </div>
                       </ChoicesWrapper>

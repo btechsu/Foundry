@@ -139,7 +139,7 @@ const EmailCard = () => {
             initialValues={{ roles: ['grade', 'clubs', 'updates', 'news'] }}
             onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
           >
-            {({}) => (
+            {() => (
               <Form>
                 <div>
                   <Checkbox

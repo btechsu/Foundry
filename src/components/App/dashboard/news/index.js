@@ -1,10 +1,10 @@
 import React from 'react';
 import Img from 'gatsby-image';
-import { useStaticQuery, Link } from 'gatsby';
+import { useStaticQuery, graphql, Link } from 'gatsby';
 
 // styles
 import styled from 'styled-components';
-import { ClickableCard, mixins, theme, media } from '@styles';
+import { ClickableCard, mixins, theme } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 const { fontSizes } = theme;

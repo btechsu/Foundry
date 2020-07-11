@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { getuser } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -36,6 +37,7 @@ const SubTitle = styled.h3`
 `;
 
 const Hero = () => {
+  const currentUser = getuser();
   const { user } = useContext(FirebaseContext) || {};
 
   return (
@@ -43,8 +45,8 @@ const Hero = () => {
       <Container normal>
         <ContentWrapper>
           <HeaderText>
-            Hello <ColoredSpan>{!user ? 'Loading...' : user.email}</ColoredSpan>
-            ,
+            Hello{' '}
+            <ColoredSpan>{currentUser ? currentUser.email : ''}</ColoredSpan>,
           </HeaderText>
           <SubTitle>Here's your daily briefing</SubTitle>
         </ContentWrapper>

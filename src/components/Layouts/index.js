@@ -7,6 +7,7 @@ import { FirebaseContext, useAuth } from '@Firebase';
 import Head from './Head';
 import Nav from '@components/nav';
 import Footer from '@components/footer';
+import Banner from './banner';
 
 // styles
 import styled from 'styled-components';
@@ -52,6 +53,7 @@ const Layout = ({ children }) => {
           <FirebaseContext.Provider value={{ user, firebase, loading }}>
             <Head metadata={site.site.siteMetadata} />
             <GlobalStyle />
+            <Banner />
             <Nav />
             <PageContainer>{children}</PageContainer>
             <Footer data={doc.node} />

@@ -183,7 +183,7 @@ const Logout = (props) => {
   const { firebase } = useContext(FirebaseContext);
 
   function handleLogoutClick() {
-    firebase.doSignOut().then(() => navigate('/login'));
+    firebase.doSignOut().then(() => navigate(ROUTES.LOGIN));
   }
 
   return (

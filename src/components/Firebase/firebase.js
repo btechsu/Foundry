@@ -40,6 +40,7 @@ class Firebase {
   getUserProfile = ({ userID, onSnapshot }) =>
     this.db.collection('users').doc(userID).onSnapshot(onSnapshot);
   getCurrentCredential = ({ email, password }) => this.cred(email, password);
+  doSendVerificationEmail = () => this.auth.currentUser.sendEmailVerification();
 }
 
 let firebaseInstance;

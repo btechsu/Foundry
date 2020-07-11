@@ -29,4 +29,15 @@ export const isloggedin = () => {
   }
 };
 
+export const getuser = () => {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('authUser')) {
+      let authUser = JSON.parse(localStorage.getItem('authUser'));
+      return authUser;
+    }
+  }
+
+  return null;
+};
+
 export { config, ROUTES, linkResolver };
