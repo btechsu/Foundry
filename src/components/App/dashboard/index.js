@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 // styles
 import styled from 'styled-components';
@@ -11,6 +12,8 @@ import PollCard from './poll';
 import EmailCard from './email';
 import ClubCard from './clubs';
 import PasswordCard from './password';
+import NewsSection from './news';
+import SocialSection from './social';
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -35,7 +38,9 @@ const CardGridWrapper = styled.div`
   }
 `;
 
-const Dashboard = () => {
+const Dashboard = ({ data }) => {
+  if (!data) return null;
+
   return (
     <PageWrapper>
       <Hero />
@@ -47,6 +52,8 @@ const Dashboard = () => {
             <PollCard />
             <EmailCard />
             <PasswordCard />
+            <NewsSection />
+            <SocialSection data={data} />
           </CardGridWrapper>
         </CardsContainer>
       </Container>
@@ -55,3 +62,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
+Dashboard.propTypes = {
+  data: PropTypes.node.isRequired,
+};

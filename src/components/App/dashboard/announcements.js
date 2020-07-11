@@ -131,7 +131,6 @@ const FooterButton = styled(Link)`
     width: 24;
   }
 `;
-
 const SortIconWrapper = styled.div`
   position: relative;
   display: flex;

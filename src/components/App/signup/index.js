@@ -79,6 +79,8 @@ const sectionSerializer = function (type, element, content, children, key) {
 };
 
 const Signup = ({ data }) => {
+  if (!data) return null;
+
   return (
     <MainContainer>
       <ResponsiveWrapper>

@@ -69,8 +69,9 @@ const FormButton = styled(ClickableButton)`
     cursor: default;
   }
 `;
-const FormError = styled.span`
-  color: var(--color-error);
+const FormMessage = styled.span`
+  color: ${(props) =>
+    props.type === 'success' ? 'var(--color-success)' : 'var(--color-error)'};
   display: inline-block;
   margin-bottom: 1rem;
 `;
@@ -113,7 +114,7 @@ const PasswordCard = () => {
                 newPassword: undefined,
               }}
               validationSchema={FormSchema}
-              onSubmit={(values, { setSubmitting, setStatus }) => {
+              onSubmit={(values, { setSubmitting, setStatus, resetForm }) => {
                 recaptchaRef.current.execute();
                 function changePassword() {
                   setSubmitting(true);
@@ -133,18 +134,25 @@ const PasswordCard = () => {
                     .then(() => {
                       setSubmitting(false);
                       NProgress.done(true);
-                      setStatus('Success');
+                      setStatus({
+                        type: 'success',
+                        message: 'Successfully updated your password!',
+                      });
                     })
                     .catch((err) => {
                       if (err.code === 'auth/wrong-password') {
-                        setStatus(
-                          'The current password you entered is incorrect. If you forgot your password, you can reset it on the login page.'
-                        );
+                        setStatus({
+                          type: 'error',
+                          message:
+                            'The current password you entered is incorrect. If you forgot your password, you can reset it on the login page.',
+                        });
                       } else {
-                        setStatus(
-                          err.message ||
-                            'An unknown error occured. Try refreshing the page.'
-                        );
+                        setStatus({
+                          type: 'error',
+                          message:
+                            err.message ||
+                            'An unknown error occured. Try refreshing the page.',
+                        });
                       }
                       setSubmitting(false);
                       NProgress.done(true);
@@ -193,7 +201,11 @@ const PasswordCard = () => {
                       size="invisible"
                       sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
                     />
-                    {!!status && <FormError>{status}</FormError>}
+                    {!!status && (
+                      <FormMessage type={status.type}>
+                        {status.message}
+                      </FormMessage>
+                    )}
                     <FormButton
                       disabled={!dirty || isSubmitting || submitCount >= 5}
                       type="submit"

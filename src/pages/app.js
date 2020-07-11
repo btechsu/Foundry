@@ -11,6 +11,7 @@ import { Login, Signup, ResetPassword, PasswordSent, Dashboard } from '@app';
 
 const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
+  const dashboardDoc = data.prismic.allDashboards.edges.slice(0, 1).pop();
 
   return (
     <Router basepath="/app" component={React.Fragment}>
@@ -32,7 +33,12 @@ const App = ({ data }) => {
         component={PasswordSent}
         title="Password reset sent"
       />
-      <PrivateRoute path="/dashboard" component={Dashboard} title="Dashboard" />
+      <PrivateRoute
+        path="/dashboard"
+        component={Dashboard}
+        title="Dashboard"
+        data={dashboardDoc.node}
+      />
     </Router>
   );
 };
@@ -48,6 +54,23 @@ export const query = graphql`
             image
             title
             label
+          }
+        }
+      }
+      allDashboards {
+        edges {
+          node {
+            social {
+              icon
+              title
+              text
+              link {
+                ... on PRISMIC__ExternalLink {
+                  _linkType
+                  url
+                }
+              }
+            }
           }
         }
       }
