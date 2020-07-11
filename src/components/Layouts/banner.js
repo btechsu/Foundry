@@ -3,7 +3,7 @@ import { getuser } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { theme, media, mixins, Container } from '@styles';
+import { theme, media, Container } from '@styles';
 
 // logic
 import { FirebaseContext } from '@Firebase';
