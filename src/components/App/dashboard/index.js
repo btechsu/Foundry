@@ -7,6 +7,10 @@ import { Container, media } from '@styles';
 // components
 import Hero from './hero';
 import AnnouncementsCard from './announcements';
+import PollCard from './poll';
+import EmailCard from './email';
+import ClubCard from './clubs';
+import PasswordCard from './password';
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -39,6 +43,10 @@ const Dashboard = () => {
         <CardsContainer>
           <CardGridWrapper>
             <AnnouncementsCard />
+            <ClubCard />
+            <PollCard />
+            <EmailCard />
+            <PasswordCard />
           </CardGridWrapper>
         </CardsContainer>
       </Container>

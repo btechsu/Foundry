@@ -30,7 +30,7 @@ const HeaderText = styled.h1`
   ${media.thone`font-size: 9vw;`};
 `;
 const SubTitle = styled.h3`
-  color: var(--color-text);
+  color: var(--color-gray-700);
   font-size: ${fontSizes.xl};
   ${media.thone`font-size: 5vw;`};
 `;
@@ -43,7 +43,8 @@ const Hero = () => {
       <Container normal>
         <ContentWrapper>
           <HeaderText>
-            Hello <ColoredSpan>{!user ? 'Loading...' : user.email}</ColoredSpan>,
+            Hello <ColoredSpan>{!user ? 'Loading...' : user.email}</ColoredSpan>
+            ,
           </HeaderText>
           <SubTitle>Here's your daily briefing</SubTitle>
         </ContentWrapper>

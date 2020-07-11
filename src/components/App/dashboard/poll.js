@@ -6,13 +6,13 @@ import { ROUTES } from '@utils';
 import styled from 'styled-components';
 import { Card, theme, media, mixins } from '@styles';
 import { FormattedIcon } from '@components/icons';
-import ShareIcon from '@images/other/share.svg';
+import PollIcon from '@images/other/poll.svg';
 
 const { fontSizes } = theme;
 
 const GridWrapper = styled.div`
   display: grid;
-  grid-column-end: span 5;
+  grid-column-end: span 4;
   z-index: 1;
 
   ${media.desktop`grid-column-end: span 6;`};
@@ -82,7 +82,7 @@ const FooterButton = styled(Link)`
   }
 `;
 
-const ClubCard = () => {
+const PollCard = () => {
   return (
     <GridWrapper>
       <StyledCard>
@@ -90,22 +90,22 @@ const ClubCard = () => {
           <HeaderItems>
             <HeaderText>
               <span role="img" aria-label="">
-                📌
+                📈
               </span>{' '}
-              My clubs
+              Latest poll
             </HeaderText>
           </HeaderItems>
         </HeaderWrapper>
         <BodyWrapper>
-          <img src={ShareIcon} alt="Polls" className="invertIcon" />
+          <img src={PollIcon} alt="Polls" className="invertIcon" />
           <BodyTitle>Nothing to see yet.</BodyTitle>
           <BodyText>
-            Clubs you're in, have joined, or have applied for will show up here.
+            When you vote, the stats of your most recent poll will show up here.
           </BodyText>
         </BodyWrapper>
         <FooterWrapper>
           <FooterButton to={ROUTES.VOTE}>
-            Browse clubs <FormattedIcon name="right-arrow" />
+            See all <FormattedIcon name="right-arrow" />
           </FooterButton>
         </FooterWrapper>
       </StyledCard>
@@ -113,4 +113,4 @@ const ClubCard = () => {
   );
 };
 
-export default ClubCard;
+export default PollCard;

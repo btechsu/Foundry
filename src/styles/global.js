@@ -30,6 +30,7 @@ const GlobalStyle = createGlobalStyle`
     --color-text: ${colors.lightMode.text};
     --color-background: ${colors.lightMode.background};
     --color-always-white: ${colors.lightMode.alwaysWhite};
+    --color-card: ${colors.lightMode.card};
     --color-primary: ${colors.lightMode.primary};
     --color-primary-shaded: ${colors.lightMode.primaryShade};
     --color-secondary: ${colors.lightMode.secondary};
@@ -62,6 +63,7 @@ const GlobalStyle = createGlobalStyle`
     --color-text: ${colors.darkMode.text};
     --color-background: ${colors.darkMode.background};
     --color-always-white: ${colors.darkMode.alwaysWhite};
+    --color-card: ${colors.darkMode.card};
     --color-primary: ${colors.darkMode.primary};
     --color-primary-shaded: ${colors.darkMode.primaryShade};
     --color-secondary: ${colors.darkMode.secondary};

@@ -23,6 +23,9 @@ class Firebase {
       this.storage = App.storage();
       this.analytics = App.analytics();
       this.perf = App.performance();
+
+      this.cred = (email, password) =>
+        App.auth.EmailAuthProvider.credential(email, password);
     }
   }
 
@@ -34,9 +37,9 @@ class Firebase {
     this.auth.sendPasswordResetEmail(email);
   doCreateUserWithEmailAndPassword = ({ email, password }) =>
     this.auth.createUserWithEmailAndPassword(email, password);
-
   getUserProfile = ({ userID, onSnapshot }) =>
     this.db.collection('users').doc(userID).onSnapshot(onSnapshot);
+  getCurrentCredential = ({ email, password }) => this.cred(email, password);
 }
 
 let firebaseInstance;

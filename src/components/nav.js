@@ -170,6 +170,10 @@ const LogOutButton = styled.button`
   color: var(--color-text);
   font-size: ${fontSizes.md};
 
+  :focus {
+    outline: 0;
+  }
+
   :hover {
     color: var(--color-tertiary);
   }

@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'gatsby';
 import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { Card, mixins, theme, media } from '@styles';
+import { Card, DropDown, mixins, theme, media } from '@styles';
+import { FormattedIcon } from '@components/icons';
+
+// form
+import { Formik, Form, Field } from 'formik';
 
 const { fontSizes } = theme;
 
 const GridWrapper = styled.div`
   display: grid;
-  grid-column-end: span 8;
+  grid-column-end: span 7;
+  z-index: 1;
 
   ${media.desktop`grid-column-end: span 12;`};
 `;
@@ -18,6 +23,7 @@ const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
   grid-template-areas: 'header' 'body' 'footer';
+  grid-gap: 0.5rem;
 `;
 const HeaderWrapper = styled.div`
   display: grid;
@@ -26,7 +32,7 @@ const HeaderWrapper = styled.div`
 const HeaderItems = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr auto;
 `;
 const HeaderText = styled.h3`
   color: var(--color-text);
@@ -82,12 +88,14 @@ const ListIconWrapper = styled.div`
   margin-right: 1rem;
   position: relative;
 `;
-const StyledIcon = styled.svg`
-  fill: currentColor;
-  width: 10px;
-  height: 10px;
-  color: ${(props) =>
-    props.unread ? 'var(--color-secondary)' : 'var(--color-gray-700)'};
+const StyledIcon = styled.div`
+  svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    color: ${(props) =>
+      props.unread ? 'var(--color-secondary)' : 'var(--color-gray-700)'};
+  }
 `;
 const ListHoverable = styled.a`
   display: inline-block;
@@ -124,7 +132,89 @@ const FooterButton = styled(Link)`
   }
 `;
 
+const SortIconWrapper = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+
+  svg:not(:root) {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: var(--color-text);
+  }
+
+  span {
+    font-size: 1.125rem;
+    line-height: 1.125rem;
+    vertical-align: text-bottom;
+    margin: 0;
+  }
+`;
+const ButtonWrapper = styled.button`
+  z-index: 6;
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: none;
+  user-select: none;
+  cursor: pointer;
+  :focus {
+    outline: 0;
+  }
+`;
+const ChoicesWrapper = styled.div`
+  div {
+    padding: 0.3rem 0;
+    display: flex;
+    align-items: center;
+
+    label {
+      padding: 0;
+      margin: 0;
+      cursor: pointer;
+    }
+
+    input {
+      margin-right: 0.6rem;
+      cursor: pointer;
+
+      :after {
+        width: 15px;
+        height: 15px;
+        border-radius: 15px;
+        top: -2px;
+        left: -1px;
+        position: relative;
+        background-color: var(--color-background);
+        content: '';
+        display: inline-block;
+        border: 2px solid var(--color-gray-300);
+      }
+    }
+
+    input:checked:after {
+      width: 15px;
+      height: 15px;
+      border-radius: 15px;
+      top: -2px;
+      left: -1px;
+      position: relative;
+      background-color: var(--color-tertiary);
+      content: '';
+    }
+  }
+`;
+
 const AnnouncementsCard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
+
   return (
     <GridWrapper>
       <StyledCard>
@@ -136,26 +226,61 @@ const AnnouncementsCard = () => {
               </span>{' '}
               Recent announements
             </HeaderText>
+            <SortIconWrapper>
+              <ButtonWrapper onClick={toggleMenu}>
+                <FormattedIcon name="sort" />
+              </ButtonWrapper>
+              <DropDown open={isOpen} toggleMenu={toggleMenu} title="Sort by">
+                <Formik initialValues={{ radioGroup: 'all' }}>
+                  {({}) => (
+                    <Form>
+                      <ChoicesWrapper>
+                        <div>
+                          <Field
+                            type="radio"
+                            name="radioGroup"
+                            value="all"
+                            id="inlineRadio1"
+                          />{' '}
+                          <label htmlFor="inlineRadio1">All</label>
+                        </div>
+                        <div>
+                          <Field
+                            type="radio"
+                            name="radioGroup"
+                            value="clubs"
+                            id="inlineRadio2"
+                          />{' '}
+                          <label htmlFor="inlineRadio2">Only my clubs</label>
+                        </div>
+                        <div>
+                          <Field
+                            type="radio"
+                            name="radioGroup"
+                            value="grade"
+                            id="inlineRadio3"
+                          />{' '}
+                          <label htmlFor="inlineRadio3">Only my grade</label>
+                        </div>
+                      </ChoicesWrapper>
+                    </Form>
+                  )}
+                </Formik>
+              </DropDown>
+            </SortIconWrapper>
           </HeaderItems>
         </HeaderWrapper>
         <BodyWrapper>
+          <BodyText>
+            Below are announements specifically picked out for your year and
+            club(s).
+          </BodyText>
           <ListContainer>
             <List>
               <ListItem>
                 <ListIconWrapper>
-                  <StyledIcon
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="circle"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                    />
+                  <StyledIcon>
+                    <FormattedIcon name="circle" />
                   </StyledIcon>
                 </ListIconWrapper>
                 <ListHoverable href="/">
@@ -170,20 +295,8 @@ const AnnouncementsCard = () => {
               </ListItem>
               <ListItem>
                 <ListIconWrapper>
-                  <StyledIcon
-                    unread
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="circle"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                    />
+                  <StyledIcon unread>
+                    <FormattedIcon name="circle" />
                   </StyledIcon>
                 </ListIconWrapper>
                 <ListHoverable href="/" unread>
@@ -198,19 +311,8 @@ const AnnouncementsCard = () => {
               </ListItem>
               <ListItem>
                 <ListIconWrapper>
-                  <StyledIcon
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="circle"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                    />
+                  <StyledIcon>
+                    <FormattedIcon name="circle" />
                   </StyledIcon>
                 </ListIconWrapper>
                 <ListHoverable href="/">
@@ -225,19 +327,8 @@ const AnnouncementsCard = () => {
               </ListItem>
               <ListItem>
                 <ListIconWrapper>
-                  <StyledIcon
-                    aria-hidden="true"
-                    focusable="false"
-                    data-prefix="fas"
-                    data-icon="circle"
-                    role="img"
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 512 512"
-                  >
-                    <path
-                      fill="currentColor"
-                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                    />
+                  <StyledIcon>
+                    <FormattedIcon name="circle" />
                   </StyledIcon>
                 </ListIconWrapper>
                 <ListHoverable href="/">
@@ -255,22 +346,7 @@ const AnnouncementsCard = () => {
         </BodyWrapper>
         <FooterWrapper>
           <FooterButton to={ROUTES.ANNOUNCEMENTS_BASE}>
-            View all{' '}
-            <svg
-              className="icon__58iry4WvgWzW_NpqDXBLP"
-              fill="currentColor"
-              height="24"
-              version="1.1"
-              viewBox="0 0 24 24"
-              width="24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <title>Right Arrow Icon</title>
-              <path
-                d="M4 10.92v2h12l-5.5 5.5 1.42 1.42 7.92-7.92L11.92 4 10.5 5.42l5.5 5.5z"
-                fillRule="nonzero"
-              />
-            </svg>
+            View all <FormattedIcon name="right-arrow" />
           </FooterButton>
         </FooterWrapper>
       </StyledCard>
