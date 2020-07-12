@@ -2,4 +2,5 @@ import * as admin from 'firebase-admin';
 
 admin.initializeApp();
 
-export { createNewAccount } from './user/user';
+export { verifyCaptchaToken, userDeleted } from './serverFunctions';
+export { createNewAccount } from './user';

@@ -5,7 +5,7 @@ import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { FormGroup, ClickableButton, mixins } from '@styles';
+import { FormGroup, ClickableButton, mixins, theme } from '@styles';
 import serializeHyperlink from '@components/serializeHyperlink';
 import { RichText } from 'prismic-reactjs';
 import NProgress from 'nprogress';
@@ -15,6 +15,8 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { FirebaseContext } from '@Firebase';
+
+const { fontSizes } = theme;
 
 const SignUpFormContainer = styled.div`
   padding-top: 0;
@@ -45,6 +47,55 @@ const FormError = styled.span`
   display: inline-block;
   margin-bottom: 1rem;
 `;
+const RadioGroup = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
+  margin-bottom: 1rem;
+`;
+const RadioButtonWrapper = styled.div`
+  label {
+    margin: 0;
+    cursor: pointer;
+    position: relative;
+    padding: 7px 15px;
+    color: var(--color-text);
+    border: 3px solid var(--color-primary);
+    border-radius: 1rem;
+    z-index: 0;
+  }
+
+  input {
+    cursor: pointer;
+    width: 0;
+  }
+
+  input:checked ~ label {
+    color: var(--color-always-white);
+    background-color: var(--color-primary);
+  }
+`;
+const RadioForm = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  label {
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text);
+    font-size: ${fontSizes.md};
+    display: inline-block;
+    margin-bottom: 0;
+    line-height: 1.25rem;
+  }
+
+  span {
+    color: var(--color-error);
+    font-weight: var(--font-weight-normal);
+  }
+`;
 
 const FormSchema = Yup.object().shape({
   email: Yup.string()
@@ -61,12 +112,31 @@ const FormSchema = Yup.object().shape({
       /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
       'Password must contain 8 characters, at least one lower case letter, upper case letter, and number'
     ),
+  year: Yup.string().required('Please choose a year'),
 });
+
+function getFirstYear() {
+  const d = new Date();
+  const thisMonth = d.getMonth();
+  const thisYear = d.getFullYear();
+  if (thisMonth >= 6) {
+    return thisYear + 1;
+  } else {
+    return thisYear;
+  }
+}
 
 const SignupForm = ({ tos }) => {
   const { firebase } = useContext(FirebaseContext) || {};
   const recaptchaRef = createRef();
   if (!firebase) return null;
+
+  const years = [
+    getFirstYear(),
+    getFirstYear() + 1,
+    getFirstYear() + 2,
+    getFirstYear() + 3,
+  ];
 
   return (
     <SignUpFormContainer>
@@ -76,23 +146,35 @@ const SignupForm = ({ tos }) => {
             initialValues={{
               email: undefined,
               password: undefined,
+              year: undefined,
             }}
             validationSchema={FormSchema}
             onSubmit={(values, { setSubmitting, setStatus }) => {
-              recaptchaRef.current.execute();
               function signup() {
                 setSubmitting(true);
                 NProgress.start();
 
                 firebase
-                  .doCreateUserWithEmailAndPassword({
-                    email: values.email,
-                    password: values.password,
+                  .verifyCaptchaToken({
+                    token: recaptchaRef.current.getValue(),
                   })
                   .then(() => {
-                    navigate(ROUTES.DASHBOARD);
+                    return firebase.createNewAccount({
+                      email: values.email,
+                      password: values.password,
+                      year: values.year,
+                    });
+                  })
+                  .then(() => {
+                    return firebase.doSignInWithEmailAndPassword({
+                      email: values.email,
+                      password: values.password,
+                    });
+                  })
+                  .then(() => {
                     setSubmitting(false);
                     NProgress.done(true);
+                    navigate(ROUTES.DASHBOARD);
                   })
                   .catch((err) => {
                     setStatus(
@@ -104,12 +186,18 @@ const SignupForm = ({ tos }) => {
                   });
               }
 
-              if (recaptchaRef.current.getValue() === undefined) {
-                recaptchaRef.current.executeAsync().then(() => {
-                  return signup();
-                });
+              if (recaptchaRef.current.getValue() === '') {
+                recaptchaRef.current
+                  .executeAsync()
+                  .then(() => {
+                    signup();
+                  })
+                  .catch((err) => {
+                    setStatus(err);
+                    setSubmitting(false);
+                  });
               } else {
-                return signup();
+                signup();
               }
             }}
           >
@@ -138,6 +226,25 @@ const SignupForm = ({ tos }) => {
                   />
                   <ErrorMessage component="span" name="password" />
                 </FormGroup>
+                <RadioForm>
+                  {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+                  <label htmlFor="year">Graduating year</label>
+                  <ErrorMessage component="span" name="year" />
+                  <RadioGroup>
+                    {years.map((year, i) => (
+                      <RadioButtonWrapper key={i}>
+                        <Field
+                          type="radio"
+                          name="year"
+                          value={`${year}`}
+                          id={`inlineRadio${i}`}
+                        />
+                        {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+                        <label htmlFor={`inlineRadio${i}`}>{year}</label>
+                      </RadioButtonWrapper>
+                    ))}
+                  </RadioGroup>
+                </RadioForm>
                 <div>
                   <ReCAPTCHA
                     ref={recaptchaRef}
@@ -152,6 +259,7 @@ const SignupForm = ({ tos }) => {
                   >
                     Sign up
                   </FormButton>
+
                   <RichText
                     render={tos}
                     serializeHyperlink={serializeHyperlink}

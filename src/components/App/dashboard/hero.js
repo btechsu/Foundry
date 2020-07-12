@@ -1,12 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { getuser } from '@utils';
 
 // styles
 import styled from 'styled-components';
 import { theme, Container, media } from '@styles';
-
-// logic
-import { FirebaseContext } from '@components/Firebase';
 
 const { fontSizes } = theme;
 
@@ -38,7 +35,6 @@ const SubTitle = styled.h3`
 
 const Hero = () => {
   const currentUser = getuser();
-  const { user } = useContext(FirebaseContext) || {};
 
   return (
     <Wrapper>

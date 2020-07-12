@@ -1,18 +1,20 @@
 import * as functions from 'firebase-functions';
-import * as rp from 'request-promise';
 
 export function dataValidator(data?: any, validKeys?: any) {
   if (Object.keys(data).length !== Object.keys(validKeys).length) {
     throw new functions.https.HttpsError(
       'invalid-argument',
-      'Error in the server. Data object contains invalid number of properties. Please contact and administrator.'
+      'Error on the server: wrong validation keys length. Please contact and administrator or refresh the page.'
     );
   } else {
     for (const key in data) {
+      if (typeof data[key] !== validKeys[key]) {
+        console.log('error');
+      }
       if (!validKeys[key] || typeof data[key] !== validKeys[key]) {
         throw new functions.https.HttpsError(
           'invalid-argument',
-          'Error in the server. Data object contains invalid properties. Please contact and administrator.'
+          'Error on the server: wrong validation keys. Please contact and administrator or refresh the page.'
         );
       }
     }
@@ -31,23 +33,4 @@ export function checkAuthentication(context?: any, Admin?: any) {
       'You must be an admin to use this feature.'
     );
   }
-}
-
-export async function verifyCaptchaToken(token?: string, ip?: string) {
-  const url = `https://google.com/recaptcha/api/siteverify?secret=${
-    functions.config().apis.captcha.invis
-  }&response=${token}&remoteip=${ip}`;
-
-  const body = await rp.post(url);
-  const JSONBody = JSON.parse(body);
-  if (JSONBody.success !== undefined && !JSONBody.success) {
-    throw new Error(
-      "Couldn't verify the recaptcha value. Try refreshing the page."
-    );
-  }
-
-  return {
-    success: true,
-    message: 'Successfully verified captcha on the server.',
-  };
 }

@@ -76,9 +76,14 @@ const LoginForm = () => {
                 setSubmitting(true);
                 NProgress.start();
                 firebase
-                  .doSignInWithEmailAndPassword({
-                    email: values.email,
-                    password: values.password,
+                  .verifyCaptchaToken({
+                    token: recaptchaRef.current.getValue(),
+                  })
+                  .then(() => {
+                    return firebase.doSignInWithEmailAndPassword({
+                      email: values.email,
+                      password: values.password,
+                    });
                   })
                   .then(() => {
                     navigate(ROUTES.DASHBOARD);
@@ -104,12 +109,18 @@ const LoginForm = () => {
                   });
               }
 
-              if (recaptchaRef.current.getValue() === undefined) {
-                recaptchaRef.current.executeAsync().then(() => {
-                  return login();
-                });
+              if (recaptchaRef.current.getValue() === '') {
+                recaptchaRef.current
+                  .executeAsync()
+                  .then(() => {
+                    login();
+                  })
+                  .catch((err) => {
+                    setStatus(err);
+                    setSubmitting(false);
+                  });
               } else {
-                return login();
+                login();
               }
             }}
           >

@@ -35,12 +35,21 @@ class Firebase {
   doSendVerificationEmail = () => this.auth.currentUser.sendEmailVerification();
   doSendPasswordResetEmail = ({ email }) =>
     this.auth.sendPasswordResetEmail(email);
-  doCreateUserWithEmailAndPassword = ({ email, password }) =>
-    this.auth.createUserWithEmailAndPassword(email, password);
   getUserProfile = ({ userID, onSnapshot }) =>
     this.db.collection('users').doc(userID).onSnapshot(onSnapshot);
   getCurrentCredential = ({ email, password }) => this.cred(email, password);
   doSendVerificationEmail = () => this.auth.currentUser.sendEmailVerification();
+
+  verifyCaptchaToken = ({ token }) =>
+    this.functions.httpsCallable('verifyCaptchaToken')({
+      token: token,
+    });
+  createNewAccount = ({ email, password, year }) =>
+    this.functions.httpsCallable('createNewAccount')({
+      email: email,
+      password: password,
+      year: year,
+    });
 }
 
 let firebaseInstance;

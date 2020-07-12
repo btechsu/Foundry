@@ -1,6 +1,9 @@
 import React from 'react';
 import { graphql } from 'gatsby';
 import { RichText, Elements } from 'prismic-reactjs';
+import { linkResolver } from '@prismicio/gatsby-source-prismic-graphql';
+
+// components
 import Title from '@components/Title';
 import Hero from '@components/hero';
 
@@ -68,6 +71,17 @@ const sectionSerializer = function (type, element, content, children, key) {
         children
       );
     case Elements.hyperlink:
+      const targetAttr = element.data.target
+        ? { target: element.data.target }
+        : {};
+      const relAttr = element.data.target ? { rel: 'noopener' } : {};
+      props = Object.assign(
+        {
+          href: element.data.url || linkResolver(element.data),
+        },
+        targetAttr,
+        relAttr
+      );
       return React.createElement(
         StyledLink,
         propsWithUniqueKey(props, key),

@@ -22,6 +22,7 @@ const StyledContainer = styled.header`
 const StyledWrapper = styled.div`
   display: flex;
   min-height: 4rem;
+  max-height: 5rem;
   align-items: center;
   padding: 0.65rem 0;
 `;

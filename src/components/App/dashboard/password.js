@@ -114,8 +114,7 @@ const PasswordCard = () => {
                 newPassword: undefined,
               }}
               validationSchema={FormSchema}
-              onSubmit={(values, { setSubmitting, setStatus, resetForm }) => {
-                recaptchaRef.current.execute();
+              onSubmit={(values, { setSubmitting, setStatus }) => {
                 function changePassword() {
                   setSubmitting(true);
                   NProgress.start();
@@ -159,12 +158,18 @@ const PasswordCard = () => {
                     });
                 }
 
-                if (recaptchaRef.current.getValue() === undefined) {
-                  recaptchaRef.current.executeAsync().then(() => {
-                    return changePassword();
-                  });
+                if (recaptchaRef.current.getValue() === '') {
+                  recaptchaRef.current
+                    .executeAsync()
+                    .then(() => {
+                      changePassword();
+                    })
+                    .catch((err) => {
+                      setStatus(err);
+                      setSubmitting(false);
+                    });
                 } else {
-                  return changePassword();
+                  changePassword();
                 }
               }}
             >
