@@ -29,6 +29,7 @@ function useAuth() {
                   setUser({
                     ...userResult,
                     isAdmin: token.claims.admin,
+                    emailPrefs: !r.data() ? undefined : r.data().mail,
                   });
                 });
             },

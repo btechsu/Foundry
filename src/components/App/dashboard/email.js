@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 // styles
 import styled from 'styled-components';
 import { Card, theme, media, mixins } from '@styles';
 import { FormattedIcon } from '@components/icons';
+import NProgress from 'nprogress';
 
-// form logic
+// logic
 import { Formik, Form, Field } from 'formik';
+import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
@@ -117,6 +119,19 @@ const StyledDescription = styled.p`
   ${mixins.regularText}
   margin: 0;
 `;
+const Loading = styled.div`
+  background-color: var(--color-muted);
+  border-radius: 1.5rem;
+  width: 100%;
+  height: 4rem;
+  margin: 1rem 0;
+`;
+const FormMessage = styled.span`
+  color: ${(props) =>
+    props.type === 'success' ? 'var(--color-success)' : 'var(--color-error)'};
+  display: inline-block;
+  margin-bottom: 1rem;
+`;
 
 function Checkbox(props) {
   return (
@@ -151,71 +166,130 @@ function Checkbox(props) {
 }
 
 const EmailCard = () => {
-  return (
-    <GridWrapper>
-      <StyledCard>
-        <HeaderWrapper>
-          <HeaderItems>
-            <HeaderText>
-              <span role="img" aria-label="">
-                📥
-              </span>{' '}
-              Mail settings
-            </HeaderText>
-          </HeaderItems>
-        </HeaderWrapper>
-        <BodyWrapper>
-          <Formik
-            initialValues={{ roles: ['grade', 'clubs', 'updates', 'news'] }}
-            onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
-          >
-            {({ dirty, initialValues, values }) => (
-              <Form>
-                <div>
-                  <Checkbox
-                    name="roles"
-                    value="clubs"
-                    title="Clubs"
-                    description="Announcements posted by clubs you're in."
-                  />
-                  <Checkbox
-                    name="roles"
-                    value="grade"
-                    title="Grade"
-                    description="Announcements posted for your grade level."
-                  />
-                  <Checkbox
-                    name="roles"
-                    value="news"
-                    title="News"
-                    description="Get weekly emails with new articles."
-                  />
-                  <Checkbox
-                    name="roles"
-                    value="updates"
-                    title="Updates"
-                    description="Get emails when we update the platform."
-                  />
-                </div>
-                <FooterWrapper>
-                  <FooterButton
-                    hide={
-                      initialValues.roles.length !== values.roles.length
-                        ? false
-                        : true
-                    }
-                    type="submit"
-                  >
-                    Change preferences <FormattedIcon name="right-arrow" />
-                  </FooterButton>
-                </FooterWrapper>
-              </Form>
-            )}
-          </Formik>
-        </BodyWrapper>
-      </StyledCard>
-    </GridWrapper>
-  );
+  const { firebase, user } = useContext(FirebaseContext) || {};
+
+  if (!user)
+    return (
+      <GridWrapper>
+        <StyledCard>
+          <HeaderWrapper>
+            <HeaderItems>
+              <HeaderText>
+                <span role="img" aria-label="">
+                  📥
+                </span>{' '}
+                Mail settings
+              </HeaderText>
+            </HeaderItems>
+          </HeaderWrapper>
+          <BodyWrapper>
+            <Loading />
+            <Loading />
+            <Loading />
+            <Loading />
+          </BodyWrapper>
+        </StyledCard>
+      </GridWrapper>
+    );
+  else
+    return (
+      <GridWrapper>
+        <StyledCard>
+          <HeaderWrapper>
+            <HeaderItems>
+              <HeaderText>
+                <span role="img" aria-label="">
+                  📥
+                </span>{' '}
+                Mail settings
+              </HeaderText>
+            </HeaderItems>
+          </HeaderWrapper>
+          <BodyWrapper>
+            <Formik
+              initialValues={{
+                roles: !user.emailPrefs ? [] : user.emailPrefs,
+              }}
+              onSubmit={(values, { setSubmitting, setStatus }) => {
+                NProgress.start();
+                setSubmitting(true);
+                firebase
+                  .updateEmail({
+                    selected: values.roles,
+                    userID: user.uid,
+                  })
+                  .then((suc) => {
+                    NProgress.done(true);
+                    setSubmitting(false);
+                    setStatus({
+                      type: 'success',
+                      message: 'Successfully updated your email preferences!',
+                    });
+                  })
+                  .catch((err) => {
+                    NProgress.done(true);
+                    setSubmitting(false);
+                    setStatus({
+                      type: 'error',
+                      message:
+                        err.message ||
+                        'An unknown error occured. Try refreshing the page.',
+                    });
+                  });
+              }}
+            >
+              {({ initialValues, values, status }) => (
+                <Form>
+                  <div>
+                    <Checkbox
+                      name="roles"
+                      value="clubs"
+                      title="Clubs"
+                      description="Announcements posted by clubs you're in."
+                    />
+                    <Checkbox
+                      name="roles"
+                      value="grade"
+                      title="Grade"
+                      description="Announcements posted for your grade level."
+                    />
+                    <Checkbox
+                      name="roles"
+                      value="news"
+                      title="News"
+                      description="Get weekly emails with new articles."
+                    />
+                    <Checkbox
+                      name="roles"
+                      value="updates"
+                      title="Updates"
+                      description="Get emails when we update the platform."
+                    />
+                  </div>
+                  {!!status && (
+                    <FormMessage type={status.type}>
+                      {status.message}
+                    </FormMessage>
+                  )}
+                  <FooterWrapper>
+                    <FooterButton
+                      hide={
+                        initialValues.roles.length !== values.roles.length
+                          ? false
+                          : true
+                      }
+                      type="submit"
+                    >
+                      Change preferences <FormattedIcon name="right-arrow" />
+                    </FooterButton>
+                  </FooterWrapper>
+                </Form>
+              )}
+            </Formik>
+          </BodyWrapper>
+        </StyledCard>
+      </GridWrapper>
+    );
 };
 
 export default EmailCard;

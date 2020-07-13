@@ -155,15 +155,10 @@ const SignupForm = ({ tos }) => {
                 NProgress.start();
 
                 firebase
-                  .verifyCaptchaToken({
-                    token: recaptchaRef.current.getValue(),
-                  })
-                  .then(() => {
-                    return firebase.createNewAccount({
-                      email: values.email,
-                      password: values.password,
-                      year: values.year,
-                    });
+                  .createNewAccount({
+                    email: values.email,
+                    password: values.password,
+                    year: values.year,
                   })
                   .then(() => {
                     return firebase.doSignInWithEmailAndPassword({
@@ -190,7 +185,11 @@ const SignupForm = ({ tos }) => {
                 recaptchaRef.current
                   .executeAsync()
                   .then(() => {
-                    signup();
+                    return firebase
+                      .verifyCaptchaToken({
+                        token: recaptchaRef.current.getValue(),
+                      })
+                      .then(() => signup());
                   })
                   .catch((err) => {
                     setStatus(err);

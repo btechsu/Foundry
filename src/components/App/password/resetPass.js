@@ -1,4 +1,4 @@
-import React, { useContext, createRef } from 'react';
+import React, { useContext } from 'react';
 import { navigate } from 'gatsby';
 import { ROUTES } from '@utils';
 
@@ -10,7 +10,6 @@ import NProgress from 'nprogress';
 // form logic
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ReCAPTCHA from 'react-google-recaptcha';
 import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
@@ -65,7 +64,6 @@ const FormSchema = Yup.object().shape({
 
 export default () => {
   const { firebase } = useContext(FirebaseContext) || {};
-  const recaptchaRef = createRef();
   if (!firebase) return null;
 
   return (
@@ -81,33 +79,23 @@ export default () => {
                 }}
                 validationSchema={FormSchema}
                 onSubmit={(values, { setSubmitting, setStatus }) => {
-                  function resetPassword() {
-                    setSubmitting(true);
-                    NProgress.start();
-                    firebase
-                      .doSendPasswordResetEmail({ email: values.email })
-                      .then(() => {
-                        navigate(ROUTES.SENT_PASSWORD);
-                        setSubmitting(false);
-                        NProgress.done(true);
-                      })
-                      .catch((err) => {
-                        setStatus(
-                          err.message ||
-                            'An unknown error occured. Try refreshing the page.'
-                        );
-                        setSubmitting(false);
-                        NProgress.done(true);
-                      });
-                  }
-
-                  if (recaptchaRef.current.getValue() === undefined) {
-                    recaptchaRef.current.executeAsync().then(() => {
-                      return resetPassword();
+                  setSubmitting(true);
+                  NProgress.start();
+                  firebase
+                    .doSendPasswordResetEmail({ email: values.email })
+                    .then(() => {
+                      navigate(ROUTES.SENT_PASSWORD);
+                      setSubmitting(false);
+                      NProgress.done(true);
+                    })
+                    .catch((err) => {
+                      setStatus(
+                        err.message ||
+                          'An unknown error occured. Try refreshing the page.'
+                      );
+                      setSubmitting(false);
+                      NProgress.done(true);
                     });
-                  } else {
-                    return resetPassword();
-                  }
                 }}
               >
                 {({ isSubmitting, dirty, status, submitCount }) => (
@@ -124,12 +112,6 @@ export default () => {
                       />
                       <ErrorMessage component="span" name="email" />
                     </FormGroup>
-                    <ReCAPTCHA
-                      ref={recaptchaRef}
-                      name="recatchpa"
-                      size="invisible"
-                      sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
-                    />
                     {!!status && <FormError>{status}</FormError>}
                     <FormButton
                       disabled={!dirty || isSubmitting || submitCount >= 5}

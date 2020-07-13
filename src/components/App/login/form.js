@@ -76,14 +76,9 @@ const LoginForm = () => {
                 setSubmitting(true);
                 NProgress.start();
                 firebase
-                  .verifyCaptchaToken({
-                    token: recaptchaRef.current.getValue(),
-                  })
-                  .then(() => {
-                    return firebase.doSignInWithEmailAndPassword({
-                      email: values.email,
-                      password: values.password,
-                    });
+                  .doSignInWithEmailAndPassword({
+                    email: values.email,
+                    password: values.password,
                   })
                   .then(() => {
                     navigate(ROUTES.DASHBOARD);
@@ -115,6 +110,12 @@ const LoginForm = () => {
                   .then(() => {
                     login();
                   })
+                  .then(() => {
+                    firebase.verifyCaptchaToken({
+                      token: recaptchaRef.current.getValue(),
+                    });
+                  })
+                  .then(() => login())
                   .catch((err) => {
                     setStatus(err);
                     setSubmitting(false);

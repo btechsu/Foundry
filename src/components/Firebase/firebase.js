@@ -19,6 +19,7 @@ class Firebase {
 
       this.auth = App.auth();
       this.db = App.firestore();
+      this.firestore = App.firestore;
       this.functions = App.functions();
       this.storage = App.storage();
       this.analytics = App.analytics();
@@ -50,6 +51,13 @@ class Firebase {
       password: password,
       year: year,
     });
+  updateEmail = ({ selected, userID }) => {
+    var batch = this.db.batch();
+    var userRef = this.db.collection('users').doc(userID);
+    batch.update(userRef, { mail: this.firestore.FieldValue.delete() });
+    batch.update(userRef, { mail: selected });
+    return batch.commit();
+  };
 }
 
 let firebaseInstance;
