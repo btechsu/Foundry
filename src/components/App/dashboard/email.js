@@ -9,6 +9,7 @@ import NProgress from 'nprogress';
 // logic
 import { Formik, Form, Field } from 'formik';
 import { FirebaseContext } from '@Firebase';
+import { isEqual, sortBy } from 'lodash';
 
 const { fontSizes } = theme;
 
@@ -208,7 +209,7 @@ const EmailCard = () => {
           <BodyWrapper>
             <Formik
               initialValues={{
-                roles: !user.emailPrefs ? [] : user.emailPrefs,
+                roles: !user.emailPrefs ? [] : sortBy(user.emailPrefs),
               }}
               onSubmit={(values, { setSubmitting, setStatus }) => {
                 NProgress.start();
@@ -218,13 +219,16 @@ const EmailCard = () => {
                     selected: values.roles,
                     userID: user.uid,
                   })
-                  .then((suc) => {
+                  .then(() => {
                     NProgress.done(true);
                     setSubmitting(false);
                     setStatus({
                       type: 'success',
                       message: 'Successfully updated your email preferences!',
                     });
+                    setTimeout(() => {
+                      setStatus(null);
+                    }, 3000);
                   })
                   .catch((err) => {
                     NProgress.done(true);
@@ -273,11 +277,10 @@ const EmailCard = () => {
                   )}
                   <FooterWrapper>
                     <FooterButton
-                      hide={
-                        initialValues.roles.length !== values.roles.length
-                          ? false
-                          : true
-                      }
+                      hide={isEqual(
+                        sortBy(initialValues.roles),
+                        sortBy(values.roles)
+                      )}
                       type="submit"
                     >
                       Change preferences <FormattedIcon name="right-arrow" />
