@@ -3,6 +3,7 @@ import React from 'react';
 // styles
 import styled from 'styled-components';
 import { Card, theme, media, mixins } from '@styles';
+import { FormattedIcon } from '@components/icons';
 
 // form logic
 import { Formik, Form, Field } from 'formik';
@@ -38,6 +39,35 @@ const HeaderText = styled.h3`
 `;
 const BodyWrapper = styled.div`
   grid-area: body;
+`;
+const FooterWrapper = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+`;
+const FooterButton = styled.button`
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
+  display: ${(props) => (props.hide ? 'none' : 'inline-block')};
+  cursor: pointer;
+
+  :focus {
+    outline: none;
+  }
+
+  :hover {
+    text-decoration: underline;
+  }
+
+  svg {
+    overflow: hidden;
+    position: relative;
+    top: 0.425rem;
+    fill: currentcolor;
+    height: 24;
+    width: 24;
+  }
 `;
 
 const CustomCheckbox = styled.span`
@@ -139,7 +169,7 @@ const EmailCard = () => {
             initialValues={{ roles: ['grade', 'clubs', 'updates', 'news'] }}
             onSubmit={(values) => alert(JSON.stringify(values, null, 2))}
           >
-            {() => (
+            {({ dirty, initialValues, values }) => (
               <Form>
                 <div>
                   <Checkbox
@@ -167,6 +197,18 @@ const EmailCard = () => {
                     description="Get emails when we update the platform."
                   />
                 </div>
+                <FooterWrapper>
+                  <FooterButton
+                    hide={
+                      initialValues.roles.length !== values.roles.length
+                        ? false
+                        : true
+                    }
+                    type="submit"
+                  >
+                    Change preferences <FormattedIcon name="right-arrow" />
+                  </FooterButton>
+                </FooterWrapper>
               </Form>
             )}
           </Formik>

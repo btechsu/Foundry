@@ -63,7 +63,7 @@ export const theme = {
       gray900: 'hsl(210, 25%, 88%)',
       gray1000: 'hsl(210, 25%, 96%)',
       shadow: 'hsl(210, 30%, 5%)',
-      navShadow: hex2rgba('#ffffff', 0.1),
+      navShadow: 'hsl(210, 30%, 5%)',
     },
   },
 
