@@ -53,7 +53,6 @@ const Layout = ({ children }) => {
           <FirebaseContext.Provider value={{ user, firebase, loading }}>
             <Head metadata={site.site.siteMetadata} />
             <GlobalStyle />
-            <Banner />
             <Nav />
             <PageContainer>{children}</PageContainer>
             <Footer data={doc.node} />
