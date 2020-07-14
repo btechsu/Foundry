@@ -16,7 +16,7 @@ import { GlobalStyle } from '@styles';
 const PageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 10rem);
+  min-height: 100vh;
 `;
 
 const Layout = ({ children }) => {
@@ -53,8 +53,11 @@ const Layout = ({ children }) => {
           <FirebaseContext.Provider value={{ user, firebase, loading }}>
             <Head metadata={site.site.siteMetadata} />
             <GlobalStyle />
-            <Nav />
-            <PageContainer>{children}</PageContainer>
+            <PageContainer>
+              <Banner />
+              <Nav />
+              {children}
+            </PageContainer>
             <Footer data={doc.node} />
           </FirebaseContext.Provider>
         );
