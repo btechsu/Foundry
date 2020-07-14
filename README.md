@@ -29,7 +29,7 @@
 2.  Clone the repository and change directories
 
     ```shell
-    git clone https://github.com/btechsu/Foundry
+    gatsby new Foundry https://github.com/btechsu/Foundry
     cd Foundry
     ```
 
