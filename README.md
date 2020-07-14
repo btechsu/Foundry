@@ -50,6 +50,7 @@ A quick look at the top-level files and directories.
 
 ```sh
   .
+  ├── functions # backend (firebase cloud functions)
   ├── node_modules # modules
   ├── src # source folder
       └── components # main components
