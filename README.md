@@ -33,11 +33,7 @@
     cd Foundry
     ```
 
-3.  Install dependencies
-    ```shell
-    npm install
-    ```
-4.  Start the local server
+3.  Start the local server
 
     ```shell
     gatsby develop # local dev server
