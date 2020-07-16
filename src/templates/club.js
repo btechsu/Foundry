@@ -21,7 +21,7 @@ const CardGridWrapper = styled.div`
   grid-template-columns: repeat(12, minmax(0, 1fr));
   grid-column-gap: 1rem;
   grid-row-gap: 3rem;
-  align-items: start;
+  align-items: flex-start;
 
   @media only screen and (min-width: 64rem) {
     grid-column-gap: 2rem;

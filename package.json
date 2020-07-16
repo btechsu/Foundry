@@ -6,6 +6,7 @@
   "author": "Kyrylo Orlov <korlov9026@bths.edu>",
   "dependencies": {
     "@prismicio/gatsby-source-prismic-graphql": "^3.6.7",
+    "algoliasearch": "^4.3.0",
     "babel-plugin-styled-components": "^1.10.7",
     "firebase": "^7.15.5",
     "formik": "^2.1.4",
@@ -35,6 +36,7 @@
     "react-dom": "^16.12.0",
     "react-google-recaptcha": "^2.1.0",
     "react-helmet": "^6.1.0",
+    "react-instantsearch-dom": "^6.6.0",
     "styled-components": "^5.1.1",
     "yup": "^0.29.1"
   },
