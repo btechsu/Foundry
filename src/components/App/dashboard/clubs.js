@@ -104,7 +104,7 @@ const ClubCard = () => {
           </BodyText>
         </BodyWrapper>
         <FooterWrapper>
-          <FooterButton to={ROUTES.VOTE}>
+          <FooterButton to={ROUTES.CLUBS}>
             Browse clubs <FormattedIcon name="right-arrow" />
           </FooterButton>
         </FooterWrapper>

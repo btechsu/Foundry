@@ -60,6 +60,7 @@ const mixins = {
   `,
   resetButton: css`
     border: none;
+    cursor: pointer;
     margin: 0;
     padding: 0;
     width: auto;
@@ -72,7 +73,8 @@ const mixins = {
     -moz-osx-font-smoothing: inherit;
     -webkit-appearance: none;
 
-    &::-moz-focus-inner {
+    :focus {
+      outline: 0;
       border: 0;
       padding: 0;
     }

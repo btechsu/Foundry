@@ -4,7 +4,6 @@ const IconCircle = () => (
   <svg
     aria-hidden="true"
     focusable="false"
-    data-prefix="fas"
     data-icon="circle"
     role="img"
     xmlns="http://www.w3.org/2000/svg"

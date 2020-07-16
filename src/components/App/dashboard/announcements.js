@@ -21,7 +21,7 @@ const GridWrapper = styled.div`
 `;
 const StyledCard = styled(Card)`
   display: grid;
-  grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
+  grid-template-rows: minmax(0, 3rem) 1fr minmax(0, max-content);
   grid-template-areas: 'header' 'body' 'footer';
   grid-gap: 0.5rem;
 `;

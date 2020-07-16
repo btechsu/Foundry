@@ -10,9 +10,7 @@ import { Container, Section, Button, mixins, theme, media } from '@styles';
 const { fontSizes } = theme;
 
 const HeroWrapper = styled.div`
-  display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   align-items: center;
 `;
@@ -46,8 +44,7 @@ const LeftCol = styled.div`
   padding-right: 15px;
   padding-left: 15px;
 
-  @media (min-width: 768px) {
-    -ms-flex: 0 0 50%;
+  @media (min-width: 769px) {
     flex: 0 0 50%;
     max-width: 50%;
   }
@@ -67,8 +64,7 @@ const RightCol = styled.div`
     user-select: none;
   }
 
-  @media (min-width: 768px) {
-    -ms-flex: 0 0 41.666667%;
+  @media (min-width: 769px) {
     flex: 0 0 41.666667%;
     max-width: 41.666667%;
   }

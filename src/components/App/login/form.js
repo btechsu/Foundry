@@ -73,8 +73,6 @@ const LoginForm = () => {
             validationSchema={FormSchema}
             onSubmit={(values, { setSubmitting, setStatus }) => {
               function login() {
-                setSubmitting(true);
-                NProgress.start();
                 firebase
                   .doSignInWithEmailAndPassword({
                     email: values.email,
@@ -105,6 +103,8 @@ const LoginForm = () => {
               }
 
               if (recaptchaRef.current.getValue() === '') {
+                setSubmitting(true);
+                NProgress.start();
                 recaptchaRef.current
                   .executeAsync()
                   .then(() => {
@@ -119,8 +119,11 @@ const LoginForm = () => {
                   .catch((err) => {
                     setStatus(err);
                     setSubmitting(false);
+                    NProgress.done(true);
                   });
               } else {
+                setSubmitting(true);
+                NProgress.start();
                 login();
               }
             }}

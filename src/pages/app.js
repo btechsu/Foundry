@@ -7,11 +7,19 @@ import PrivateRoute from '@components/PrivateRoute';
 
 // components
 import ErrorPage from './404';
-import { Login, Signup, ResetPassword, PasswordSent, Dashboard } from '@app';
+import {
+  Login,
+  Signup,
+  ResetPassword,
+  PasswordSent,
+  Dashboard,
+  Clubs,
+} from '@app';
 
 const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
   const dashboardDoc = data.prismic.allDashboards.edges.slice(0, 1).pop();
+  const clubsNode = data.allClubs.edges;
 
   return (
     <Router basepath="/app" component={React.Fragment}>
@@ -39,6 +47,7 @@ const App = ({ data }) => {
         title="Dashboard"
         data={dashboardDoc.node}
       />
+      <Clubs path="/clubs" title="Clubs" data={clubsNode} />
     </Router>
   );
 };
@@ -72,6 +81,19 @@ export const query = graphql`
               }
             }
           }
+        }
+      }
+    }
+    allClubs {
+      edges {
+        node {
+          id
+          name
+          description
+          room
+          time
+          days
+          type
         }
       }
     }

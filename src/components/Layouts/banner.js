@@ -3,7 +3,7 @@ import { getuser } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { theme, media, Container } from '@styles';
+import { theme, media, mixins, Container } from '@styles';
 
 // logic
 import { FirebaseContext } from '@Firebase';
@@ -33,18 +33,11 @@ const StyledTitle = styled.h2`
   ${media.tablet`font-size: ${fontSizes.lg};`};
 `;
 const StyledButton = styled.button`
+  ${mixins.resetButton};
   color: var(--color-tertiary);
-  cursor: pointer;
-  background: none;
-  border: none;
-  padding: 0;
 
   :hover {
     text-decoration: underline;
-  }
-
-  :focus {
-    outline: 0;
   }
 `;
 

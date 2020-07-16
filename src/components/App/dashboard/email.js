@@ -49,15 +49,9 @@ const FooterWrapper = styled.div`
   justify-content: flex-end;
 `;
 const FooterButton = styled.button`
-  background-color: transparent;
-  border: none;
+  ${mixins.resetButton}
   color: var(--color-primary);
   display: ${(props) => (props.hide ? 'none' : 'inline-block')};
-  cursor: pointer;
-
-  :focus {
-    outline: none;
-  }
 
   :hover {
     text-decoration: underline;
