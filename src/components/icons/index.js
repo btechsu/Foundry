@@ -6,3 +6,4 @@ export { default as IconRoom } from './room';
 export { default as IconClock } from './clock';
 export { default as IconUser } from './user';
 export { default as IconSearch } from './search';
+export { default as IconCancel } from './cancel';

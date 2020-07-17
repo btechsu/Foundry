@@ -18,6 +18,7 @@ import { FormattedIcon } from '@components/icons';
 // components
 import ClubCard from './ClubCard';
 import Hero from './hero';
+import { Form } from 'formik';
 
 const { fontSizes } = theme;
 
@@ -76,6 +77,10 @@ const SearchInput = styled.input`
   ::placeholder {
     color: var(--color-gray-500);
   }
+
+  ::-webkit-search-cancel-button {
+    display: none;
+  }
 `;
 const PaginationWrapper = styled.div`
   width: 100%;
@@ -100,6 +105,17 @@ const PaginationWrapper = styled.div`
     color: var(--color-always-white);
   }
 `;
+const CancelButton = styled.button`
+  background: none;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+  display: ${(props) => (props.hide ? 'none' : 'relative')};
+
+  :focus {
+    outline: 0;
+  }
+`;
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
@@ -107,17 +123,37 @@ const searchClient = algoliasearch(
 );
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
-  <StyledForm noValidate action="" role="search">
+  <StyledForm
+    noValidate
+    action=""
+    role="search"
+    onSubmit={(e) => {
+      e.preventDefault();
+    }}
+  >
     <FormattedIcon name="search" />
     <SearchInput
       type="search"
-      placeholder="Search by name, description, type..."
+      placeholder="Search here…"
+      autocomplete="off"
+      autocorrect="off"
+      autocapitalize="off"
+      spellcheck="false"
+      required=""
+      maxlength="512"
       value={currentRefinement}
       onChange={(event) => refine(event.currentTarget.value)}
     />
-    {/* <button onClick={() => refine('')}>Reset query</button> */}
+    <CancelButton
+      type="reset"
+      onClick={() => refine('')}
+      hide={currentRefinement === '' ? true : false}
+    >
+      <FormattedIcon name="cancel" />
+    </CancelButton>
   </StyledForm>
 );
+
 const Hits = ({ hits }) => {
   return (
     <CardGrid>

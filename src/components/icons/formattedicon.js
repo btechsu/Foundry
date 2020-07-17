@@ -7,6 +7,7 @@ import IconRoom from './room';
 import IconClock from './clock';
 import IconUser from './user';
 import IconSearch from './search';
+import IconCancel from './cancel';
 
 const FormattedIcon = ({ name }) => {
   switch (name) {
@@ -24,6 +25,8 @@ const FormattedIcon = ({ name }) => {
       return <IconUser />;
     case 'search':
       return <IconSearch />;
+    case 'cancel':
+      return <IconCancel />;
     default:
       return null;
   }
