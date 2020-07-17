@@ -10,7 +10,7 @@ const { fontSizes } = theme;
 
 const GridWrapper = styled.div`
   display: grid;
-  grid-column-end: span 6;
+  grid-column-end: span 4;
   z-index: 1;
 
   ${media.desktop`grid-column-end: span 12;`};

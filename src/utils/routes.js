@@ -2,6 +2,7 @@ export const LANDING = '/';
 export const ABOUT = '/about';
 export const NEWS = '/app/news';
 export const CLUBS = '/app/clubs';
+export const SUBMIT_CLUB = '/app/clubs/submit';
 export const VOTE = '/app/vote';
 export const SGO = '/app/suggestions';
 export const LOGIN = '/app/login';

@@ -8,6 +8,7 @@ import {
   connectSearchBox,
   connectHits,
   Configure,
+  connectRefinementList,
 } from 'react-instantsearch-dom';
 
 // styles
@@ -18,7 +19,7 @@ import { FormattedIcon } from '@components/icons';
 // components
 import ClubCard from './ClubCard';
 import Hero from './hero';
-import { Form } from 'formik';
+import Sort from './sort';
 
 const { fontSizes } = theme;
 
@@ -32,7 +33,7 @@ const CardsContainer = styled.div`
 `;
 const CardGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-columns: repeat(11, minmax(0, 1fr));
   grid-column-gap: 1rem;
   grid-row-gap: 3rem;
   align-items: flex-start;
@@ -68,7 +69,7 @@ const SearchInput = styled.input`
   border: none;
   background: transparent;
   color: var(--color-text);
-  padding-left: 1rem;
+  margin-left: 1rem;
 
   :focus {
     outline: none;
@@ -116,13 +117,78 @@ const CancelButton = styled.button`
     outline: 0;
   }
 `;
+const CustomCheckbox = styled.span`
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  position: absolute;
+  left: 0;
+  top: 0;
+  border: 2px solid var(--color-gray-700);
+`;
+const LabelWrapper = styled.label`
+  display: inline-block;
+  padding-left: 30px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  margin-bottom: 1rem;
+
+  input {
+    display: none;
+  }
+
+  input:checked + ${CustomCheckbox} {
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-secondary);
+  }
+
+  input:checked + ${CustomCheckbox}:after {
+    content: '';
+    position: absolute;
+    height: 6px;
+    width: 11px;
+    border-left: 2px solid var(--color-always-white);
+    border-bottom: 2px solid var(--color-always-white);
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+`;
+const RefinmentWrapper = styled.div`
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    color: var(--color-text);
+    font-size: ${fontSizes.lg};
+  }
+`;
+const GridWrapper = styled.div`
+  display: grid;
+  grid-column-end: span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  grid-column-gap: 0.5rem;
+  grid-row-gap: 2rem;
+
+  @media only screen and (min-width: 64rem) {
+    grid-column-gap: 2rem;
+  }
+  z-index: 1;
+
+  ${media.desktop`grid-column-end: span 12;`};
+`;
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
   process.env.GATSBY_ALGOLIA_SEARCH
 );
 
-const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
+const SearchBox = ({ currentRefinement, refine }) => (
   <StyledForm
     noValidate
     action=""
@@ -153,10 +219,9 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
     </CancelButton>
   </StyledForm>
 );
-
 const Hits = ({ hits }) => {
   return (
-    <CardGrid>
+    <>
       {hits.map((hit) => (
         <ClubCard
           to={`/club/${hit.objectID}`}
@@ -167,24 +232,53 @@ const Hits = ({ hits }) => {
           type={hit.type}
         />
       ))}
-    </CardGrid>
+    </>
   );
 };
+const RefinementList = ({ items, refine, createURL }) => (
+  <RefinmentWrapper>
+    <ul>
+      {items.map((item) => (
+        <li>
+          <LabelWrapper
+            key={item.label}
+            onClick={(event) => {
+              event.preventDefault();
+              refine(item.value);
+            }}
+          >
+            <input type="checkbox" checked={item.isRefined} />
+            <CustomCheckbox />
+            {item.label} ({item.count})
+          </LabelWrapper>
+        </li>
+      ))}
+    </ul>
+  </RefinmentWrapper>
+);
 
 const CustomHits = connectHits(Hits);
 const CustomSearchBox = connectSearchBox(SearchBox);
+const CustomRefinements = connectRefinementList(RefinementList);
 
 const Dash = () => {
   return (
     <PageWrapper>
       <Container normal>
         <InstantSearch indexName="clubs" searchClient={searchClient}>
-          <Configure hitsPerPage={10} />
+          <Configure hitsPerPage={8} />
           <Hero>
             <CustomSearchBox />
           </Hero>
           <CardsContainer>
-            <CustomHits />
+            <CardGrid>
+              <Sort>
+                <CustomRefinements attribute="type" />
+              </Sort>
+              <GridWrapper>
+                <CustomHits />
+              </GridWrapper>
+            </CardGrid>
             <PaginationWrapper>
               <Pagination />
             </PaginationWrapper>

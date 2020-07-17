@@ -8,6 +8,7 @@ import IconClock from './clock';
 import IconUser from './user';
 import IconSearch from './search';
 import IconCancel from './cancel';
+import IconChevron from './chevron';
 
 const FormattedIcon = ({ name }) => {
   switch (name) {
@@ -27,6 +28,8 @@ const FormattedIcon = ({ name }) => {
       return <IconSearch />;
     case 'cancel':
       return <IconCancel />;
+    case 'chevron':
+      return <IconChevron />;
     default:
       return null;
   }
