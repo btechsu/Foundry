@@ -1,22 +1,19 @@
 import React from 'react';
-import { ROUTES } from '@utils';
 
 // search
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
-  Hits,
   Pagination,
-  Highlight,
-  ClearRefinements,
-  RefinementList,
-  Configure,
   connectSearchBox,
+  connectHits,
+  Configure,
 } from 'react-instantsearch-dom';
 
 // styles
 import styled from 'styled-components';
-import { media, theme, mixins, Container } from '@styles';
+import { media, theme, Container } from '@styles';
+import { FormattedIcon } from '@components/icons';
 
 // components
 import ClubCard from './ClubCard';
@@ -30,7 +27,7 @@ const PageWrapper = styled.div`
 `;
 const CardsContainer = styled.div`
   z-index: 1;
-  margin: 4rem 0;
+  margin: 3rem 0;
 `;
 const CardGrid = styled.div`
   display: grid;
@@ -44,75 +41,120 @@ const CardGrid = styled.div`
   }
 `;
 
+const StyledForm = styled.form`
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 2px solid var(--color-card);
+  border-radius: 1.5rem;
+  box-shadow: 0px 5px 9px var(--shadow);
+  background-color: var(--color-card);
+  font-size: ${fontSizes.lg};
+  ${media.tablet`margin-top: 1rem;`};
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  svg {
+    color: var(--color-gray-700);
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+`;
+const SearchInput = styled.input`
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+  padding-left: 1rem;
+
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: var(--color-gray-500);
+  }
+`;
+const PaginationWrapper = styled.div`
+  width: 100%;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+  }
+  li {
+    font-size: ${fontSizes.lg};
+    padding: 0.4rem 0.9rem;
+    margin: 0.2rem;
+    color: var(--color-always-white);
+    background-color: var(--color-secondary-shaded);
+  }
+  a {
+    text-decoration: none;
+    color: var(--color-always-white);
+  }
+`;
+
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
   process.env.GATSBY_ALGOLIA_SEARCH
 );
 
-const SearchInput = styled.input`
-  width: 100%;
-  padding: 1.5rem 1rem;
-  border: 2px solid var(--color-muted);
-  border-radius: 1rem;
-  box-shadow: 0px 5px 9px var(--shadow);
-  background-color: var(--color-muted);
-  color: var(--color-text);
-
-  ::placeholder {
-    color: var(--color-gray-500);
-  }
-
-  :focus {
-    outline: none;
-  }
-`;
-
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
-  <form noValidate action="" role="search">
+  <StyledForm noValidate action="" role="search">
+    <FormattedIcon name="search" />
     <SearchInput
       type="search"
-      placeholder="Search for a club"
+      placeholder="Search by name, description, type..."
       value={currentRefinement}
       onChange={(event) => refine(event.currentTarget.value)}
     />
     {/* <button onClick={() => refine('')}>Reset query</button> */}
-    {isSearchStalled ? 'My search is stalled' : ''}
-  </form>
+  </StyledForm>
 );
+const Hits = ({ hits }) => {
+  return (
+    <CardGrid>
+      {hits.map((hit) => (
+        <ClubCard
+          to={`/club/${hit.objectID}`}
+          title={hit.name}
+          text={hit.description}
+          room={hit.room}
+          time={`${hit.days} @ ${hit.time}`}
+          type={hit.type}
+        />
+      ))}
+    </CardGrid>
+  );
+};
 
+const CustomHits = connectHits(Hits);
 const CustomSearchBox = connectSearchBox(SearchBox);
 
 const Dash = () => {
-  // MAX ALLOWABLE CHARACTERS FOR CLUB CARD is 231 https://wordcounter.net/character-count
-
   return (
     <PageWrapper>
-      <InstantSearch indexName="instant_search" searchClient={searchClient}>
-        <Hero>
-          <CustomSearchBox />
-        </Hero>
-        <Container normal>
-          <Hits />
+      <Container normal>
+        <InstantSearch indexName="clubs" searchClient={searchClient}>
+          <Configure hitsPerPage={10} />
+          <Hero>
+            <CustomSearchBox />
+          </Hero>
           <CardsContainer>
-            <CardGrid>
-              {/* {this.props.data.map((reference, i) => {
-              const card = reference.node;
-              return (
-                <ClubCard
-                  key={i}
-                  to={`/club/${card.id}`}
-                  title={card.name}
-                  text={card.description}
-                  room={card.room}
-                  time={`${card.days} @ ${card.time}`}
-                  type={card.type}
-                />
-              );
-            })} */}
-            </CardGrid>
+            <CustomHits />
+            <PaginationWrapper>
+              <Pagination />
+            </PaginationWrapper>
           </CardsContainer>
-        </Container>
-      </InstantSearch>
+        </InstantSearch>
+      </Container>
     </PageWrapper>
   );
 };

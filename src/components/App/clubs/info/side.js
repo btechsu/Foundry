@@ -7,7 +7,6 @@ import {
   theme,
   media,
   mixins,
-  Container,
   Card,
   ClickableButton,
 } from '@styles';

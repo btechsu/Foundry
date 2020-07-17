@@ -6,6 +6,7 @@ import IconSort from './sort';
 import IconRoom from './room';
 import IconClock from './clock';
 import IconUser from './user';
+import IconSearch from './search';
 
 const FormattedIcon = ({ name }) => {
   switch (name) {
@@ -21,6 +22,8 @@ const FormattedIcon = ({ name }) => {
       return <IconClock />;
     case 'user':
       return <IconUser />;
+    case 'search':
+      return <IconSearch />;
     default:
       return null;
   }

@@ -86,7 +86,7 @@ const ClubCard = ({ to, title, text, room, time, type }) => {
         <HeaderWrapper>
           <HeaderItems>
             <HeaderText>
-              {title} <HeaderClubType>{type}</HeaderClubType>
+              {title} {type && <HeaderClubType>{type}</HeaderClubType>}
             </HeaderText>
           </HeaderItems>
         </HeaderWrapper>

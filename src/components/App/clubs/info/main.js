@@ -1,12 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 // styles
 import styled from 'styled-components';
-import { theme, media, mixins, Container, Card } from '@styles';
-import { FormattedIcon } from '@components/icons';
-
-const { fontSizes } = theme;
+import { media, mixins, Card } from '@styles';
 
 const GridWrapper = styled.div`
   display: grid;

@@ -19,6 +19,10 @@ const GlobalStyle = createGlobalStyle`
     --font-family-mono: ${fonts.Ubuntu};
   }
 
+  * {
+    box-sizing: border-box;
+  }
+
   body {
     margin: 0;
     width: 100%;
@@ -34,6 +38,7 @@ const GlobalStyle = createGlobalStyle`
     --color-primary: ${colors.lightMode.primary};
     --color-primary-shaded: ${colors.lightMode.primaryShade};
     --color-secondary: ${colors.lightMode.secondary};
+    --color-secondary-shaded: ${colors.lightMode.secondaryShade};
     --color-tertiary: ${colors.lightMode.tertiary};
     --color-muted: ${colors.lightMode.muted};
     --color-muted-background: ${colors.lightMode.mutedBackground};
@@ -67,6 +72,7 @@ const GlobalStyle = createGlobalStyle`
     --color-primary: ${colors.darkMode.primary};
     --color-primary-shaded: ${colors.darkMode.primaryShade};
     --color-secondary: ${colors.darkMode.secondary};
+    --color-secondary-shaded: ${colors.darkMode.secondaryShade};
     --color-tertiary: ${colors.darkMode.tertiary};
     --color-muted: ${colors.darkMode.muted};
     --color-muted-background: ${colors.darkMode.mutedBackground};
