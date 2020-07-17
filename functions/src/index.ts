@@ -9,5 +9,6 @@ export {
   indexClub,
   updateIndexClub,
   unindexClub,
+  onUpdateClubs,
 } from './serverFunctions';
 export { createNewAccount } from './user';

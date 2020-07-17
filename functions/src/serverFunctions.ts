@@ -81,3 +81,8 @@ export const unindexClub = functions.firestore
     // Delete an ID from the index
     return index.deleteObject(objectID);
   });
+export const onUpdateClubs = functions.firestore
+  .document('clubs/{clubID}')
+  .onWrite((snap, context) => {
+    return axios.post(env.apis.netlify);
+  });
