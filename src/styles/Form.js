@@ -18,7 +18,8 @@ const FormGroup = styled.div`
     line-height: 1.25rem;
   }
 
-  input {
+  input,
+  select {
     margin-top: 0.4rem;
     font-size: ${fontSizes.md};
     text-indent: 0.8rem;
@@ -30,23 +31,23 @@ const FormGroup = styled.div`
     border-radius: 2px;
     font-weight: var(--font-weight-normal);
     color: var(--color-text);
-    box-sizing: border-box;
   }
 
   textarea {
+    margin-top: 0.4rem;
     resize: vertical;
     display: block;
     width: 100%;
     min-height: calc(1.5em + 0.75rem + 2px);
-    max-height: 100px;
+    max-height: 8rem;
     padding: 0.375rem 0.75rem;
     font-size: ${fontSizes.md};
     font-weight: 400;
     line-height: 1.5;
     color: var(--color-text);
-    background-color: var(--color-gray-200);
+    background-color: var(--color-muted);
     background-clip: padding-box;
-    border: 1px solid var(--color-text);
+    border: 1px solid var(--color-gray-200);
     border-radius: 0.25rem;
   }
 

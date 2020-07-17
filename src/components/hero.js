@@ -10,7 +10,7 @@ const { fontSizes } = theme;
 const HeroWrapper = styled.div`
   position: relative;
   background-color: var(--color-muted);
-  margin-bottom: 5rem;
+  margin-bottom: ${(props) => (props.mb ? props.mb : '5rem')};
   ${media.tablet`margin-bottom: 3rem;`};
 `;
 const ContentWrapper = styled.div`
@@ -31,9 +31,9 @@ const ContentWrapper = styled.div`
   }
 `;
 
-const Hero = ({ title, subtitle }) => {
+const Hero = ({ title, subtitle, mb }) => {
   return (
-    <HeroWrapper>
+    <HeroWrapper mb={mb}>
       <Container normal>
         <ContentWrapper>
           <h3>{subtitle}</h3>

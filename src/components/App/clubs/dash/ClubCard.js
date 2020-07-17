@@ -17,7 +17,7 @@ const GridWrapper = styled.div`
 `;
 const StyledCard = styled(ClickableCard)`
   display: grid;
-  grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
+  grid-template-rows: minmax(0, 4rem) 1fr;
   grid-template-areas: 'header' 'body';
   grid-gap: 0.5rem;
 `;

@@ -11,4 +11,4 @@ export {
   unindexClub,
   onUpdateClubs,
 } from './serverFunctions';
-export { createNewAccount } from './user';
+export { createNewAccount, submitClub } from './user';

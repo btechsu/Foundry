@@ -58,6 +58,16 @@ class Firebase {
     batch.update(userRef, { mail: selected });
     return batch.commit();
   };
+  submitClub = ({ email, description, room, days, time, type, text }) =>
+    this.functions.httpsCallable('submitClub')({
+      email: email,
+      description: description,
+      room: room,
+      days: days,
+      time: time,
+      type: type,
+      text: text,
+    });
 }
 
 let firebaseInstance;

@@ -6,6 +6,7 @@ export const theme = {
       text: 'hsl(222, 22%, 5%)',
       background: 'hsl(0, 0%, 100%)',
       alwaysWhite: 'hsl(0, 0%, 100%)',
+      alwaysBlack: 'hsl(222, 22%, 5%)',
       card: 'hsl(0, 0%, 100%)',
       primary: 'hsl(245, 100%, 60%)',
       primaryShade: 'hsla(245, 100%, 31%)',
@@ -36,6 +37,7 @@ export const theme = {
 
     darkMode: {
       text: 'hsl(0, 0%, 100%)',
+      alwaysBlack: 'hsl(222, 22%, 5%)',
       background: 'hsl(210, 30%, 8%)',
       alwaysWhite: 'hsl(0, 0%, 100%)',
       card: 'hsl(210, 30%, 13%)',

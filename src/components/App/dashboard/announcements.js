@@ -139,7 +139,7 @@ const SortIconWrapper = styled.div`
   width: 1rem;
   height: 1rem;
 
-  svg:not(:root) {
+  svg {
     overflow: hidden;
     position: absolute;
     top: 0;

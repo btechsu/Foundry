@@ -14,6 +14,7 @@ import {
   PasswordSent,
   Dashboard,
   Clubs,
+  SubmitClub,
 } from '@app';
 
 const App = ({ data }) => {
@@ -45,6 +46,11 @@ const App = ({ data }) => {
         component={Dashboard}
         title="Dashboard"
         data={dashboardDoc.node}
+      />
+      <PrivateRoute
+        path="/clubs/submit"
+        component={SubmitClub}
+        title="Submit a club"
       />
       <Clubs path="/clubs" title="Clubs" />
     </Router>
