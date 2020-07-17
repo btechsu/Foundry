@@ -5,11 +5,9 @@ import { ROUTES, isloggedin } from '@utils';
 import Title from './Title';
 
 const PrivateRoute = ({ component: Component, location, title, ...rest }) => {
-  if (typeof window !== 'undefined') {
-    if (!isloggedin()) {
-      navigate(ROUTES.LOGIN);
-      return null;
-    }
+  if (!isloggedin()) {
+    navigate(ROUTES.LOGIN);
+    return null;
   }
 
   return (
