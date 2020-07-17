@@ -1,20 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Dash from './dash';
 import Title from '@components/Title';
 
-const Clubs = ({ data }) => {
+const Clubs = () => {
   return (
     <>
       <Title>Clubs</Title>
-      <Dash data={data} />
+      <Dash />
     </>
   );
 };
 
 export default Clubs;
-
-Clubs.propTypes = {
-  data: PropTypes.node.isRequired,
-};
