@@ -54,7 +54,7 @@ const App = ({ data }) => {
         title="Submit a club"
       />
       <Clubs path="/clubs" title="Clubs" />
-      <UnprivateRoute
+      <PrivateRoute
         path="/clubs/submit/success"
         component={SubmitClubSent}
         title="Submitted club"
