@@ -169,7 +169,7 @@ class Editor extends Component {
           text: edit.blocks,
         });
       })
-      .then((resp) => {
+      .then(() => {
         navigate(ROUTES.SUBMIT_CLUB_SUCESS);
         setSubmitting(false);
         NProgress.done(true);
