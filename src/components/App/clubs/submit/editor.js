@@ -199,6 +199,8 @@ class Editor extends Component {
         validationSchema={FormSchema}
         onSubmit={(values, { setSubmitting, setStatus }) => {
           if (recaptchaRef.current.getValue() === '') {
+            setSubmitting(true);
+            NProgress.start();
             recaptchaRef.current
               .executeAsync()
               .then(() => {
@@ -207,8 +209,6 @@ class Editor extends Component {
                 });
               })
               .then(() => {
-                setSubmitting(true);
-                NProgress.start();
                 this.submitForm({
                   values: values,
                   setSubmitting: setSubmitting,
@@ -320,7 +320,7 @@ class Editor extends Component {
                       />
                       {!!status && <FormError>{status}</FormError>}
                       <FormButton
-                        disabled={!dirty || isSubmitting || submitCount >= 5}
+                        disabled={isSubmitting || submitCount >= 5}
                         type="submit"
                       >
                         Submit

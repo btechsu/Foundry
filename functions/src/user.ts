@@ -48,13 +48,16 @@ export const submitClub = functions.https.onCall((data, context) => {
   });
   checkAuthentication(context);
 
-  return admin.firestore().collection('clubSubmissions').add({
-    email: data.email,
-    description: data.description,
-    room: data.room,
-    days: data.days,
-    time: data.time,
-    type: data.type,
-    text: data.text,
-  });
+  return admin
+    .firestore()
+    .collection('clubSubmissions')
+    .add({
+      email: data.email,
+      description: data.description,
+      room: data.room,
+      days: data.days,
+      time: data.time,
+      type: data.type,
+      text: JSON.stringify(data.text),
+    });
 });
