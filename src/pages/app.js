@@ -15,6 +15,7 @@ import {
   Dashboard,
   Clubs,
   SubmitClub,
+  SubmitClubSent,
 } from '@app';
 
 const App = ({ data }) => {
@@ -53,6 +54,11 @@ const App = ({ data }) => {
         title="Submit a club"
       />
       <Clubs path="/clubs" title="Clubs" />
+      <UnprivateRoute
+        path="/clubs/submit/success"
+        component={SubmitClubSent}
+        title="Submitted club"
+      />
     </Router>
   );
 };

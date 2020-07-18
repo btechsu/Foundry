@@ -4,3 +4,4 @@ export { ResetPassword, PasswordSent } from './password';
 export { default as Dashboard } from './dashboard';
 export { default as Clubs } from './clubs';
 export { default as SubmitClub } from './clubs/submit';
+export { default as SubmitClubSent } from './clubs/submit/success';

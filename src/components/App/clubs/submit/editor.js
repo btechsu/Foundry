@@ -1,4 +1,6 @@
 import React, { Component, createRef } from 'react';
+import { navigate } from 'gatsby';
+import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -168,8 +170,7 @@ class Editor extends Component {
         });
       })
       .then((resp) => {
-        console.log(resp);
-        console.log('submitted');
+        navigate(ROUTES.SUBMIT_CLUB_SUCESS);
         setSubmitting(false);
         NProgress.done(true);
       })
@@ -201,19 +202,18 @@ class Editor extends Component {
             recaptchaRef.current
               .executeAsync()
               .then(() => {
-                return this.props.firebase
-                  .verifyCaptchaToken({
-                    token: recaptchaRef.current.getValue(),
-                  })
-                  .then(() => {
-                    setSubmitting(true);
-                    NProgress.start();
-                    this.submitForm({
-                      values: values,
-                      setSubmitting: setSubmitting,
-                      setStatus: setStatus,
-                    });
-                  });
+                return this.props.firebase.verifyCaptchaToken({
+                  token: recaptchaRef.current.getValue(),
+                });
+              })
+              .then(() => {
+                setSubmitting(true);
+                NProgress.start();
+                this.submitForm({
+                  values: values,
+                  setSubmitting: setSubmitting,
+                  setStatus: setStatus,
+                });
               })
               .catch((err) => {
                 setStatus(err);
