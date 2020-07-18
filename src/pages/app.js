@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'gatsby';
 import { Router } from '@reach/router';
+
 import UnprivateRoute from '@components/UnprivateRoute';
 import PrivateRoute from '@components/PrivateRoute';
 
