@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 
 // search
 import algoliasearch from 'algoliasearch/lite';
@@ -15,7 +15,6 @@ import {
 import styled from 'styled-components';
 import { media, theme, Container } from '@styles';
 import { FormattedIcon } from '@components/icons';
-import Loader from '@components/loader';
 
 // components
 import ClubCard from './ClubCard';
@@ -264,31 +263,33 @@ const CustomRefinements = connectRefinementList(RefinementList);
 
 const Dash = () => {
   return (
-    <Suspense fallback={<Loader />}>
-      <PageWrapper>
-        <Container normal>
-          <InstantSearch indexName="clubs" searchClient={searchClient}>
-            <Configure hitsPerPage={8} />
-            <Hero>
-              <CustomSearchBox />
-            </Hero>
-            <CardsContainer>
-              <CardGrid>
-                <Sort>
-                  <CustomRefinements attribute="type" />
-                </Sort>
-                <GridWrapper>
-                  <CustomHits />
-                </GridWrapper>
-              </CardGrid>
-              <PaginationWrapper>
-                <Pagination />
-              </PaginationWrapper>
-            </CardsContainer>
-          </InstantSearch>
-        </Container>
-      </PageWrapper>
-    </Suspense>
+    <PageWrapper>
+      <Container normal>
+        <InstantSearch
+          indexName="clubs"
+          searchClient={searchClient}
+          stalledSearchDelay={100}
+        >
+          <Configure hitsPerPage={8} />
+          <Hero>
+            <CustomSearchBox />
+          </Hero>
+          <CardsContainer>
+            <CardGrid>
+              <Sort>
+                <CustomRefinements attribute="type" />
+              </Sort>
+              <GridWrapper>
+                <CustomHits />
+              </GridWrapper>
+            </CardGrid>
+            <PaginationWrapper>
+              <Pagination />
+            </PaginationWrapper>
+          </CardsContainer>
+        </InstantSearch>
+      </Container>
+    </PageWrapper>
   );
 };
 
