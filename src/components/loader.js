@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 // styles
 import styled, { keyframes } from 'styled-components';
@@ -16,6 +16,13 @@ const AnimDotBefore = keyframes`
   } 100%, 0% {
     transform: scale(1.0); 
   } 
+`;
+const PageWrapper = styled.div`
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 const LoaderWrapper = styled.div`
   width: 40px;
@@ -36,7 +43,7 @@ const LoadingDot = styled.div`
     display: block;
     width: 25%;
     height: 25%;
-    background-color: #fff;
+    background-color: var(--color-text);
     border-radius: 100%;
     animation: ${AnimDotBefore} 2s infinite ease-in-out both;
   }
@@ -79,7 +86,7 @@ const LoadingDot = styled.div`
   }
 `;
 
-export default () => {
+const Circles = () => {
   return (
     <LoaderWrapper>
       <LoadingDot />
@@ -91,3 +98,23 @@ export default () => {
     </LoaderWrapper>
   );
 };
+
+export default function Loader({ children }) {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(false);
+  }, []);
+
+  return (
+    <>
+      {loading ? (
+        <PageWrapper>
+          <Circles />
+        </PageWrapper>
+      ) : (
+        children
+      )}
+    </>
+  );
+}

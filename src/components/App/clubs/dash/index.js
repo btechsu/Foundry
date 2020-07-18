@@ -222,8 +222,9 @@ const SearchBox = ({ currentRefinement, refine }) => (
 const Hits = ({ hits }) => {
   return (
     <>
-      {hits.map((hit) => (
+      {hits.map((hit, i) => (
         <ClubCard
+          key={i}
           to={`/club/${hit.objectID}`}
           title={hit.name}
           text={hit.description}

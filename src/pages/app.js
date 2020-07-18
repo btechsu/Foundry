@@ -5,6 +5,7 @@ import { Router } from '@reach/router';
 
 import UnprivateRoute from '@components/UnprivateRoute';
 import PrivateRoute from '@components/PrivateRoute';
+import Loader from '@components/loader'
 
 // components
 import ErrorPage from './404';
@@ -24,7 +25,7 @@ const App = ({ data }) => {
   const dashboardDoc = data.prismic.allDashboards.edges.slice(0, 1).pop();
 
   return (
-    <Router basepath="/app" component={React.Fragment}>
+    <Router basepath="/app" component={Loader}>
       <ErrorPage default />
       <UnprivateRoute path="/login" component={Login} title="Login" />
       <UnprivateRoute
