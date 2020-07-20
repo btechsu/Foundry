@@ -51,6 +51,7 @@ export default ClubTemplate;
 export const query = graphql`
   query clubQuery($clubID: String!) {
     clubs(id: { eq: $clubID }) {
+      id
       name
       description
       room

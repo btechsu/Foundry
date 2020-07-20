@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 // styles
 import styled from 'styled-components';
@@ -8,14 +9,13 @@ import { FormattedIcon } from '@components/icons';
 const { fontSizes } = theme;
 
 const ModalWrapper = styled.div`
-  display: ${(props) => (props.show ? 'block' : 'none')};
+  display: block;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 9998;
   width: 100%;
   height: 100%;
-  background-color: black;
   background-color: rgba(0, 0, 0, 0.4);
   transition: all 0.3s linear;
 `;
@@ -29,10 +29,10 @@ const ModalContent = styled.div`
 `;
 const StyledCard = styled(Card)`
   display: grid;
-  grid-template-rows: minmax(0, 3rem) 1fr;
+  grid-template-rows: 1fr 2fr;
   grid-template-areas: 'header' 'body';
-  grid-gap: 0.5rem;
-  margin: 0 15px;
+  max-width: 500px;
+  margin: 15px;
 `;
 const HeaderWrapper = styled.div`
   display: grid;
@@ -42,6 +42,7 @@ const HeaderItems = styled.div`
   display: grid;
   align-items: center;
   grid-template-columns: 1fr auto;
+  grid-gap: 1rem;
 `;
 const HeaderText = styled.h3`
   color: var(--color-text);
@@ -56,7 +57,6 @@ const IconWrapper = styled.button`
   background: none;
   border: none;
   cursor: pointer;
-  margin-left: 2rem;
 
   :focus {
     outline: 0;
@@ -74,28 +74,40 @@ const BodyWrapper = styled.div`
   grid-area: body;
 `;
 
-const Modal = ({ open, header, children }) => {
-  const [modalOpen, setModalOpen] = useState(open);
+class Modal extends Component {
+  onClose = (e) => {
+    this.props.onClose && this.props.onClose(e);
+  };
 
-  return (
-    <>
-      <ModalWrapper show={modalOpen}>
+  render() {
+    if (!this.props.open) {
+      return null;
+    }
+
+    return (
+      <ModalWrapper>
         <ModalContent>
-          <StyledCard>
+          <StyledCard nopadding>
             <HeaderWrapper>
               <HeaderItems>
-                <HeaderText>{header}</HeaderText>
-                <IconWrapper onClick={() => setModalOpen(false)}>
+                <HeaderText>{this.props.header}</HeaderText>
+                <IconWrapper onClick={this.onClose}>
                   <FormattedIcon name="cancel" />
                 </IconWrapper>
               </HeaderItems>
             </HeaderWrapper>
-            <BodyWrapper>{children}</BodyWrapper>
+            <BodyWrapper>{this.props.children}</BodyWrapper>
           </StyledCard>
         </ModalContent>
       </ModalWrapper>
-    </>
-  );
-};
+    );
+  }
+}
 
 export default Modal;
+
+Modal.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  open: PropTypes.bool.isRequired,
+  header: PropTypes.string,
+};

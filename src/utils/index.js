@@ -40,4 +40,19 @@ export const getuser = () => {
   return null;
 };
 
+export const emailVerified = () => {
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem('authUser')) {
+      let authUser = JSON.parse(localStorage.getItem('authUser'));
+      if (authUser) {
+        if (authUser.emailVerified) return true;
+      }
+    }
+
+    return null;
+  }
+
+  return false;
+};
+
 export { config, ROUTES, linkResolver };

@@ -8,8 +8,8 @@ import NProgress from 'nprogress';
 
 // logic
 import { Formik, Form, Field } from 'formik';
-import { FirebaseContext } from '@Firebase';
 import { isEqual, sortBy } from 'lodash';
+import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
@@ -161,7 +161,7 @@ function Checkbox(props) {
 }
 
 const EmailCard = () => {
-  const { firebase, user } = useContext(FirebaseContext) || {};
+  const { user, firebase } = useContext(FirebaseContext);
 
   if (!user)
     return (

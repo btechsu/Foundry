@@ -30,7 +30,26 @@ exports.createPages = ({ graphql, actions }) => {
 };
 
 // https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
-exports.onCreateWebpackConfig = ({ actions }) => {
+// https://www.gatsbyjs.org/docs/debugging-html-builds/
+// https://github.com/gregberge/loadable-components
+exports.onCreateWebpackConfig = ({ stage, actions, loaders }) => {
+  if (stage === 'build-html') {
+    actions.setWebpackConfig({
+      module: {
+        rules: [
+          {
+            test: /react-editor-js/,
+            use: loaders.null(),
+          },
+          {
+            test: /@editorjs/,
+            use: loaders.null(),
+          },
+        ],
+      },
+    });
+  }
+
   actions.setWebpackConfig({
     resolve: {
       alias: {

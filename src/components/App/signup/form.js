@@ -37,10 +37,6 @@ const FormButton = styled(ClickableButton)`
   ${mixins.bigButton};
   width: 100%;
   margin-bottom: 1rem;
-
-  :disabled {
-    cursor: default;
-  }
 `;
 const FormError = styled.span`
   color: var(--color-error);

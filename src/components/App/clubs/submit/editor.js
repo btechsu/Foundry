@@ -84,6 +84,11 @@ const SmallText = styled.p`
   margin-top: 0;
   margin-bottom: 1rem;
 `;
+const StyledSelect = styled(FormGroup)`
+  select {
+    -webkit-appearance: none;
+  }
+`;
 
 const EDITOR_JS_TOOLS = {
   paragraph: {
@@ -146,6 +151,7 @@ const FormSchema = Yup.object().shape({
     .max(250, 'Please keep your description under 250 characters')
     .min(100, 'Your description has to be longer than 100 characters'),
   room: Yup.string().required('A club room is required'),
+  credits: Yup.string().required('Amount of club credits are required'),
   days: Yup.string().required('Please specify day(s) that your club meets'),
   time: Yup.string().required('Please specify the time your club starts at'),
   type: Yup.string().required('Please pick what type of club you have'),
@@ -167,10 +173,11 @@ class Editor extends Component {
           time: values.time,
           type: values.type,
           text: edit.blocks,
+          credits: values.credits,
         });
       })
       .then(() => {
-        navigate(ROUTES.SUBMIT_CLUB_SUCESS);
+        navigate(ROUTES.SUBMIT_CLUB_SUCCESS);
         setSubmitting(false);
         NProgress.done(true);
       })
@@ -193,6 +200,7 @@ class Editor extends Component {
           description: undefined,
           room: undefined,
           days: undefined,
+          credits: undefined,
           time: undefined,
           type: undefined,
         }}
@@ -230,7 +238,7 @@ class Editor extends Component {
           }
         }}
       >
-        {({ isSubmitting, dirty, submitCount, status }) => (
+        {({ isSubmitting, submitCount, status }) => (
           <Form>
             <FormWrapper>
               <Wrapper>
@@ -292,7 +300,7 @@ class Editor extends Component {
                       />
                       <ErrorMessage component="span" name="time" />
                     </FormGroup>
-                    <FormGroup>
+                    <StyledSelect>
                       {/* eslint-disable-next-line jsx-a11y/label-has-for */}
                       <label htmlFor="days">Type</label>
                       <Field
@@ -310,6 +318,19 @@ class Editor extends Component {
                         {/* eslint-enable jsx-a11y/control-has-associated-label */}
                       </Field>
                       <ErrorMessage component="span" name="type" />
+                    </StyledSelect>
+                    <FormGroup>
+                      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+                      <label htmlFor="credits">
+                        Club credits (per semester)
+                      </label>
+                      <Field
+                        type="text"
+                        name="credits"
+                        id="credits"
+                        placeholder="5"
+                      />
+                      <ErrorMessage component="span" name="credits" />
                     </FormGroup>
                     <div>
                       <ReCAPTCHA

@@ -29,6 +29,10 @@ const LoaderWrapper = styled.div`
   height: 40px;
   position: relative;
   animation: ${AnimWrapper} 2.5s infinite linear both;
+
+  :focus {
+    outline: none;
+  }
 `;
 const LoadingDot = styled.div`
   width: 100%;
@@ -86,7 +90,7 @@ const LoadingDot = styled.div`
   }
 `;
 
-const Circles = () => {
+export const Circles = () => {
   return (
     <LoaderWrapper>
       <LoadingDot />

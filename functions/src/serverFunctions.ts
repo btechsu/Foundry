@@ -49,40 +49,22 @@ export const verifyCaptchaToken = functions.https.onCall(
 export const userDeleted = functions.auth.user().onDelete((user) => {
   return admin.firestore().collection('users').doc(user.uid).delete();
 });
-export const indexClub = functions.firestore
-  .document('clubs/{clubID}')
-  .onCreate((snap, context) => {
-    const data = snap.data();
-    const objectID = snap.id;
-
-    // Add the data to the algolia index
-    return index.saveObject({
-      objectID,
-      ...data,
-    });
-  });
-export const updateIndexClub = functions.firestore
-  .document('clubs/{clubID}')
-  .onUpdate((snap, context) => {
-    const data = snap.after.data();
-    const objectID = snap.after.id;
-
-    // Add the data to the algolia index
-    return index.saveObject({
-      objectID,
-      ...data,
-    });
-  });
-export const unindexClub = functions.firestore
-  .document('clubs/{clubID}')
-  .onDelete((snap, context) => {
-    const objectID = snap.id;
-
-    // Delete an ID from the index
-    return index.deleteObject(objectID);
-  });
 export const onUpdateClubs = functions.firestore
   .document('clubs/{clubID}')
-  .onWrite((snap, context) => {
+  .onWrite(async (change, context) => {
+    if (change.after.data() === undefined) {
+      const objectID = change.before.id;
+      // Delete an ID from the index
+      await index.deleteObject(objectID);
+    } else {
+      const objectID = change.after.id;
+      const data = change.after.data();
+      // Index new data to algolia
+      await index.saveObject({
+        objectID,
+        ...data,
+      });
+    }
+
     return axios.post(env.apis.netlify);
   });

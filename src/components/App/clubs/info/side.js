@@ -1,16 +1,18 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { ROUTES } from '@utils';
+import { navigate } from 'gatsby';
+import { emailVerified } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import {
-  theme,
-  media,
-  mixins,
-  Card,
-  ClickableButton,
-} from '@styles';
+import { theme, media, mixins, Card, ClickableButton } from '@styles';
 import { FormattedIcon } from '@components/icons';
+import Modal from '@components/Modal';
+import NProgress from 'nprogress';
+import { Circles } from '@components/loader';
+
+import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
@@ -70,6 +72,9 @@ const BodyText = styled.p`
   ${mixins.normalText};
   margin: 0;
 `;
+const ErrorMessage = styled.p`
+  color: var(--color-error);
+`;
 const FooterWrapper = styled.div`
   grid-area: footer;
 `;
@@ -101,53 +106,120 @@ const FooterSmallText = styled.p`
 `;
 
 const Side = ({ data }) => {
+  const { firebase, user } = useContext(FirebaseContext);
+  const [openModal, setOpenModal] = useState(false);
+  const [joining, setJoining] = useState(false);
+  const [error, setError] = useState(null);
+  const same = [];
+
+  if (!!user) {
+    user.clubs.forEach((ref) => {
+      if (ref.ID === data.id && ref.status !== 'denied') same.push(ref.ID);
+    });
+  }
+
   return (
-    <GridWrapper>
-      <JoinButton>Request to join</JoinButton>
-      <ContactButton
-        target="_blank"
-        rel="noopener"
-        href={`mailto:${data.president}?subject=I have a question about ${data.name}`}
+    <>
+      <Modal
+        open={openModal}
+        onClose={() => setOpenModal(false)}
+        header="Are you sure you want to join this club?"
       >
-        Contact administrator
-      </ContactButton>
-      <StyledCard>
-        <HeaderWrapper>
-          <HeaderItems>
-            <HeaderText>
-              {data.name} <HeaderClubType>{data.type}</HeaderClubType>
-            </HeaderText>
-          </HeaderItems>
-        </HeaderWrapper>
-        <BodyWrapper>
-          <BodyText>{data.description}</BodyText>
-        </BodyWrapper>
-        <FooterWrapper>
-          <FooterIcons>
-            {data.room && (
-              <FooterIconWrapper>
-                <FormattedIcon name="room" />
-                <FooterSmallText className="transform">
-                  {data.room}
-                </FooterSmallText>
-              </FooterIconWrapper>
-            )}
-            {data.time && (
-              <FooterIconWrapper>
-                <FormattedIcon name="clock" />
-                <FooterSmallText className="transform">{`${data.days} @ ${data.time}`}</FooterSmallText>
-              </FooterIconWrapper>
-            )}
-            {data.president && (
-              <FooterIconWrapper>
-                <FormattedIcon name="user" />
-                <FooterSmallText>{data.president}</FooterSmallText>
-              </FooterIconWrapper>
-            )}
-          </FooterIcons>
-        </FooterWrapper>
-      </StyledCard>
-    </GridWrapper>
+        {!firebase && !user && <Circles />}
+        {firebase && user && (
+          <>
+            <BodyText>
+              You can only join this club once and this action cannot be undone.
+              If your request gets denied, you may apply again.
+            </BodyText>
+            <br />
+            <BodyText>Are you sure you want to continue?</BodyText>
+            <br />
+            {error ? (
+              <>
+                <ErrorMessage>{error}</ErrorMessage>
+                <br />
+              </>
+            ) : null}
+            <JoinButton
+              disabled={joining}
+              onClick={() => {
+                NProgress.start();
+                setJoining(true);
+                firebase
+                  .joinClub({ clubID: data.id, userID: user.uid })
+                  .then(() => {
+                    NProgress.done(true);
+                    setJoining(false);
+                    navigate(ROUTES.JOIN_CLUB_SUCCESS);
+                  })
+                  .catch((err) => {
+                    NProgress.done(true);
+                    setJoining(false);
+                    setError(err.message || 'An unknown error has occurred.');
+                  });
+              }}
+            >
+              Request to join
+            </JoinButton>
+          </>
+        )}
+      </Modal>
+      <GridWrapper>
+        {emailVerified() && same.length === 0 && (
+          <JoinButton
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            Request to join
+          </JoinButton>
+        )}
+        <ContactButton
+          target="_blank"
+          rel="noopener"
+          href={`mailto:${data.president}?subject=I have a question about ${data.name}`}
+        >
+          Contact administrator
+        </ContactButton>
+        <StyledCard>
+          <HeaderWrapper>
+            <HeaderItems>
+              <HeaderText>
+                {data.name} <HeaderClubType>{data.type}</HeaderClubType>
+              </HeaderText>
+            </HeaderItems>
+          </HeaderWrapper>
+          <BodyWrapper>
+            <BodyText>{data.description}</BodyText>
+          </BodyWrapper>
+          <FooterWrapper>
+            <FooterIcons>
+              {data.room && (
+                <FooterIconWrapper>
+                  <FormattedIcon name="room" />
+                  <FooterSmallText className="transform">
+                    {data.room}
+                  </FooterSmallText>
+                </FooterIconWrapper>
+              )}
+              {data.time && (
+                <FooterIconWrapper>
+                  <FormattedIcon name="clock" />
+                  <FooterSmallText className="transform">{`${data.days} @ ${data.time}`}</FooterSmallText>
+                </FooterIconWrapper>
+              )}
+              {data.president && (
+                <FooterIconWrapper>
+                  <FormattedIcon name="user" />
+                  <FooterSmallText>{data.president}</FooterSmallText>
+                </FooterIconWrapper>
+              )}
+            </FooterIcons>
+          </FooterWrapper>
+        </StyledCard>
+      </GridWrapper>
+    </>
   );
 };
 

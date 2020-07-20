@@ -33,6 +33,10 @@ const ClickableButton = styled.button`
   line-height: 1.5;
   min-width: 8rem;
   transition: all 0.1s ease-in-out;
+
+  :disabled {
+    cursor: default;
+  }
 `;
 
 export { Button, ClickableButton };

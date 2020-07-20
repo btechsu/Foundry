@@ -1,3 +1,5 @@
+import { ref } from 'yup';
+
 const config = {
   apiKey: process.env.GATSBY_FIREBASE_KEY,
   authDomain: process.env.GATSBY_FIREBASE_DOMAIN,
@@ -36,6 +38,7 @@ class Firebase {
   doSendVerificationEmail = () => this.auth.currentUser.sendEmailVerification();
   doSendPasswordResetEmail = ({ email }) =>
     this.auth.sendPasswordResetEmail(email);
+  // gets user profile in real time
   getUserProfile = ({ userID, onSnapshot }) =>
     this.db.collection('users').doc(userID).onSnapshot(onSnapshot);
   getCurrentCredential = ({ email, password }) => this.cred(email, password);
@@ -58,7 +61,16 @@ class Firebase {
     batch.update(userRef, { mail: selected });
     return batch.commit();
   };
-  submitClub = ({ email, description, room, days, time, type, text }) =>
+  submitClub = ({
+    email,
+    description,
+    room,
+    days,
+    time,
+    type,
+    text,
+    credits,
+  }) =>
     this.functions.httpsCallable('submitClub')({
       email: email,
       description: description,
@@ -66,8 +78,51 @@ class Firebase {
       days: days,
       time: time,
       type: type,
+      credits: credits,
       text: text,
     });
+  /*
+   * The following function 'joinClub' is a function called when the user want to join a club
+   * First, we get the userDoc
+   * We see if there is an array called 'clubs' in the userDoc
+   * If there is, we loop though all the array values
+   * While looping, we check if the current club we are looking at is equal to the one the user is applying...
+   * ...for and if their application has alreeady be 'denied'. If it has, we don't push it to the new array...
+   * ...All the other values but the clubs that have been rejected are pushed to a new array.
+   * The old 'clubs' array is deleted and the new one is pushed to the userDoc
+   */
+  joinClub = ({ clubID, userID }) => {
+    const userDocRef = this.db.collection('users').doc(userID);
+    const clubDoc = this.db.doc(`/clubs/${clubID}`);
+
+    return this.db.runTransaction((transaction) => {
+      return transaction.get(userDocRef).then((userDoc) => {
+        const clubs = [
+          {
+            club: clubDoc,
+            status: 'pending',
+          },
+        ];
+        const clubData = !userDoc.data() ? undefined : userDoc.data().clubs;
+
+        if (clubData !== undefined && clubData.length !== 0) {
+          clubData.forEach((reference) => {
+            console.log(reference);
+            if (reference.club !== clubDoc) {
+              if (reference.status !== 'denied') {
+                clubs.push(reference);
+              }
+            }
+          });
+        }
+
+        transaction.update(userDocRef, {
+          clubs: this.firestore.FieldValue.delete(),
+        });
+        transaction.update(userDocRef, { clubs: clubs });
+      });
+    });
+  };
 }
 
 let firebaseInstance;

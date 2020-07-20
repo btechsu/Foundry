@@ -5,7 +5,7 @@ import { Router } from '@reach/router';
 
 import UnprivateRoute from '@components/UnprivateRoute';
 import PrivateRoute from '@components/PrivateRoute';
-import Loader from '@components/loader'
+import Loader from '@components/loader';
 
 // components
 import ErrorPage from './404';
@@ -18,6 +18,7 @@ import {
   Clubs,
   SubmitClub,
   SubmitClubSent,
+  JoinClubSent,
 } from '@app';
 
 const App = ({ data }) => {
@@ -60,6 +61,11 @@ const App = ({ data }) => {
         path="/clubs/submit/success"
         component={SubmitClubSent}
         title="Submitted club"
+      />
+      <PrivateRoute
+        path="/clubs/join/success"
+        component={JoinClubSent}
+        title="Submitted club application"
       />
     </Router>
   );

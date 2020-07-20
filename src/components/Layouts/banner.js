@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { getuser } from '@utils';
+import { emailVerified, isloggedin } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -42,56 +42,53 @@ const StyledButton = styled.button`
 `;
 
 const Banner = () => {
-  const currentUser = getuser();
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(false);
   const { firebase } = useContext(FirebaseContext);
 
   // check if there is a user record in the localstorage
-  if (currentUser) {
-    if (!currentUser.emailVerified)
-      return (
-        <Wrapper success={success}>
-          <Container normal>
-            <ContentWrapper>
-              {!success && !error && (
-                <StyledTitle>
-                  <strong>Uh-oh!</strong> Looks like your email isn't verified!
-                  Click{' '}
-                  <StyledButton
-                    onClick={() => {
-                      firebase
-                        .doSendVerificationEmail()
-                        .then(() => {
-                          setSuccess(true);
-                        })
-                        .catch((err) => {
-                          setError(
-                            err.message
-                              ? err.message
-                              : 'An unknown error has occurred. Try refreshing the page or re-logging.'
-                          );
-                        });
-                    }}
-                  >
-                    here
-                  </StyledButton>{' '}
-                  to recieve an email with your verificaion link.
-                </StyledTitle>
-              )}
-              {success && (
-                <StyledTitle success={success}>
-                  <strong>Check your inbox.</strong> We sent a verificaion link
-                  to your Brooklyn Tech email. The link is valid for the next 2
-                  hours.
-                </StyledTitle>
-              )}
-              {error && <StyledTitle success={success}>{error}</StyledTitle>}
-            </ContentWrapper>
-          </Container>
-        </Wrapper>
-      );
-  }
+  if (emailVerified() === false && emailVerified() !== null)
+    return (
+      <Wrapper success={success}>
+        <Container normal>
+          <ContentWrapper>
+            {!success && !error && (
+              <StyledTitle>
+                <strong>Uh-oh!</strong> Looks like your email isn't verified!
+                Click{' '}
+                <StyledButton
+                  onClick={() => {
+                    firebase
+                      .doSendVerificationEmail()
+                      .then(() => {
+                        setSuccess(true);
+                      })
+                      .catch((err) => {
+                        setError(
+                          err.message
+                            ? err.message
+                            : 'An unknown error has occurred. Try refreshing the page or re-logging.'
+                        );
+                      });
+                  }}
+                >
+                  here
+                </StyledButton>{' '}
+                to recieve an email with your verificaion link.
+              </StyledTitle>
+            )}
+            {success && (
+              <StyledTitle success={success}>
+                <strong>Check your inbox.</strong> We sent a verificaion link to
+                your Brooklyn Tech email. The link is valid for the next 2
+                hours.
+              </StyledTitle>
+            )}
+            {error && <StyledTitle success={success}>{error}</StyledTitle>}
+          </ContentWrapper>
+        </Container>
+      </Wrapper>
+    );
 
   return null;
 };

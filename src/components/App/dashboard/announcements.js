@@ -60,8 +60,6 @@ const List = styled.div`
   grid-gap: 1rem;
 `;
 const ListItem = styled.div`
-  opacity: 1;
-  transform: none;
   display: grid;
   grid-template-columns: auto auto 1fr;
   align-items: start;
@@ -88,15 +86,6 @@ const ListIconWrapper = styled.div`
   margin-right: 1rem;
   position: relative;
 `;
-const StyledIcon = styled.div`
-  svg {
-    fill: currentColor;
-    width: 10px;
-    height: 10px;
-    color: ${(props) =>
-      props.unread ? 'var(--color-secondary)' : 'var(--color-gray-700)'};
-  }
-`;
 const ListHoverable = styled.a`
   display: inline-block;
   text-decoration: none;
@@ -111,6 +100,15 @@ const ListHoverable = styled.a`
   :active {
     outline: 0;
     text-decoration: underline;
+  }
+`;
+const StyledIcon = styled.div`
+  svg {
+    fill: currentColor;
+    width: 10px;
+    height: 10px;
+    color: ${(props) =>
+      props.unread ? 'var(--color-secondary)' : 'var(--color-gray-700)'};
   }
 `;
 const FooterWrapper = styled.div`

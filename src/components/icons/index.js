@@ -8,3 +8,4 @@ export { default as IconUser } from './user';
 export { default as IconSearch } from './search';
 export { default as IconCancel } from './cancel';
 export { default as IconChevron } from './chevron';
+export { default as IconError } from './error';

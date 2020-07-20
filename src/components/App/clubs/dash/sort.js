@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { isloggedin, ROUTES } from '@utils';
+import { ROUTES, emailVerified } from '@utils';
 
 // styles
 import styled from 'styled-components';
@@ -76,9 +76,10 @@ const SubmitButton = styled(Button)`
 
 const Sort = ({ children }) => {
   const [chevron, setChevron] = useState(false);
+
   return (
     <GridWrapper>
-      {isloggedin() && (
+      {emailVerified() && (
         <SubmitButton to={ROUTES.SUBMIT_CLUB}>Submit a club</SubmitButton>
       )}
       <StyledCard>

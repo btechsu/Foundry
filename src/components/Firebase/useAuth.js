@@ -26,11 +26,46 @@ function useAuth() {
               firebaseInstance.auth.currentUser
                 .getIdTokenResult(true)
                 .then((token) => {
-                  setUser({
-                    ...userResult,
-                    isAdmin: token.claims.admin,
-                    emailPrefs: !r.data() ? undefined : r.data().mail,
-                  });
+                  const clubs = [];
+                  const clubData = !r.data() ? undefined : r.data().clubs;
+                  if (clubData !== undefined && clubData.length !== 0) {
+                    clubData.forEach((reference) => {
+                      reference.club.get().then((clubDoc) => {
+                        if (clubDoc.exists) {
+                          const id = reference.club.id;
+                          const name = clubDoc.data().name;
+                          const room = clubDoc.data().room;
+                          const time = clubDoc.data().time;
+                          const days = clubDoc.data().days;
+                          const status = reference.status;
+                          clubs.push({
+                            ID: id,
+                            name: name,
+                            room: room,
+                            time: time,
+                            days: days,
+                            status: status,
+                          });
+                        }
+
+                        setUser({
+                          ...userResult,
+                          isAdmin: !token.claims.admin
+                            ? false
+                            : token.claims.admin,
+                          emailPrefs: !r.data() ? undefined : r.data().mail,
+                          clubs: clubs,
+                        });
+                      });
+                    });
+                  } else {
+                    setUser({
+                      ...userResult,
+                      isAdmin: !token.claims.admin ? false : token.claims.admin,
+                      emailPrefs: !r.data() ? undefined : r.data().mail,
+                      clubs: clubs,
+                    });
+                  }
                 });
             },
           });
