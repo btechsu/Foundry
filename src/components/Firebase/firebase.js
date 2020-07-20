@@ -1,5 +1,3 @@
-import { ref } from 'yup';
-
 const config = {
   apiKey: process.env.GATSBY_FIREBASE_KEY,
   authDomain: process.env.GATSBY_FIREBASE_DOMAIN,

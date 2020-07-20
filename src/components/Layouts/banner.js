@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { emailVerified, isloggedin } from '@utils';
+import { emailVerified } from '@utils';
 
 // styles
 import styled from 'styled-components';
