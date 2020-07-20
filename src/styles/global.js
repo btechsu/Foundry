@@ -126,6 +126,11 @@ const GlobalStyle = createGlobalStyle`
   p {
     line-height: 160%;
   }
+
+  .ce-inline-toolbar__dropdown,
+  .ce-conversion-toolbar__tools {
+    color: var(--color-always-black);
+  }
 `;
 
 export default GlobalStyle;

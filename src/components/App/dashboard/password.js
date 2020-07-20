@@ -7,8 +7,8 @@ import {
   FormGroup,
   ClickableButton,
   theme,
-  media,
   mixins,
+  GridCol,
 } from '@styles';
 import NProgress from 'nprogress';
 
@@ -20,14 +20,6 @@ import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 4;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 6;`};
-  ${media.tablet`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
@@ -94,7 +86,7 @@ const PasswordCard = () => {
   if (!firebase) return null;
 
   return (
-    <GridWrapper>
+    <GridCol spans={4} tabletSpans={6}>
       <StyledCard>
         <HeaderWrapper>
           <HeaderItems>
@@ -224,7 +216,7 @@ const PasswordCard = () => {
           </RegistrationContainer>
         </BodyWrapper>
       </StyledCard>
-    </GridWrapper>
+    </GridCol>
   );
 };
 

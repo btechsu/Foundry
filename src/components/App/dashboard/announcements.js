@@ -4,7 +4,7 @@ import { ROUTES } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { Card, DropDown, mixins, theme, media } from '@styles';
+import { mixins, theme, media, Card, DropDown, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 // form
@@ -12,13 +12,6 @@ import { Formik, Form, Field } from 'formik';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 7;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 3rem) 1fr minmax(0, max-content);
@@ -213,7 +206,7 @@ const AnnouncementsCard = () => {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   return (
-    <GridWrapper>
+    <GridCol spans={7}>
       <StyledCard>
         <HeaderWrapper>
           <HeaderItems>
@@ -350,7 +343,7 @@ const AnnouncementsCard = () => {
           </FooterButton>
         </FooterWrapper>
       </StyledCard>
-    </GridWrapper>
+    </GridCol>
   );
 };
 

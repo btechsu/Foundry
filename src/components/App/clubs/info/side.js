@@ -6,7 +6,7 @@ import { emailVerified } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { theme, media, mixins, Card, ClickableButton } from '@styles';
+import { theme, mixins, Card, ClickableButton, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 import Modal from '@components/Modal';
 import NProgress from 'nprogress';
@@ -16,13 +16,6 @@ import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 4;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
@@ -165,7 +158,7 @@ const Side = ({ data }) => {
           </>
         )}
       </Modal>
-      <GridWrapper>
+      <GridCol>
         {emailVerified() && same.length === 0 && (
           <JoinButton
             onClick={() => {
@@ -218,7 +211,7 @@ const Side = ({ data }) => {
             </FooterIcons>
           </FooterWrapper>
         </StyledCard>
-      </GridWrapper>
+      </GridCol>
     </>
   );
 };

@@ -4,17 +4,11 @@ import { RichText, Elements } from 'prismic-reactjs';
 
 // styles
 import styled from 'styled-components';
-import { mixins, theme, media } from '@styles';
+import { mixins, theme, media, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 const { fontSizes } = theme;
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-column-end: span 12;
-  z-index: 1;
-  margin-top: 4rem;
-`;
 const ElementsWrapper = styled.div`
   display: grid;
   grid-gap: 1rem;
@@ -100,7 +94,7 @@ const SocialSection = ({ data }) => {
   const socialArray = data.social;
 
   return (
-    <Wrapper>
+    <GridCol spans={12}>
       <ElementsWrapper>
         <TitleContainer>
           <StyledTitle>Community @ The Foundry</StyledTitle>
@@ -144,7 +138,7 @@ const SocialSection = ({ data }) => {
           ))}
         </CardGrid>
       </ElementsWrapper>
-    </Wrapper>
+    </GridCol>
   );
 };
 

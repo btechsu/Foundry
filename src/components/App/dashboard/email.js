@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 // styles
 import styled from 'styled-components';
-import { Card, theme, media, mixins } from '@styles';
+import { theme, mixins, Card, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 import NProgress from 'nprogress';
 
@@ -13,13 +13,6 @@ import { FirebaseContext } from '@Firebase';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 4;
-
-  ${media.desktop`grid-column-end: span 6;`};
-  ${media.tablet`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
@@ -159,134 +152,123 @@ function Checkbox(props) {
     </Field>
   );
 }
-
-const EmailCard = () => {
+const EmailBody = () => {
   const { user, firebase } = useContext(FirebaseContext);
 
-  if (!user)
+  if (!user || !firebase) {
     return (
-      <GridWrapper>
-        <StyledCard>
-          <HeaderWrapper>
-            <HeaderItems>
-              <HeaderText>
-                <span role="img" aria-label="">
-                  📥
-                </span>{' '}
-                Mail settings
-              </HeaderText>
-            </HeaderItems>
-          </HeaderWrapper>
-          <BodyWrapper>
-            <Loading />
-            <Loading />
-            <Loading />
-            <Loading />
-          </BodyWrapper>
-        </StyledCard>
-      </GridWrapper>
+      <BodyWrapper>
+        <Loading />
+        <Loading />
+        <Loading />
+        <Loading />
+      </BodyWrapper>
     );
-  else
+  } else {
     return (
-      <GridWrapper>
-        <StyledCard>
-          <HeaderWrapper>
-            <HeaderItems>
-              <HeaderText>
-                <span role="img" aria-label="">
-                  📥
-                </span>{' '}
-                Mail settings
-              </HeaderText>
-            </HeaderItems>
-          </HeaderWrapper>
-          <BodyWrapper>
-            <Formik
-              initialValues={{
-                roles: !user.emailPrefs ? [] : sortBy(user.emailPrefs),
-              }}
-              onSubmit={(values, { setSubmitting, setStatus }) => {
-                NProgress.start();
-                setSubmitting(true);
-                firebase
-                  .updateEmail({
-                    selected: values.roles,
-                    userID: user.uid,
-                  })
-                  .then(() => {
-                    NProgress.done(true);
-                    setSubmitting(false);
-                    setStatus({
-                      type: 'success',
-                      message: 'Successfully updated your email preferences!',
-                    });
-                    setTimeout(() => {
-                      setStatus(null);
-                    }, 3000);
-                  })
-                  .catch((err) => {
-                    NProgress.done(true);
-                    setSubmitting(false);
-                    setStatus({
-                      type: 'error',
-                      message:
-                        err.message ||
-                        'An unknown error occured. Try refreshing the page.',
-                    });
-                  });
-              }}
-            >
-              {({ initialValues, values, status }) => (
-                <Form>
-                  <div>
-                    <Checkbox
-                      name="roles"
-                      value="clubs"
-                      title="Clubs"
-                      description="Announcements posted by clubs you're in."
-                    />
-                    <Checkbox
-                      name="roles"
-                      value="grade"
-                      title="Grade"
-                      description="Announcements posted for your grade level."
-                    />
-                    <Checkbox
-                      name="roles"
-                      value="news"
-                      title="News"
-                      description="Get weekly emails with new articles."
-                    />
-                    <Checkbox
-                      name="roles"
-                      value="updates"
-                      title="Updates"
-                      description="Get emails when we update the platform."
-                    />
-                  </div>
-                  {!!status && (
-                    <FormMessage type={status.type}>
-                      {status.message}
-                    </FormMessage>
-                  )}
-                  <FooterWrapper>
-                    <FooterButton
-                      hide={isEqual(
-                        sortBy(initialValues.roles),
-                        sortBy(values.roles)
-                      )}
-                      type="submit"
-                    >
-                      Change preferences <FormattedIcon name="right-arrow" />
-                    </FooterButton>
-                  </FooterWrapper>
-                </Form>
+      <BodyWrapper>
+        <Formik
+          initialValues={{
+            roles: !user.emailPrefs ? [] : sortBy(user.emailPrefs),
+          }}
+          onSubmit={(values, { setSubmitting, setStatus }) => {
+            NProgress.start();
+            setSubmitting(true);
+            firebase
+              .updateEmail({
+                selected: values.roles,
+                userID: user.uid,
+              })
+              .then(() => {
+                NProgress.done(true);
+                setSubmitting(false);
+                setStatus({
+                  type: 'success',
+                  message: 'Successfully updated your email preferences!',
+                });
+                setTimeout(() => {
+                  setStatus(null);
+                }, 3000);
+              })
+              .catch((err) => {
+                NProgress.done(true);
+                setSubmitting(false);
+                setStatus({
+                  type: 'error',
+                  message:
+                    err.message ||
+                    'An unknown error occured. Try refreshing the page.',
+                });
+              });
+          }}
+        >
+          {({ initialValues, values, status }) => (
+            <Form>
+              <div>
+                <Checkbox
+                  name="roles"
+                  value="clubs"
+                  title="Clubs"
+                  description="Announcements posted by clubs you're in."
+                />
+                <Checkbox
+                  name="roles"
+                  value="grade"
+                  title="Grade"
+                  description="Announcements posted for your grade level."
+                />
+                <Checkbox
+                  name="roles"
+                  value="news"
+                  title="News"
+                  description="Get weekly emails with new articles."
+                />
+                <Checkbox
+                  name="roles"
+                  value="updates"
+                  title="Updates"
+                  description="Get emails when we update the platform."
+                />
+              </div>
+              {!!status && (
+                <FormMessage type={status.type}>{status.message}</FormMessage>
               )}
-            </Formik>
-          </BodyWrapper>
-        </StyledCard>
-      </GridWrapper>
+              <FooterWrapper>
+                <FooterButton
+                  hide={isEqual(
+                    sortBy(initialValues.roles),
+                    sortBy(values.roles)
+                  )}
+                  type="submit"
+                >
+                  Change preferences <FormattedIcon name="right-arrow" />
+                </FooterButton>
+              </FooterWrapper>
+            </Form>
+          )}
+        </Formik>
+      </BodyWrapper>
     );
+  }
+};
+const EmailCard = () => {
+  return (
+    <GridCol tabletSpans={6}>
+      <StyledCard>
+        <HeaderWrapper>
+          <HeaderItems>
+            <HeaderText>
+              <span role="img" aria-label="">
+                📥
+              </span>{' '}
+              Mail settings
+            </HeaderText>
+          </HeaderItems>
+        </HeaderWrapper>
+        <EmailBody />
+      </StyledCard>
+    </GridCol>
+  );
 };
 
 export default EmailCard;

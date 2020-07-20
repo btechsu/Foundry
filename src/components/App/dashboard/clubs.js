@@ -5,21 +5,13 @@ import { FirebaseContext } from '@Firebase';
 
 // styles
 import styled from 'styled-components';
-import { Card, theme, media, mixins } from '@styles';
+import { theme, mixins, Card, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 import ShareIcon from '@images/other/share.svg';
 import { Circles } from '@components/loader';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 5;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 6;`};
-  ${media.tablet`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr minmax(0, max-content);
@@ -164,10 +156,9 @@ const NothingToSeeYet = () => (
 
 const ClubCard = () => {
   const { user } = useContext(FirebaseContext);
-  console.log(user);
 
   return (
-    <GridWrapper>
+    <GridCol spans={5} tabletSpans={6}>
       <StyledCard>
         <HeaderWrapper>
           <HeaderItems>
@@ -215,7 +206,7 @@ const ClubCard = () => {
           </FooterButton>
         </FooterWrapper>
       </StyledCard>
-    </GridWrapper>
+    </GridCol>
   );
 };
 

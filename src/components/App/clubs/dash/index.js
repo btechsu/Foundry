@@ -13,7 +13,7 @@ import {
 
 // styles
 import styled from 'styled-components';
-import { media, theme, Container } from '@styles';
+import { media, theme, Container, GridWrapper, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 // components
@@ -30,17 +30,6 @@ const PageWrapper = styled.div`
 const CardsContainer = styled.div`
   z-index: 1;
   margin: 3rem 0;
-`;
-const CardGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(11, minmax(0, 1fr));
-  grid-column-gap: 1rem;
-  grid-row-gap: 3rem;
-  align-items: flex-start;
-
-  @media only screen and (min-width: 64rem) {
-    grid-column-gap: 2rem;
-  }
 `;
 
 const StyledForm = styled.form`
@@ -168,20 +157,6 @@ const RefinmentWrapper = styled.div`
     font-size: ${fontSizes.lg};
   }
 `;
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 8;
-  grid-template-columns: repeat(8, minmax(0, 1fr));
-  grid-column-gap: 0.5rem;
-  grid-row-gap: 2rem;
-
-  @media only screen and (min-width: 64rem) {
-    grid-column-gap: 2rem;
-  }
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
 
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
@@ -276,14 +251,16 @@ const Dash = () => {
             <CustomSearchBox />
           </Hero>
           <CardsContainer>
-            <CardGrid>
+            <GridWrapper col={11} align="flex-start">
               <Sort>
                 <CustomRefinements attribute="type" />
               </Sort>
-              <GridWrapper>
-                <CustomHits />
-              </GridWrapper>
-            </CardGrid>
+              <GridCol spans={8}>
+                <GridWrapper col={8} colGap="0.5rem" rowGap="2rem">
+                  <CustomHits />
+                </GridWrapper>
+              </GridCol>
+            </GridWrapper>
             <PaginationWrapper>
               <Pagination />
             </PaginationWrapper>

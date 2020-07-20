@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 // styles
 import styled from 'styled-components';
-import { Container, media } from '@styles';
+import { Container, GridWrapper, media } from '@styles';
 
 // components
 import Hero from './hero';
@@ -27,16 +27,6 @@ const CardsContainer = styled.div`
   ${media.phablet`top: -7rem;`};
   ${media.phone`top: -9rem;`};
 `;
-const CardGridWrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-column-gap: 1rem;
-  grid-row-gap: 3rem;
-
-  @media only screen and (min-width: 64rem) {
-    grid-column-gap: 2rem;
-  }
-`;
 
 const Dashboard = ({ data }) => {
   if (!data) return null;
@@ -46,7 +36,7 @@ const Dashboard = ({ data }) => {
       <Hero />
       <Container normal>
         <CardsContainer>
-          <CardGridWrapper>
+          <GridWrapper>
             <AnnouncementsCard />
             <ClubCard />
             <PollCard />
@@ -54,7 +44,7 @@ const Dashboard = ({ data }) => {
             <PasswordCard />
             <NewsSection />
             <SocialSection data={data} />
-          </CardGridWrapper>
+          </GridWrapper>
         </CardsContainer>
       </Container>
     </PageWrapper>

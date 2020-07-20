@@ -4,15 +4,12 @@ import { useStaticQuery, graphql, Link } from 'gatsby';
 
 // styles
 import styled from 'styled-components';
-import { ClickableCard, mixins, theme } from '@styles';
+import { mixins, theme, ClickableCard, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 const { fontSizes } = theme;
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-column-end: span 12;
-  z-index: 1;
+const CustomCol = styled(GridCol)`
   margin-top: 4rem;
 `;
 const Elements = styled.section`
@@ -118,7 +115,7 @@ const NewsSection = () => {
   `);
 
   return (
-    <Wrapper>
+    <CustomCol spans={12}>
       <Elements>
         <TitleContainer>
           <StyledTitle>Recent tech news</StyledTitle>
@@ -264,7 +261,7 @@ const NewsSection = () => {
           </FooterWrapper>
         </StyledCard>
       </CardGrid>
-    </Wrapper>
+    </CustomCol>
   );
 };
 

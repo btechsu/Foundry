@@ -5,12 +5,13 @@ import { ROUTES } from '@utils';
 // styles
 import styled from 'styled-components';
 import {
-  media,
   theme,
   mixins,
   FormGroup,
   ClickableButton,
   Card,
+  GridWrapper,
+  GridCol,
 } from '@styles';
 import NProgress from 'nprogress';
 
@@ -33,36 +34,6 @@ import ReCAPTCHA from 'react-google-recaptcha';
 
 const { fontSizes } = theme;
 
-const Wrapper = styled.div`
-  display: grid;
-  grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-column-gap: 1rem;
-  grid-row-gap: 3rem;
-  align-items: flex-start;
-
-  @media only screen and (min-width: 64rem) {
-    grid-column-gap: 2rem;
-  }
-
-  .ce-inline-toolbar__dropdown,
-  .ce-conversion-toolbar__tools {
-    color: var(--color-always-black);
-  }
-`;
-const FormWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 4;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
-const EditorWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 8;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
 const FormButton = styled(ClickableButton)`
   ${mixins.primaryButton};
   ${mixins.bigButton};
@@ -240,9 +211,9 @@ class Editor extends Component {
       >
         {({ isSubmitting, submitCount, status }) => (
           <Form>
-            <FormWrapper>
-              <Wrapper>
-                <FormWrapper>
+            <GridCol>
+              <GridWrapper align="flex-start">
+                <GridCol>
                   <Card>
                     <FormGroup>
                       {/* eslint-disable-next-line jsx-a11y/label-has-for */}
@@ -352,8 +323,8 @@ class Editor extends Component {
                       </SmallText>
                     </div>
                   </Card>
-                </FormWrapper>
-                <EditorWrapper>
+                </GridCol>
+                <GridCol spans={8}>
                   <Card>
                     <EditorJs
                       tools={EDITOR_JS_TOOLS}
@@ -364,9 +335,9 @@ class Editor extends Component {
                       logLevel="ERROR"
                     />
                   </Card>
-                </EditorWrapper>
-              </Wrapper>
-            </FormWrapper>
+                </GridCol>
+              </GridWrapper>
+            </GridCol>
           </Form>
         )}
       </Formik>

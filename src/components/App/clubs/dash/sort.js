@@ -3,18 +3,11 @@ import { ROUTES, emailVerified } from '@utils';
 
 // styles
 import styled from 'styled-components';
-import { theme, media, mixins, Card, Button } from '@styles';
+import { theme, media, mixins, Card, Button, GridCol } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 const { fontSizes } = theme;
 
-const GridWrapper = styled.div`
-  display: grid;
-  grid-column-end: span 3;
-  z-index: 1;
-
-  ${media.desktop`grid-column-end: span 12;`};
-`;
 const StyledCard = styled(Card)`
   display: grid;
   grid-template-rows: minmax(0, 4rem) 1fr;
@@ -78,7 +71,7 @@ const Sort = ({ children }) => {
   const [chevron, setChevron] = useState(false);
 
   return (
-    <GridWrapper>
+    <GridCol spans={3}>
       {emailVerified() && (
         <SubmitButton to={ROUTES.SUBMIT_CLUB}>Submit a club</SubmitButton>
       )}
@@ -93,7 +86,7 @@ const Sort = ({ children }) => {
         </HeaderWrapper>
         <BodyWrapper showChevron={chevron}>{children}</BodyWrapper>
       </StyledCard>
-    </GridWrapper>
+    </GridCol>
   );
 };
 
