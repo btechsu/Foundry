@@ -2,7 +2,14 @@ import React, { useContext } from 'react';
 
 // styles
 import styled from 'styled-components';
-import { theme, mixins, Card, GridCol } from '@styles';
+import {
+  theme,
+  mixins,
+  Card,
+  GridCol,
+  CheckBoxWrapper,
+  CheckBox,
+} from '@styles';
 import { FormattedIcon } from '@components/icons';
 import NProgress from 'nprogress';
 
@@ -60,45 +67,6 @@ const FooterButton = styled.button`
   }
 `;
 
-const CustomCheckbox = styled.span`
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border: 2px solid var(--color-gray-700);
-`;
-const LabelWrapper = styled.label`
-  display: inline-block;
-  padding-left: 30px;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  margin-bottom: 1rem;
-
-  input {
-    display: none;
-  }
-
-  input:checked + ${CustomCheckbox} {
-    background-color: var(--color-secondary);
-    border: 1px solid var(--color-secondary);
-  }
-
-  input:checked + ${CustomCheckbox}:after {
-    content: '';
-    position: absolute;
-    height: 6px;
-    width: 11px;
-    border-left: 2px solid var(--color-always-white);
-    border-bottom: 2px solid var(--color-always-white);
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-`;
 const StyledTitle = styled.h4`
   font-size: ${fontSizes.lg};
   margin-bottom: 0.3rem;
@@ -125,7 +93,7 @@ function Checkbox(props) {
   return (
     <Field name={props.name}>
       {({ field, form }) => (
-        <LabelWrapper>
+        <CheckBoxWrapper>
           <input
             type="checkbox"
             {...props}
@@ -142,12 +110,12 @@ function Checkbox(props) {
               }
             }}
           />
-          <CustomCheckbox />
+          <CheckBox />
           <StyledTitle>
             <strong>{props.title}</strong>
           </StyledTitle>
           <StyledDescription>{props.description}</StyledDescription>
-        </LabelWrapper>
+        </CheckBoxWrapper>
       )}
     </Field>
   );

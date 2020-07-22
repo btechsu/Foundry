@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import { ROUTES, emailVerified } from '@utils';
 
 // styles
@@ -23,6 +23,20 @@ const HeaderItems = styled.div`
   align-items: center;
   grid-template-columns: 1fr auto;
 `;
+const ModileHeaderItems = styled.button`
+  background: none;
+  border: 0;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr auto;
+  text-align: inherit;
+  padding: 0;
+  cursor: pointer;
+
+  :focus {
+    outline: 0;
+  }
+`;
 const HeaderText = styled.h3`
   color: var(--color-text);
   margin: 0;
@@ -36,7 +50,6 @@ const ChevronIconWrapper = styled.button`
   align-items: center;
   width: 1rem;
   height: 1rem;
-  cursor: pointer;
   background: none;
   padding: 0;
   border: 0;
@@ -67,27 +80,48 @@ const SubmitButton = styled(Button)`
   margin-bottom: 1rem;
 `;
 
-const Sort = ({ children }) => {
-  const [chevron, setChevron] = useState(false);
+class Sort extends Component {
+  state = { chevron: false };
 
-  return (
-    <GridCol spans={3}>
-      {emailVerified() && (
-        <SubmitButton to={ROUTES.SUBMIT_CLUB}>Submit a club</SubmitButton>
-      )}
-      <StyledCard>
-        <HeaderWrapper>
-          <HeaderItems>
-            <HeaderText>Sort by</HeaderText>
-            <ChevronIconWrapper onClick={() => setChevron(!chevron)}>
-              <FormattedIcon name="chevron" />
-            </ChevronIconWrapper>
-          </HeaderItems>
-        </HeaderWrapper>
-        <BodyWrapper showChevron={chevron}>{children}</BodyWrapper>
-      </StyledCard>
-    </GridCol>
-  );
-};
+  changeChevronToggle = () => {
+    if (window.innerWidth < 768) {
+      return true;
+    }
+
+    return false;
+  };
+
+  render() {
+    return (
+      <GridCol spans={3}>
+        {emailVerified() && (
+          <SubmitButton to={ROUTES.SUBMIT_CLUB}>Submit a club</SubmitButton>
+        )}
+        <StyledCard>
+          <HeaderWrapper>
+            {this.changeChevronToggle && (
+              <ModileHeaderItems
+                onClick={() => this.setState({ chevron: !this.state.chevron })}
+              >
+                <HeaderText>Sort by</HeaderText>
+                <ChevronIconWrapper>
+                  <FormattedIcon name="chevron" />
+                </ChevronIconWrapper>
+              </ModileHeaderItems>
+            )}
+            {!this.changeChevronToggle && (
+              <HeaderItems>
+                <HeaderText>Sort by</HeaderText>
+              </HeaderItems>
+            )}
+          </HeaderWrapper>
+          <BodyWrapper showChevron={this.state.chevron}>
+            {this.props.children}
+          </BodyWrapper>
+        </StyledCard>
+      </GridCol>
+    );
+  }
+}
 
 export default Sort;

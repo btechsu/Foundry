@@ -24,7 +24,7 @@ const StyledContainer = styled.div`
 const DropDownWrapper = styled.div`
   position: absolute;
   top: -4rem;
-  left: -12rem;
+  left: -10rem;
   height: auto;
   width: 150px;
   padding: 1rem;

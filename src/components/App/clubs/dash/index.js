@@ -13,7 +13,15 @@ import {
 
 // styles
 import styled from 'styled-components';
-import { media, theme, Container, GridWrapper, GridCol } from '@styles';
+import {
+  media,
+  theme,
+  Container,
+  GridWrapper,
+  GridCol,
+  CheckBoxWrapper,
+  CheckBox,
+} from '@styles';
 import { FormattedIcon } from '@components/icons';
 
 // components
@@ -106,45 +114,6 @@ const CancelButton = styled.button`
     outline: 0;
   }
 `;
-const CustomCheckbox = styled.span`
-  display: inline-block;
-  width: 20px;
-  height: 20px;
-  background: transparent;
-  position: absolute;
-  left: 0;
-  top: 0;
-  border: 2px solid var(--color-gray-700);
-`;
-const LabelWrapper = styled.label`
-  display: inline-block;
-  padding-left: 30px;
-  position: relative;
-  cursor: pointer;
-  user-select: none;
-  margin-bottom: 1rem;
-
-  input {
-    display: none;
-  }
-
-  input:checked + ${CustomCheckbox} {
-    background-color: var(--color-secondary);
-    border: 1px solid var(--color-secondary);
-  }
-
-  input:checked + ${CustomCheckbox}:after {
-    content: '';
-    position: absolute;
-    height: 6px;
-    width: 11px;
-    border-left: 2px solid var(--color-always-white);
-    border-bottom: 2px solid var(--color-always-white);
-    top: 45%;
-    left: 50%;
-    transform: translate(-50%, -50%) rotate(-45deg);
-  }
-`;
 const RefinmentWrapper = styled.div`
   ul {
     list-style: none;
@@ -216,7 +185,7 @@ const RefinementList = ({ items, refine, createURL }) => (
     <ul>
       {items.map((item) => (
         <li>
-          <LabelWrapper
+          <CheckBoxWrapper
             key={item.label}
             onClick={(event) => {
               event.preventDefault();
@@ -224,9 +193,9 @@ const RefinementList = ({ items, refine, createURL }) => (
             }}
           >
             <input type="checkbox" checked={item.isRefined} />
-            <CustomCheckbox />
+            <CheckBox />
             {item.label} ({item.count})
-          </LabelWrapper>
+          </CheckBoxWrapper>
         </li>
       ))}
     </ul>

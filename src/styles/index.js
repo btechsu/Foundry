@@ -6,7 +6,7 @@ export { default as Section } from './Section';
 export { Button, ClickableButton } from './Button';
 export { default as mixins } from './mixins';
 export { default as ThemeToggle } from './themetoggle';
-export { FormGroup, LinkContainer } from './Form';
+export { FormGroup, CheckBoxWrapper, CheckBox } from './Form';
 export { Card, ClickableCard } from './card';
 export { default as DropDown } from './dropdown';
 export { GridWrapper, GridCol } from './Grid';
