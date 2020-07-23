@@ -10,3 +10,10 @@ export { FormGroup, CheckBoxWrapper, CheckBox } from './Form';
 export { Card, ClickableCard } from './card';
 export { default as DropDown } from './dropdown';
 export { GridWrapper, GridCol } from './Grid';
+export {
+  SearchForm,
+  SearchInput,
+  PaginationWrapper,
+  CancelButton,
+  RefinmentWrapper,
+} from './Search';

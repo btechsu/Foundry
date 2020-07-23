@@ -14,13 +14,16 @@ import {
 // styles
 import styled from 'styled-components';
 import {
-  media,
-  theme,
   Container,
   GridWrapper,
   GridCol,
   CheckBoxWrapper,
   CheckBox,
+  SearchForm,
+  SearchInput,
+  PaginationWrapper,
+  CancelButton,
+  RefinmentWrapper,
 } from '@styles';
 import { FormattedIcon } from '@components/icons';
 
@@ -28,8 +31,6 @@ import { FormattedIcon } from '@components/icons';
 import ClubCard from './ClubCard';
 import Hero from './hero';
 import Sort from './sort';
-
-const { fontSizes } = theme;
 
 const PageWrapper = styled.div`
   width: 100%;
@@ -40,100 +41,13 @@ const CardsContainer = styled.div`
   margin: 3rem 0;
 `;
 
-const StyledForm = styled.form`
-  width: 100%;
-  margin-top: 2rem;
-  padding: 1.5rem;
-  border: 2px solid var(--color-card);
-  border-radius: 1.5rem;
-  box-shadow: 0px 5px 9px var(--shadow);
-  background-color: var(--color-card);
-  font-size: ${fontSizes.lg};
-  ${media.tablet`margin-top: 1rem;`};
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-
-  svg {
-    color: var(--color-gray-700);
-    width: 1.5rem;
-    height: 1.5rem;
-  }
-`;
-const SearchInput = styled.input`
-  width: 100%;
-  height: 100%;
-  border: none;
-  background: transparent;
-  color: var(--color-text);
-  margin-left: 1rem;
-
-  :focus {
-    outline: none;
-  }
-
-  ::placeholder {
-    color: var(--color-gray-500);
-  }
-
-  ::-webkit-search-cancel-button {
-    display: none;
-  }
-`;
-const PaginationWrapper = styled.div`
-  width: 100%;
-  margin-top: 2rem;
-  display: flex;
-  justify-content: center;
-
-  ul {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-  }
-  li {
-    font-size: ${fontSizes.lg};
-    padding: 0.4rem 0.9rem;
-    margin: 0.2rem;
-    color: var(--color-always-white);
-    background-color: var(--color-secondary-shaded);
-  }
-  a {
-    text-decoration: none;
-    color: var(--color-always-white);
-  }
-`;
-const CancelButton = styled.button`
-  background: none;
-  padding: 0;
-  border: 0;
-  cursor: pointer;
-  display: ${(props) => (props.hide ? 'none' : 'relative')};
-
-  :focus {
-    outline: 0;
-  }
-`;
-const RefinmentWrapper = styled.div`
-  ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  li {
-    color: var(--color-text);
-    font-size: ${fontSizes.lg};
-  }
-`;
-
 const searchClient = algoliasearch(
   process.env.GATSBY_ALGOLIA_APP_ID,
   process.env.GATSBY_ALGOLIA_SEARCH
 );
 
 const SearchBox = ({ currentRefinement, refine }) => (
-  <StyledForm
+  <SearchForm
     noValidate
     action=""
     role="search"
@@ -161,7 +75,7 @@ const SearchBox = ({ currentRefinement, refine }) => (
     >
       <FormattedIcon name="cancel" />
     </CancelButton>
-  </StyledForm>
+  </SearchForm>
 );
 const Hits = ({ hits }) => {
   return (
@@ -202,8 +116,8 @@ const RefinementList = ({ items, refine, createURL }) => (
   </RefinmentWrapper>
 );
 
-const CustomHits = connectHits(Hits);
 const CustomSearchBox = connectSearchBox(SearchBox);
+const CustomHits = connectHits(Hits);
 const CustomRefinements = connectRefinementList(RefinementList);
 
 const Dash = () => {

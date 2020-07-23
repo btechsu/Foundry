@@ -52,6 +52,8 @@ class Firebase {
       password: password,
       year: year,
     });
+  deleteAccount = ({ uid }) =>
+    this.functions.httpsCallable('deleteUser')({ uid: uid });
   updateEmail = ({ selected, userID }) => {
     var batch = this.db.batch();
     var userRef = this.db.collection('users').doc(userID);

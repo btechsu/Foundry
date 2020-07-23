@@ -9,14 +9,12 @@ import { FormattedIcon } from '@components/icons';
 
 const { fontSizes } = theme;
 
-const CustomCol = styled(GridCol)`
-  margin-top: 4rem;
-`;
 const Elements = styled.section`
   display: grid;
   grid-gap: 1rem;
   grid-template-rows: auto auto;
   grid-auto-rows: max-content auto;
+  margin-top: 4rem;
 `;
 const TitleContainer = styled.div`
   display: grid;
@@ -115,7 +113,7 @@ const NewsSection = () => {
   `);
 
   return (
-    <CustomCol spans={12}>
+    <GridCol spans={12}>
       <Elements>
         <TitleContainer>
           <StyledTitle>Recent tech news</StyledTitle>
@@ -261,7 +259,7 @@ const NewsSection = () => {
           </FooterWrapper>
         </StyledCard>
       </CardGrid>
-    </CustomCol>
+    </GridCol>
   );
 };
 

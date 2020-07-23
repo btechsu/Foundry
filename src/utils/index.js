@@ -46,12 +46,11 @@ export const emailVerified = () => {
       let authUser = JSON.parse(localStorage.getItem('authUser'));
       if (authUser) {
         if (authUser.emailVerified) return true;
+        else return false;
       }
     }
-
     return null;
   }
-
   return false;
 };
 

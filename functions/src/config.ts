@@ -27,7 +27,7 @@ export function checkAuthentication(context?: any, Admin?: any) {
       'unauthenticated',
       'User is not signed in. Cannot complete this action.'
     );
-  } else if (!context.auth.token.Admin && Admin) {
+  } else if (!context.auth.token.admin && Admin) {
     throw new functions.https.HttpsError(
       'permission-denied',
       'You must be an admin to use this feature.'

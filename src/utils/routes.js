@@ -14,3 +14,5 @@ export const SENT_PASSWORD = '/app/secret/sent';
 export const ANNOUNCEMENTS_BASE = '/app/announcements';
 export const DASHBOARD = '/app/dashboard';
 export const PRIVACY = '/privacy';
+
+export const ADMIN = '/app/admin';

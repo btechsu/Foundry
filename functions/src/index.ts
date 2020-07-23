@@ -7,5 +7,6 @@ export {
   verifyCaptchaToken,
   userDeleted,
   onUpdateClubs,
+  onUpdateUsers,
 } from './serverFunctions';
-export { createNewAccount, submitClub } from './user';
+export { createNewAccount, submitClub, deleteUser } from './user';

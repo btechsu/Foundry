@@ -33,10 +33,10 @@ const Dashboard = ({ data }) => {
 
   return (
     <PageWrapper>
-      <Hero />
+      <Hero subtitle="Here's your daily briefing" />
       <Container normal>
         <CardsContainer>
-          <GridWrapper>
+          <GridWrapper rowGap="3rem">
             <AnnouncementsCard />
             <ClubCard />
             <PollCard />

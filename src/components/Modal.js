@@ -29,7 +29,7 @@ const ModalContent = styled.div`
 `;
 const StyledCard = styled(Card)`
   display: grid;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: auto auto;
   grid-template-areas: 'header' 'body';
   max-width: 500px;
   margin: 15px;

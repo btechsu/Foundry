@@ -8,7 +8,8 @@ const env = functions.config();
 
 // init algoliasearch
 const client = algoliasearch(env.apis.algolia.appid, env.apis.algolia.api);
-const index = client.initIndex('clubs');
+const clubIndex = client.initIndex('clubs');
+const userIndex = client.initIndex('users');
 
 export const verifyCaptchaToken = functions.https.onCall(
   async (data, context) => {
@@ -55,16 +56,35 @@ export const onUpdateClubs = functions.firestore
     if (change.after.data() === undefined) {
       const objectID = change.before.id;
       // Delete an ID from the index
-      await index.deleteObject(objectID);
+      await clubIndex.deleteObject(objectID);
     } else {
       const objectID = change.after.id;
       const data = change.after.data();
       // Index new data to algolia
-      await index.saveObject({
+      await clubIndex.saveObject({
         objectID,
         ...data,
       });
     }
 
     return axios.post(env.apis.netlify);
+  });
+export const onUpdateUsers = functions.firestore
+  .document('/users/{userID}')
+  .onWrite((change, context) => {
+    if (change.after.data() === undefined) {
+      const objectID = change.before.id;
+      // Delete an ID from the index
+      return userIndex.deleteObject(objectID);
+    } else {
+      const objectID = change.after.id;
+      const data = change.after.data();
+      // Index new data to algolia
+      return userIndex.saveObject({
+        objectID,
+        email: data?.email || undefined,
+        joined: data?.joined.toDate() || undefined,
+        year: data?.year || undefined,
+      });
+    }
   });

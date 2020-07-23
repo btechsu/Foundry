@@ -193,7 +193,6 @@ const Logout = (props) => {
     </LogOutButton>
   );
 };
-
 class Nav extends Component {
   state = { menuOpen: false };
 

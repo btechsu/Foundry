@@ -14,6 +14,7 @@ const ElementsWrapper = styled.div`
   grid-gap: 1rem;
   grid-template-rows: auto auto;
   grid-auto-rows: max-content auto;
+  margin-top: 4rem;
 `;
 const TitleContainer = styled.div`
   display: grid;

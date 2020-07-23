@@ -9,3 +9,5 @@ export { default as IconSearch } from './search';
 export { default as IconCancel } from './cancel';
 export { default as IconChevron } from './chevron';
 export { default as IconError } from './error';
+export { default as IconDelete } from './delete';
+export { default as IconMail } from './mail';

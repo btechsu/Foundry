@@ -17,7 +17,7 @@ const AnimDotBefore = keyframes`
     transform: scale(1.0); 
   } 
 `;
-const PageWrapper = styled.div`
+export const PageWrapper = styled.div`
   height: 100vh;
   width: 100%;
   display: flex;

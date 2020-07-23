@@ -77,6 +77,10 @@ const RightCol = styled.div`
     max-width: 41.666667%;
   }
 `;
+const SearchWrapper = styled.div`
+  margin-top: 2rem;
+  width: 100%;
+`;
 
 const Hero = ({ children }) => {
   return (
@@ -88,7 +92,7 @@ const Hero = ({ children }) => {
               Lets find a club <ColoredSpan>for you</ColoredSpan>.
             </HeaderText>
             <SubTitle>Search through our directory.</SubTitle>
-            {children}
+            <SearchWrapper>{children}</SearchWrapper>
           </ContentWrapper>
         </LeftCol>
         <RightCol>

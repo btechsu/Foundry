@@ -25,7 +25,7 @@ const ColoredSpan = styled.span`
 const HeaderText = styled.h1`
   color: var(--color-text);
   font-size: ${fontSizes.h2};
-  ${media.thone`font-size: 9vw;`};
+  ${media.thone`font-size: 8.5vw;`};
 `;
 const SubTitle = styled.h3`
   color: var(--color-gray-700);
@@ -33,7 +33,7 @@ const SubTitle = styled.h3`
   ${media.thone`font-size: 5vw;`};
 `;
 
-const Hero = () => {
+const Hero = ({ subtitle }) => {
   const currentUser = getuser();
 
   return (
@@ -44,7 +44,7 @@ const Hero = () => {
             Hello{' '}
             <ColoredSpan>{currentUser ? currentUser.email : ''}</ColoredSpan>,
           </HeaderText>
-          <SubTitle>Here's your daily briefing</SubTitle>
+          <SubTitle>{subtitle}</SubTitle>
         </ContentWrapper>
       </Container>
     </Wrapper>
