@@ -12,6 +12,7 @@ import IconChevron from './chevron';
 import IconError from './error';
 import IconDelete from './delete';
 import IconMail from './mail';
+import IconSync from './sync';
 
 const FormattedIcon = ({ name }) => {
   switch (name) {
@@ -39,6 +40,8 @@ const FormattedIcon = ({ name }) => {
       return <IconDelete />;
     case 'mail':
       return <IconMail />;
+    case 'sync':
+      return <IconSync />;
     default:
       return null;
   }

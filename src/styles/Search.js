@@ -5,10 +5,14 @@ const { fontSizes } = theme;
 
 export const SearchForm = styled.form`
   width: 100%;
-  padding: ${(props) => (props.small ? '1rem' : '1.5rem')};
-  border: 2px solid var(--color-card);
-  border-radius: 1.5rem;
-  box-shadow: 0px 5px 9px var(--shadow);
+  padding: ${(props) => (props.small ? '0.5rem 1rem' : '1.5rem')};
+  border: ${(props) =>
+    props.small
+      ? '4px solid var(--color-muted)'
+      : '2px solid var(--color-card)'};
+  border-radius: ${(props) => (props.small ? '0.5rem' : '1.5rem')};
+  box-shadow: ${(props) =>
+    props.small ? 'none' : '0px 5px 9px var(--shadow)'};
   background-color: var(--color-card);
   font-size: ${(props) => (props.small ? fontSizes.md : fontSizes.lg)};
   display: flex;

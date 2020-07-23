@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 
 // search
 import algoliasearch from 'algoliasearch/lite';
@@ -24,7 +24,27 @@ import { User, Wrapper } from './user';
 import CardWrapper from './card';
 
 const SearchWrapper = styled.div`
+  display: grid;
   grid-area: search;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+`;
+const RefreshIcon = styled.button`
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  :focus {
+    outline: none;
+  }
+
+  svg {
+    color: var(--color-text);
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-left: 1rem;
+  }
 `;
 const BodyWrapper = styled.div`
   grid-area: body;
@@ -90,29 +110,45 @@ const Hits = ({ hits }) => {
 const CustomSearchBox = connectSearchBox(SearchBox);
 const CustomHits = connectHits(Hits);
 
-const Users = () => {
-  return (
-    <InstantSearch
-      indexName="users"
-      searchClient={searchClient}
-      stalledSearchDelay={100}
-    >
-      <Configure hitsPerPage={5} />
-      <CardWrapper>
-        <SearchWrapper>
-          <CustomSearchBox />
-        </SearchWrapper>
-        <BodyWrapper>
-          <Wrapper>
-            <CustomHits />
-          </Wrapper>
-          <PaginationWrapper mt="0">
-            <Pagination />
-          </PaginationWrapper>
-        </BodyWrapper>
-      </CardWrapper>
-    </InstantSearch>
-  );
-};
+class Users extends Component {
+  state = {
+    refresh: false,
+  };
+
+  refresh = () => {
+    this.setState({ refresh: true }, () => {
+      this.setState({ refresh: false });
+    });
+  };
+
+  render() {
+    return (
+      <InstantSearch
+        indexName="users"
+        searchClient={searchClient}
+        stalledSearchDelay={100}
+        refresh={this.state.refresh}
+      >
+        <Configure hitsPerPage={5} />
+        <CardWrapper>
+          <SearchWrapper>
+            <CustomSearchBox />
+            <RefreshIcon onClick={this.refresh}>
+              <FormattedIcon name="sync" />
+            </RefreshIcon>
+          </SearchWrapper>
+          <BodyWrapper>
+            <Wrapper>
+              <CustomHits />
+            </Wrapper>
+            <PaginationWrapper mt="0">
+              <Pagination />
+            </PaginationWrapper>
+          </BodyWrapper>
+        </CardWrapper>
+      </InstantSearch>
+    );
+  }
+}
 
 export default Users;

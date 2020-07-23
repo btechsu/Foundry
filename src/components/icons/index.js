@@ -11,3 +11,4 @@ export { default as IconChevron } from './chevron';
 export { default as IconError } from './error';
 export { default as IconDelete } from './delete';
 export { default as IconMail } from './mail';
+export { default as IconSync } from './sync';

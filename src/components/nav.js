@@ -180,6 +180,21 @@ const LogOutButton = styled.button`
   }
 `;
 
+const Admin = () => {
+  const { user } = useContext(FirebaseContext);
+
+  if (user) {
+    if (user.isAdmin) {
+      return (
+        <ListItem>
+          <StyledButton to={ROUTES.ADMIN}>ADMIN</StyledButton>
+        </ListItem>
+      );
+    }
+  }
+
+  return null;
+};
 const Logout = (props) => {
   const { firebase } = useContext(FirebaseContext);
 
@@ -193,6 +208,7 @@ const Logout = (props) => {
     </LogOutButton>
   );
 };
+
 class Nav extends Component {
   state = { menuOpen: false };
 
@@ -242,6 +258,7 @@ class Nav extends Component {
                         <StyledLink to={url}>{name}</StyledLink>
                       </ListItem>
                     ))}
+                  <Admin />
                 </ListWrapper>
               </SectionLeft>
               <SectionRight>
