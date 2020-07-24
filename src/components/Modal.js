@@ -9,7 +9,7 @@ import { FormattedIcon } from '@components/icons';
 const { fontSizes } = theme;
 
 const ModalWrapper = styled.div`
-  display: block;
+  display: flex;
   position: fixed;
   left: 0;
   top: 0;
@@ -17,15 +17,9 @@ const ModalWrapper = styled.div`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.4);
-  transition: all 0.3s linear;
-`;
-const ModalContent = styled.div`
-  display: flex;
-  height: 100%;
-  width: 100%;
   align-items: center;
   justify-content: center;
-  z-index: 9999;
+  z-index: 6;
 `;
 const StyledCard = styled(Card)`
   display: grid;
@@ -33,6 +27,7 @@ const StyledCard = styled(Card)`
   grid-template-areas: 'header' 'body';
   max-width: 500px;
   margin: 15px;
+  z-index: 9999;
 `;
 const HeaderWrapper = styled.div`
   display: grid;
@@ -79,26 +74,34 @@ class Modal extends Component {
     this.props.onClose && this.props.onClose(e);
   };
 
+  handleMenuClick = (e) => {
+    const target = e.target;
+    const isNotMenu =
+      target.classList && target.classList[0].includes('ModalWrapper');
+
+    if (isNotMenu) {
+      this.onClose();
+    }
+  };
+
   render() {
     if (!this.props.open) {
       return null;
     }
 
     return (
-      <ModalWrapper>
-        <ModalContent>
-          <StyledCard nopadding>
-            <HeaderWrapper>
-              <HeaderItems>
-                <HeaderText>{this.props.header}</HeaderText>
-                <IconWrapper onClick={this.onClose}>
-                  <FormattedIcon name="cancel" />
-                </IconWrapper>
-              </HeaderItems>
-            </HeaderWrapper>
-            <BodyWrapper>{this.props.children}</BodyWrapper>
-          </StyledCard>
-        </ModalContent>
+      <ModalWrapper onClick={this.handleMenuClick}>
+        <StyledCard nopadding>
+          <HeaderWrapper>
+            <HeaderItems>
+              <HeaderText>{this.props.header}</HeaderText>
+              <IconWrapper onClick={this.onClose}>
+                <FormattedIcon name="cancel" />
+              </IconWrapper>
+            </HeaderItems>
+          </HeaderWrapper>
+          <BodyWrapper>{this.props.children}</BodyWrapper>
+        </StyledCard>
       </ModalWrapper>
     );
   }

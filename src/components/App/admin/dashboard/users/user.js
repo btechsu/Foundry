@@ -13,7 +13,6 @@ import { FirebaseContext } from '@Firebase';
 const SortTable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  overflow-x: auto;
 
   td,
   th {
