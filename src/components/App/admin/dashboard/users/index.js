@@ -48,7 +48,6 @@ const RefreshIcon = styled.button`
 `;
 const BodyWrapper = styled.div`
   grid-area: body;
-  overflow-x: auto;
 `;
 
 const searchClient = algoliasearch(
