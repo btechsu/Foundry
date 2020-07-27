@@ -5,13 +5,14 @@ import { ROUTES } from '@utils';
 // styles
 import styled from 'styled-components';
 import { Container, GridWrapper, media } from '@styles';
+import { Circles, PageWrapper } from '@components/loader';
 
 import { FirebaseContext } from '@Firebase';
-import { Circles, PageWrapper } from '@components/loader';
 
 // components
 import Hero from '../../dashboard/hero';
 import Users from './users';
+import ClubCard from './clubs';
 
 const DashWrapper = styled.div`
   width: 100%;
@@ -41,6 +42,7 @@ const AdminDashboard = () => {
     navigate(ROUTES.DASHBOARD);
     return null;
   }
+
   return (
     <DashWrapper>
       <Hero subtitle="Welcome to your admin dashboard." />
@@ -48,6 +50,7 @@ const AdminDashboard = () => {
         <CardsContainer>
           <GridWrapper rowGap="3rem">
             <Users />
+            <ClubCard />
           </GridWrapper>
         </CardsContainer>
       </Container>

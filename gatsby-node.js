@@ -1,34 +1,5 @@
 const path = require('path');
 
-exports.createPages = ({ graphql, actions }) => {
-  const { createPage } = actions;
-  const clubTemplate = path.resolve(`src/templates/club.js`);
-
-  return graphql(`
-    {
-      allClubs {
-        edges {
-          node {
-            id
-          }
-        }
-      }
-    }
-  `).then((result) => {
-    if (result.errors) {
-      throw result.errors;
-    }
-
-    result.data.allClubs.edges.forEach((club) => {
-      createPage({
-        path: `/club/${club.node.id}`,
-        component: clubTemplate,
-        context: { clubID: club.node.id },
-      });
-    });
-  });
-};
-
 // https://www.gatsbyjs.org/docs/node-apis/#onCreateWebpackConfig
 // https://www.gatsbyjs.org/docs/debugging-html-builds/
 // https://github.com/gregberge/loadable-components

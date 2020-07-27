@@ -3,7 +3,7 @@ import theme from './theme';
 
 const { fontSizes } = theme;
 
-const FormGroup = styled.div`
+const FormGroup = styled.section`
   margin-bottom: 1rem;
   position: relative;
   width: 100%;

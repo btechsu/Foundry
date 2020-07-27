@@ -39,6 +39,7 @@ const BodyWrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   grid-area: body;
+  overflow: auto;
 
   img {
     width: 90px;
@@ -181,7 +182,7 @@ const ClubCard = () => {
             {user.clubs.map((reference) => (
               <ListItem>
                 <ListHeader>
-                  <ListClubName to={`/club/${reference.ID}`}>
+                  <ListClubName to={`/app/club/${reference.ID}`}>
                     {reference.name}{' '}
                   </ListClubName>{' '}
                   <StyledBadge>{reference.status}</StyledBadge>

@@ -62,6 +62,7 @@ class Firebase {
     return batch.commit();
   };
   submitClub = ({
+    name,
     email,
     description,
     room,
@@ -72,6 +73,33 @@ class Firebase {
     credits,
   }) =>
     this.functions.httpsCallable('submitClub')({
+      name: name,
+      email: email,
+      description: description,
+      room: room,
+      days: days,
+      time: time,
+      type: type,
+      credits: credits,
+      text: text,
+    });
+  addClub = ({
+    objectID,
+    accept,
+    name,
+    email,
+    description,
+    room,
+    days,
+    time,
+    type,
+    text,
+    credits,
+  }) =>
+    this.functions.httpsCallable('addClub')({
+      accept: accept,
+      id: objectID,
+      name: name,
       email: email,
       description: description,
       room: room,
@@ -107,7 +135,6 @@ class Firebase {
 
         if (clubData !== undefined && clubData.length !== 0) {
           clubData.forEach((reference) => {
-            console.log(reference);
             if (reference.club !== clubDoc) {
               if (reference.status !== 'denied') {
                 clubs.push(reference);
@@ -123,6 +150,9 @@ class Firebase {
       });
     });
   };
+  getClub = ({ clubID }) => this.db.collection('clubs').doc(clubID).get();
+  getClubSubmission = ({ clubID }) =>
+    this.db.collection('clubSubmissions').doc(clubID).get();
 }
 
 let firebaseInstance;

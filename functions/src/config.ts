@@ -21,7 +21,7 @@ export function dataValidator(data?: any, validKeys?: any) {
   }
 }
 
-export function checkAuthentication(context?: any, Admin?: any) {
+export function checkAuthentication(context?: any, Admin?: boolean) {
   if (!context.auth) {
     throw new functions.https.HttpsError(
       'unauthenticated',

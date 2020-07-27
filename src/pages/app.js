@@ -19,9 +19,9 @@ import {
   SubmitClub,
   SubmitClubSent,
   JoinClubSent,
+  ClubTemplate,
 } from '@app';
-
-import { AdminDashboard } from '@app/admin';
+import { AdminDashboard, AdminClub } from '@app/admin';
 
 const App = ({ data }) => {
   const signupDoc = data.prismic.allSignups.edges.slice(0, 1).pop();
@@ -70,6 +70,12 @@ const App = ({ data }) => {
         title="Submitted club application"
       />
       <PrivateRoute path="/admin" component={AdminDashboard} title="Admin" />
+      <PrivateRoute
+        path="/admin/clubs/:clubID"
+        component={AdminClub}
+        title="Approve club"
+      />
+      <PrivateRoute path="/club/:clubID" component={ClubTemplate} />
     </Router>
   );
 };

@@ -33,7 +33,12 @@ const CardWrapper = ({ children }) => {
       <StyledCard>
         <HeaderWrapper>
           <HeaderItems>
-            <HeaderText>Manage Users</HeaderText>
+            <HeaderText>
+              <span role="img" aria-label="">
+                👥
+              </span>{' '}
+              Manage Users
+            </HeaderText>
           </HeaderItems>
         </HeaderWrapper>
         {children}

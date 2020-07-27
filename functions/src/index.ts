@@ -8,5 +8,6 @@ export {
   userDeleted,
   onUpdateClubs,
   onUpdateUsers,
+  onUpdateClubSubmissions,
 } from './serverFunctions';
-export { createNewAccount, submitClub, deleteUser } from './user';
+export { createNewAccount, submitClub, deleteUser, addClub } from './user';

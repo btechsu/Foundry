@@ -1,11 +1,10 @@
-import React, { Component, createRef } from 'react';
-import { navigate } from 'gatsby';
+import React, { Component } from 'react';
 import { ROUTES } from '@utils';
+import { navigate } from 'gatsby';
 
 // styles
 import styled from 'styled-components';
 import {
-  theme,
   mixins,
   FormGroup,
   ClickableButton,
@@ -14,6 +13,7 @@ import {
   GridCol,
 } from '@styles';
 import NProgress from 'nprogress';
+import { Circles, PageWrapper } from '@components/loader';
 
 // editor
 import EditorJs from 'react-editor-js';
@@ -26,9 +26,6 @@ import Underline from '@editorjs/underline';
 // form
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
-import ReCAPTCHA from 'react-google-recaptcha';
-
-const { fontSizes } = theme;
 
 const FormButton = styled(ClickableButton)`
   ${mixins.primaryButton};
@@ -43,12 +40,6 @@ const FormButton = styled(ClickableButton)`
 const FormError = styled.span`
   color: var(--color-error);
   display: inline-block;
-  margin-bottom: 1rem;
-`;
-const SmallText = styled.p`
-  font-size: ${fontSizes.sm};
-  color: var(--color-gray-700);
-  margin-top: 0;
   margin-bottom: 1rem;
 `;
 const StyledSelect = styled(FormGroup)`
@@ -70,40 +61,7 @@ const EDITOR_JS_TOOLS = {
   simpleImage: SimpleImage,
   underline: Underline,
 };
-let data = {
-  blocks: [
-    {
-      type: 'header',
-      data: {
-        text: 'Replace this with something about your club',
-        level: 1,
-      },
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text:
-          'Your club description will go here. Our advanced editor allows you to add different components like paragraphs, lists, and images. We recommend you be as descriptive as you can when writing this section, as this is what someone will look at the most before joining a club.',
-      },
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text:
-          'You can add things like club hours, dates, things you do, why you should join, things to have ready, people in the club, etc.',
-      },
-    },
-    {
-      type: 'paragraph',
-      data: {
-        text:
-          'You should keep writing, the more the better! (Hint: try pasting an image URL)',
-      },
-    },
-  ],
-};
 const FormSchema = Yup.object().shape({
-  name: Yup.string().required('A club name is required'),
   email: Yup.string()
     .required('Email field is required')
     .email('Please enter a valid email address')
@@ -122,21 +80,56 @@ const FormSchema = Yup.object().shape({
   type: Yup.string().required('Please pick what type of club you have'),
 });
 
-class Editor extends Component {
+class Submit extends Component {
+  state = {
+    club: undefined,
+    name: undefined,
+    email: undefined,
+    description: undefined,
+    room: undefined,
+    days: undefined,
+    credits: undefined,
+    time: undefined,
+    type: undefined,
+    text: undefined,
+  };
+
   componentDidMount() {
-    return this.editorInstance; // access editor-js
+    this.props.firebase
+      .getClubSubmission({ clubID: this.props.clubID })
+      .then((doc) => {
+        if (doc.exists) {
+          this.setState({
+            club: true,
+            name: doc.data().name,
+            email: doc.data().president,
+            description: doc.data().description,
+            room: doc.data().room,
+            days: doc.data().days,
+            credits: doc.data().credits,
+            time: doc.data().time,
+            type: doc.data().type,
+            text: doc.data().text,
+          });
+        } else {
+          this.setState({ club: null });
+        }
+      })
+      .catch(() => {
+        this.setState({ club: null });
+      });
+    return this.editorInstance;
   }
-  submitForm({ values, setSubmitting, setStatus }) {
+
+  submitForm({ values, setSubmitting, setStatus, accept }) {
+    setSubmitting(true);
+    NProgress.start();
     this.editorInstance
       .save()
       .then((edit) => {
-        console.log(edit.blocks);
-        if (JSON.stringify(edit.blocks).length > 1010000) {
-          throw Error(
-            'Your club text is too long. Try cutting some things out. If you pasted an image and not an image link, try deleting it.'
-          );
-        }
-        return this.props.firebase.submitClub({
+        return this.props.firebase.addClub({
+          objectID: this.props.clubID,
+          accept: accept,
           name: values.name,
           email: values.email,
           description: values.description,
@@ -149,9 +142,7 @@ class Editor extends Component {
         });
       })
       .then(() => {
-        navigate(ROUTES.SUBMIT_CLUB_SUCCESS);
-        setSubmitting(false);
-        NProgress.done(true);
+        navigate(ROUTES.ADMIN);
       })
       .catch((err) => {
         setStatus(
@@ -163,56 +154,54 @@ class Editor extends Component {
   }
 
   render() {
-    const recaptchaRef = createRef();
+    if (this.state.club === undefined) {
+      return (
+        <PageWrapper>
+          <Circles />
+        </PageWrapper>
+      );
+    }
+
+    if (this.state.club === null) {
+      navigate('/404');
+      return null;
+    }
+
+    const blocks = JSON.parse(this.state.text);
+    let data = {
+      blocks: blocks,
+    };
 
     return (
       <Formik
         initialValues={{
-          name: undefined,
-          email: undefined,
-          description: undefined,
-          room: undefined,
-          days: undefined,
-          credits: undefined,
-          time: undefined,
-          type: undefined,
+          name: this.state.name,
+          email: this.state.email,
+          description: this.state.description,
+          room: this.state.room,
+          days: this.state.days,
+          credits: this.state.credits,
+          time: this.state.time,
+          type: this.state.type,
         }}
         validationSchema={FormSchema}
         onSubmit={(values, { setSubmitting, setStatus }) => {
-          if (recaptchaRef.current.getValue() === '') {
-            setSubmitting(true);
-            NProgress.start();
-            recaptchaRef.current
-              .executeAsync()
-              .then(() => {
-                return this.props.firebase.verifyCaptchaToken({
-                  token: recaptchaRef.current.getValue(),
-                });
-              })
-              .then(() => {
-                this.submitForm({
-                  values: values,
-                  setSubmitting: setSubmitting,
-                  setStatus: setStatus,
-                });
-              })
-              .catch((err) => {
-                setStatus(err);
-                setSubmitting(false);
-                NProgress.done(true);
-              });
-          } else {
-            setSubmitting(true);
-            NProgress.start();
-            this.submitForm({
-              values: values,
-              setSubmitting: setSubmitting,
-              setStatus: setStatus,
-            });
-          }
+          this.submitForm({
+            values: values,
+            setSubmitting: setSubmitting,
+            setStatus: setStatus,
+            accept: true,
+          });
         }}
       >
-        {({ isSubmitting, submitCount, status }) => (
+        {({
+          isSubmitting,
+          submitCount,
+          status,
+          values,
+          setSubmitting,
+          setStatus,
+        }) => (
           <Form>
             <GridCol>
               <GridWrapper align="flex-start">
@@ -317,25 +306,25 @@ class Editor extends Component {
                       />
                       <ErrorMessage component="span" name="credits" />
                     </FormGroup>
-                    <div>
-                      <ReCAPTCHA
-                        ref={recaptchaRef}
-                        name="recatchpa"
-                        size="invisible"
-                        sitekey="6LdXUK8ZAAAAAIU3_JDUGHuI4DL5nsqbEVtIUsgU"
-                      />
-                      {!!status && <FormError>{status}</FormError>}
-                      <FormButton
-                        disabled={isSubmitting || submitCount >= 5}
-                        type="submit"
-                      >
-                        Submit
-                      </FormButton>
-                      <SmallText>
-                        You cannot undo after submitting this form. Please
-                        double check all your information before submitting.
-                      </SmallText>
-                    </div>
+                    {!!status && <FormError>{status}</FormError>}
+                    <FormButton
+                      disabled={isSubmitting || submitCount >= 5}
+                      type="submit"
+                    >
+                      Approve
+                    </FormButton>
+                    <FormButton
+                      onClick={() => {
+                        this.submitForm({
+                          values: values,
+                          setSubmitting: setSubmitting,
+                          setStatus: setStatus,
+                          accept: false,
+                        });
+                      }}
+                    >
+                      Deny
+                    </FormButton>
                   </Card>
                 </GridCol>
                 <GridCol spans={8}>
@@ -359,4 +348,4 @@ class Editor extends Component {
   }
 }
 
-export default Editor;
+export default Submit;

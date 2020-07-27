@@ -10,6 +10,7 @@ const env = functions.config();
 const client = algoliasearch(env.apis.algolia.appid, env.apis.algolia.api);
 const clubIndex = client.initIndex('clubs');
 const userIndex = client.initIndex('users');
+const clubSubmissionsIndex = client.initIndex('clubSubmissions');
 
 export const verifyCaptchaToken = functions.https.onCall(
   async (data, context) => {
@@ -52,22 +53,20 @@ export const userDeleted = functions.auth.user().onDelete((user) => {
 });
 export const onUpdateClubs = functions.firestore
   .document('clubs/{clubID}')
-  .onWrite(async (change, context) => {
+  .onWrite((change, context) => {
     if (change.after.data() === undefined) {
       const objectID = change.before.id;
       // Delete an ID from the index
-      await clubIndex.deleteObject(objectID);
+      return clubIndex.deleteObject(objectID);
     } else {
       const objectID = change.after.id;
       const data = change.after.data();
       // Index new data to algolia
-      await clubIndex.saveObject({
+      return clubIndex.saveObject({
         objectID,
         ...data,
       });
     }
-
-    return axios.post(env.apis.netlify);
   });
 export const onUpdateUsers = functions.firestore
   .document('/users/{userID}')
@@ -85,6 +84,23 @@ export const onUpdateUsers = functions.firestore
         email: data?.email || undefined,
         joined: data?.joined.toDate() || undefined,
         year: data?.year || undefined,
+      });
+    }
+  });
+export const onUpdateClubSubmissions = functions.firestore
+  .document('/clubSubmissions/{clubID}')
+  .onWrite((change, context) => {
+    if (change.after.data() === undefined) {
+      const objectID = change.before.id;
+      // Delete an ID from the index
+      return clubSubmissionsIndex.deleteObject(objectID);
+    } else {
+      const objectID = change.after.id;
+      const data = change.after.data();
+      // Index new data to algolia
+      return clubSubmissionsIndex.saveObject({
+        objectID,
+        ...data,
       });
     }
   });

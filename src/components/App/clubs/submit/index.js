@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
+import { FirebaseContext } from '@Firebase';
 
 // styles
 import styled from 'styled-components';
 import { Container } from '@styles';
 
-import { FirebaseContext } from '@Firebase';
+// components
 import Hero from '@components/hero';
 import Editor from './editor';
 

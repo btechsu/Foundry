@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, location, title, ...rest }) => {
 
   return (
     <>
-      <Title>{title}</Title>
+      {title && <Title>{title}</Title>}
       <Component {...rest} />
     </>
   );

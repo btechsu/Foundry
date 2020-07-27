@@ -83,7 +83,7 @@ const Hits = ({ hits }) => {
       {hits.map((hit, i) => (
         <ClubCard
           key={i}
-          to={`/club/${hit.objectID}`}
+          to={`/app/club/${hit.objectID}`}
           title={hit.name}
           text={hit.description}
           room={hit.room}

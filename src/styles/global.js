@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 import theme from './theme';
+import mixins from './mixins';
 
 const { colors, fonts } = theme;
 
@@ -130,6 +131,11 @@ const GlobalStyle = createGlobalStyle`
   .ce-inline-toolbar__dropdown,
   .ce-conversion-toolbar__tools {
     color: var(--color-always-black);
+  }
+  .ce-block__content {
+    a {
+      ${mixins.inlineLink};
+    }
   }
 `;
 

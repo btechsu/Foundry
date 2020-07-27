@@ -46,7 +46,9 @@ export const createNewAccount = functions.https.onCall(async (data) => {
   }
 });
 export const submitClub = functions.https.onCall((data, context) => {
+  checkAuthentication(context);
   dataValidator(data, {
+    name: 'string',
     email: 'string',
     description: 'string',
     room: 'string',
@@ -56,13 +58,13 @@ export const submitClub = functions.https.onCall((data, context) => {
     credits: 'string',
     text: 'object',
   });
-  checkAuthentication(context);
 
   return admin
     .firestore()
     .collection('clubSubmissions')
     .add({
-      email: data.email,
+      name: data.name,
+      president: data.email,
       description: data.description,
       room: data.room,
       days: data.days,
@@ -79,4 +81,43 @@ export const deleteUser = functions.https.onCall((data, context) => {
   });
 
   return admin.auth().deleteUser(data.uid);
+});
+export const addClub = functions.https.onCall((data, context) => {
+  checkAuthentication(context, true);
+  dataValidator(data, {
+    accept: 'boolean',
+    id: 'string',
+    name: 'string',
+    email: 'string',
+    description: 'string',
+    room: 'string',
+    days: 'string',
+    time: 'string',
+    type: 'string',
+    credits: 'string',
+    text: 'object',
+  });
+
+  if (data.accept === true) {
+    const batch = admin.firestore().batch();
+    const oldRef = admin.firestore().collection('clubSubmissions').doc(data.id);
+    const newRef = admin.firestore().collection('clubs').doc(data.id);
+
+    batch.delete(oldRef);
+    batch.set(newRef, {
+      name: data.name,
+      president: data.email,
+      description: data.description,
+      room: data.room,
+      days: data.days,
+      time: data.time,
+      type: data.type,
+      credits: data.credits,
+      text: JSON.stringify(data.text),
+    });
+
+    return batch.commit();
+  } else {
+    return 'ok';
+  }
 });
