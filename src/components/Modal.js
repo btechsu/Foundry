@@ -78,7 +78,6 @@ class Modal extends Component {
     const target = e.target;
     const isNotMenu =
       target.classList && target.classList[0].includes('ModalWrapper');
-
     if (isNotMenu) {
       this.onClose();
     }

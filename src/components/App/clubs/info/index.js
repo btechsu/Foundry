@@ -37,6 +37,7 @@ class ClubData extends Component {
             credits: doc.data().credits,
             time: doc.data().time,
             type: doc.data().type,
+            id: doc.id,
           },
           text: doc.data().text,
         });
@@ -75,7 +76,7 @@ class ClubData extends Component {
 const ClubTemplate = (props) => {
   const { user, firebase } = useContext(FirebaseContext);
 
-  if (!firebase || !user) {
+  if (!firebase) {
     return (
       <PageWrapper>
         <Circles />

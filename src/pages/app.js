@@ -75,7 +75,7 @@ const App = ({ data }) => {
         component={AdminClub}
         title="Approve club"
       />
-      <PrivateRoute path="/club/:clubID" component={ClubTemplate} />
+      <ClubTemplate path="/club/:clubID" />
     </Router>
   );
 };
