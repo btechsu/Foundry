@@ -46,7 +46,8 @@ A quick look at the top-level structure.
 ```sh
 foundry/
 ├── functions # Backend (firebase cloud functions)
-├── node_modules # NPM modules
+├── node_modules # NPM dependencies
+├── shared # Global app settings
 ├── src # Frontend SPA
 ├── .prettierrc # prettier config
 ├── .eslintrc # Eslint config

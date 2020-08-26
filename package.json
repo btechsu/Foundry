@@ -37,7 +37,6 @@
     "react-router": "4.x",
     "react-router-dom": "4.x",
     "react-scripts": "^1.1.5",
-    "react-snap": "^1.23.0",
     "react-textarea-autosize": "^8.2.0",
     "react-visibility-sensor": "^5.0.1",
     "recompose": "^0.30.0",
@@ -92,6 +91,7 @@
     "prettier": "^2.0.5",
     "react-app-rewire-hot-loader": "^1.0.3",
     "react-hot-loader": "^4.12.13",
+    "react-snap": "^1.10.1",
     "sw-precache-webpack-plugin": "^0.11.4",
     "webpack-bundle-analyzer": "^3.3.2",
     "write-file-webpack-plugin": "^4.5.1"
