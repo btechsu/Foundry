@@ -3,7 +3,7 @@
 </h1>
 <p align="center">
   <a href="https://app.netlify.com/sites/foundry-dev/deploys" target="_blank">
-    <img src="https://api.netlify.com/api/v1/badges/18439ca7-a095-40f4-b3d3-b943fb1bc67b/deploy-status" alt="Netlify status" />
+    <img src="https://api.netlify.com/api/v1/badges/c4def703-1d0c-4159-a16e-a65eb84544a4/deploy-status" alt="Netlify status" />
   </a>
 </p>
 <p align="center">
