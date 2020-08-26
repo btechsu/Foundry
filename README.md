@@ -11,7 +11,7 @@
 </p>
 <p align="center">
   <a href="https://app.netlify.com/sites/foundry-dev/deploys" target="_blank">
-    <img src="https://api.netlify.com/api/v1/badges/18439ca7-a095-40f4-b3d3-b943fb1bc67b/deploy-status" alt="Netlify status" />
+    <img src="https://api.netlify.com/api/v1/badges/d3c57aab-00f3-458c-a531-2a3b8caf2936/deploy-status" alt="Netlify status" />
   </a>
   <a href="https://deepscan.io/dashboard#view=project&tid=9434&pid=12754&bid=201901"><img src="https://deepscan.io/api/teams/9434/projects/12754/branches/201901/badge/grade.svg" alt="DeepScan grade"></a>
 </p>
