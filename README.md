@@ -1,68 +1,70 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+  <img src="https://i.imgur.com/ko1hl2N.png" alt="Foundry" width="300" />
+</h1>
+<p align="center">
+  <a href="https://app.netlify.com/sites/foundry-dev/deploys" target="_blank">
+    <img src="https://api.netlify.com/api/v1/badges/18439ca7-a095-40f4-b3d3-b943fb1bc67b/deploy-status" alt="Netlify status" />
+  </a>
+</p>
+<p align="center">
+  Brooklyn Tech's premier student platform, built with <a href="https://reactjs.org" target="_blank">React</a> and hosted with <a href="https://www.netlify.com" target="_blank">Netlify</a>.
+</p>
 
-## Available Scripts
+![hero](https://i.imgur.com/i5GmM7I.png)
 
-In the project directory, you can run:
+## 🚀 Installing
 
-### `npm start`
+1.  For development, you will only need Node.js installed on your environement.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+2.  Clone the repository
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+    ```shell
+    git clone https://github.com/btechsu/Foundry
+    cd Foundry
+    ```
 
-### `npm test`
+3.  Install
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    ```shell
+    npm install
+    ```
 
-### `npm run build`
+4.  Start the local server
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```shell
+    npm run start
+    ```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+5.  **Open the source code and start editing!**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    The local dev server is now running at `http://localhost:3000`!
 
-### `npm run eject`
+## 🧐 What's inside?
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+A quick look at the top-level structure.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```sh
+foundry/
+├── functions # Backend (firebase cloud functions)
+├── node_modules # NPM modules
+├── src # Frontend SPA
+├── .prettierrc # prettier config
+├── .eslintrc # Eslint config
+├── .babelrc # Babel config
+├── .env # Environment credentials
+├── .flowconfig # Flow config
+├── config-overrides.js # React-app-rewired config
+├── .gitignore
+├── LICENSE
+├── package-lock.json
+├── package.json
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 🌟 Code Style
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+We run Prettier on-commit, which means you can write code in whatever style you want and it will be automatically formatted according to the common style when you run git commit. We also have ESLint setup, although we've disabled all stylistic rules since Prettier takes care of those.
 
-## Learn More
+###### Rules
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- All new .js files must be flow typed.
+- No console.logs in any file: We use the debug module across the codebase to log debugging information in development only. Never commit a file that contains a console.log. The only exceptions are errors, which you can log, but you have to use console.error to be explicit about it.

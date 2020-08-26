@@ -10,11 +10,11 @@ export const theme = {
     inactive: '#DFE7EF',
   },
   brand: {
-    default: '#4400CC',
-    alt: '#7B16FF',
-    wash: '#E8E5FF',
-    border: '#DDD9FF',
-    dark: '#2A0080',
+    default: '#05C',
+    alt: '#1778FF',
+    wash: '#E6F0FF',
+    border: '#D9E9FF',
+    dark: '#003580',
   },
   generic: {
     default: '#E6ECF7',

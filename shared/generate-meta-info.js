@@ -85,10 +85,10 @@ function generateMetaInfo(input /*: Input */) /*: Meta */ {
   var type = exists.type;
   var data = exists.data;
   switch (type) {
-    case 'explore': {
+    case 'clubs': {
       return {
-        title: 'Explore',
-        description: 'Explore some of the communities on Foundry',
+        title: 'Clubs',
+        description: 'Explore the clubs on Foundry',
       };
     }
     case 'thread': {

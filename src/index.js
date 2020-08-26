@@ -10,7 +10,6 @@ import { HelmetProvider } from 'react-helmet-async';
 import webPushManager from './helpers/web-push-manager';
 import { initStore } from './store';
 import { history } from './helpers/history';
-import RedirectHandler from './components/redirectHandler';
 import Routes from './hot-routes';
 
 // If the server passes an initial redux state use that, otherwise construct our own

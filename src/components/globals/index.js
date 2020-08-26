@@ -3,13 +3,7 @@ import styled, { css, keyframes } from 'styled-components';
 import { theme } from '@shared/theme';
 
 export const Gradient = (g1, g2) =>
-  css`
-    background: radial-gradient(
-      ellipse farthest-corner at top left,
-      ${g1} 0%,
-      ${g2} 100%
-    );
-  `;
+  css`radial-gradient(ellipse farthest-corner at top left, ${g1} 0%, ${g2} 100%)`;
 
 export const Truncate = () => css`
   text-overflow: ellipsis;

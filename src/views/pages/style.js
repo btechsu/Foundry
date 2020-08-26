@@ -3,6 +3,7 @@ import { theme } from '@shared/theme';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Button } from '@components/button';
+import { ViewGrid } from '@components/layout';
 import {
   H2,
   FlexCol,
@@ -14,7 +15,7 @@ import {
   hexa,
   Gradient,
 } from '@components/globals';
-import { ViewGrid, MEDIA_BREAK } from '@components/layout';
+import { MEDIA_BREAK } from '@components/layout';
 
 export const Page = styled.main`
   position: relative;
@@ -28,8 +29,6 @@ export const Page = styled.main`
 export const Wrapper = styled(FlexCol)`
   grid-area: content;
   height: 100%;
-  min-height: 100vh;
-  min-width: 100vw;
   width: 100%;
   max-width: 100vw;
   background-color: ${theme.bg.default};
@@ -451,10 +450,10 @@ export const NavContainer = styled.div`
 export const Tabs = styled.div`
   display: grid;
   padding: 0 16px;
-  grid-template-columns: auto 1fr repeat(3, auto);
+  grid-template-columns: auto 1fr repeat(4, auto);
   grid-column-gap: 32px;
   grid-template-rows: auto;
-  grid-template-areas: 'logo . features apps support auth';
+  grid-template-areas: 'logo . features apps support login auth';
   align-items: center;
   justify-items: center;
   color: ${(props) =>
@@ -551,22 +550,6 @@ export const LogoLink = styled(DropdownLink)`
   }
 `;
 
-export const FeaturesLink = styled(DropdownLink)`
-  grid-area: features;
-`;
-
-export const AppsLink = styled(DropdownLink)`
-  grid-area: apps;
-`;
-
-export const SupportLink = styled(DropdownLink)`
-  grid-area: support;
-`;
-
-export const ExploreLink = styled(DropdownLink)`
-  grid-area: explore;
-`;
-
 export const AuthLink = styled(DropdownLink)`
   margin: 0;
   margin-top: 24px;
@@ -574,8 +557,7 @@ export const AuthLink = styled(DropdownLink)`
   font-weight: 700;
   border-top: none;
   color: ${theme.text.reverse};
-  background-image: ${(props) =>
-    Gradient(props.theme.brand.alt, props.theme.brand.default)};
+  background-image: ${(props) => Gradient(props.theme.brand.alt, props.theme.brand.default)};
   justify-content: center;
   &:hover {
     color: ${theme.text.reverse};
@@ -583,12 +565,16 @@ export const AuthLink = styled(DropdownLink)`
   }
 `;
 
+export const LoginLink = styled(DropdownLink)`
+  grid-area: login;
+`;
+
 export const MenuContainer = styled.div`
   position: fixed;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto 16px repeat(5, auto) 1fr auto;
-  grid-template-areas: 'logo' '.' 'features' 'apps' 'support' 'explore' '.' 'auth';
+  grid-template-areas: 'logo' '.' 'features' 'apps' 'support' 'explore' 'login' '.' 'auth';
   align-content: start;
   left: 0;
   top: 0;
@@ -640,22 +626,8 @@ export const MenuTab = styled.div`
   }
 `;
 
-export const FeaturesTab = styled(Tab)`
-  grid-area: features;
-  @media (max-width: ${MEDIA_BREAK}px) {
-    display: none;
-  }
-`;
-
-export const AppsTab = styled(Tab)`
-  grid-area: apps;
-  @media (max-width: ${MEDIA_BREAK}px) {
-    display: none;
-  }
-`;
-
-export const SupportTab = styled(Tab)`
-  grid-area: support;
+export const LoginTab = styled(Tab)`
+  grid-area: login;
   @media (max-width: ${MEDIA_BREAK}px) {
     display: none;
   }

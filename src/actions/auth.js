@@ -1,31 +1,20 @@
-// @flow
 import * as actions from './actionTypes';
 
+// Clean up messages
+export const clean = () => ({
+  type: actions.CLEAN_UP,
+});
+
 // Sign up action creator
-export const signUp = (data) => async (
-  dispatch,
-  getState,
-  { getFirebase, getFirestore },
-) => {
+export const signUp = (data) => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
-  const firestore = getFirestore();
   dispatch({ type: actions.AUTH_START });
   try {
-    const res = await firebase
-      .auth()
-      .createUserWithEmailAndPassword(data.email, data.password);
-
-    // Send the verfication email
-    const user = firebase.auth().currentUser;
-    await user.sendEmailVerification();
-
-    await firestore.collection('users').doc(res.user.uid).set({
-      firstName: data.firstName,
-      lastName: data.lastName,
-    });
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
     dispatch({ type: actions.AUTH_SUCCESS });
   } catch (err) {
-    dispatch({ type: actions.AUTH_FAIL, payload: err.message });
+    dispatch({ type: actions.AUTH_FAIL, code: err.code, payload: err.message });
   }
   dispatch({ type: actions.AUTH_END });
 };
@@ -36,58 +25,51 @@ export const signOut = () => async (dispatch, getState, { getFirebase }) => {
   try {
     await firebase.auth().signOut();
   } catch (err) {
-    console.log(err.message);
+    console.error(err.message);
   }
 };
 
 // Login action creator
-export const signIn = (data) => async (dispatch, getState, { getFirebase }) => {
+export const signIn = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
   dispatch({ type: actions.AUTH_START });
   try {
-    await firebase.auth().signInWithEmailAndPassword(data.email, data.password);
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await firebase.auth().signInWithPopup(provider);
     dispatch({ type: actions.AUTH_SUCCESS });
   } catch (err) {
-    dispatch({ type: actions.AUTH_FAIL, payload: err.message });
+    dispatch({ type: actions.AUTH_FAIL, code: err.code, payload: err.message });
   }
   dispatch({ type: actions.AUTH_END });
 };
 
-// Clean up messages
-export const clean = () => ({
-  type: actions.CLEAN_UP,
-});
-
-// Verify email actionTypes
-export const verifyEmail = () => async (
+// Edit profile
+export const editProfile = (data) => async (
   dispatch,
   getState,
-  { getFirebase },
+  { getFirebase, getFirestore },
 ) => {
   const firebase = getFirebase();
-  dispatch({ type: actions.VERIFY_START });
+  const firestore = getFirestore();
+  const user = firebase.auth().currentUser;
+  const { uid: userId, email: userEmail } = getState().firebase.auth;
+  dispatch({ type: actions.PROFILE_EDIT_START });
   try {
-    const user = firebase.auth().currentUser;
-    await user.sendEmailVerification();
-    dispatch({ type: actions.VERIFY_SUCCESS });
-  } catch (err) {
-    dispatch({ type: actions.VERIFY_FAIL, payload: err.message });
-  }
-};
+    //edit the user profile
+    if (data.email !== userEmail) {
+      await user.updateEmail(data.email);
+    }
 
-// Send recover password
-export const recoverPassword = (data) => async (
-  dispatch,
-  getState,
-  { getFirebase },
-) => {
-  const firebase = getFirebase();
-  dispatch({ type: actions.RECOVERY_START });
-  try {
-    // send email ehre
-    await firebase.auth().sendPasswordResetEmail(data.email);
-    dispatch({ type: actions.RECOVERY_SUCCESS });
+    await firestore.collection('users').doc(userId).set({
+      firstName: data.firstName,
+      lastName: data.lastName,
+    });
+
+    if (data.password.length > 0) {
+      await user.updatePassword(data.password);
+    }
+    dispatch({ type: actions.PROFILE_EDIT_SUCCESS });
   } catch (err) {
-    dispatch({ type: actions.RECOVERY_FAIL, payload: err.message });
+    dispatch({ type: actions.PROFILE_EDIT_FAIL, payload: err.message });
   }
 };

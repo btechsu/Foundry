@@ -149,6 +149,10 @@ module.exports = function override(config, env) {
         },
       }),
     );
+    config.module.rules.push({
+      test: /react-editor-js/,
+      use: 'null-loader',
+    });
   }
 
   // NOTE(@mxstbr): This works around an issue where webpack was resolving the "module" path of b2a
@@ -161,7 +165,7 @@ module.exports = function override(config, env) {
     new CircularDependencyPlugin({
       cwd: process.cwd(),
       failOnError: true,
-      exclude: /a\.js|react-redux-firebase/,
+      exclude: /a\.js|react-redux-firebase|routes.js/,
     }),
   );
   config.resolve.plugins = config.resolve.plugins.filter(
@@ -179,5 +183,6 @@ module.exports = function override(config, env) {
       '@shared': path.resolve(__dirname, 'shared'),
     },
   };
+  // config = rewireUglifyjs(config);
   return rewireStyledComponents(config, env, { ssr: true });
 };

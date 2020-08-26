@@ -1,5 +1,6 @@
 // @flow
 import * as React from 'react';
+import Nav from './components/nav';
 import Home from './home';
 import Privacy from './privacy';
 import { StyledViewGrid } from './style';
@@ -20,9 +21,20 @@ class Pages extends React.Component {
   };
 
   render() {
+    const {
+      match: { path },
+    } = this.props;
+    const dark = path === '/' || path === '/about';
+
     return (
       <StyledViewGrid>
-        <div style={{ position: 'relative' }}>{this.renderPage()}</div>
+        <div style={{ position: 'relative' }}>
+          <Nav
+            dark={dark ? 'true' : undefined}
+            location={this.props.match.path.substr(1)}
+          />
+          {this.renderPage()}
+        </div>
       </StyledViewGrid>
     );
   }

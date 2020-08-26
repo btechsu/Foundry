@@ -1,5 +1,6 @@
 // @flow
+import { ErrorView } from './errorView';
 import { LoadingView } from './loadingView';
 import { CardStyles } from './style';
 
-export { LoadingView, CardStyles };
+export { ErrorView, LoadingView, CardStyles };

@@ -20,7 +20,7 @@ const StyledCard = styled(FlexCol)`
   }
 `;
 
-const CardPure = (props: Object): React$Element<any> => (
+const CardPure = (props) => (
   <StyledCard {...props}>{props.children}</StyledCard>
 );
 

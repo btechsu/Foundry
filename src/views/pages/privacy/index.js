@@ -9,6 +9,9 @@ import {
   SectionTitle,
   SectionDescription,
 } from './style';
+import { withRouter } from 'react-router';
+import { connect } from 'react-redux';
+import compose from 'recompose/compose';
 import Head from '@components/head';
 
 class Terms extends React.Component {
@@ -73,7 +76,7 @@ class Terms extends React.Component {
             <SectionDescription>
               For information about how we collect and use information about
               users of the Service, please check out our privacy policy
-              available at https://bths.social/privacy.html.
+              available at https://bths.social/privacy.
             </SectionDescription>
           </Section>
 
@@ -351,4 +354,5 @@ class Terms extends React.Component {
     );
   }
 }
-export default Terms;
+
+export default compose(withRouter, connect())(Terms);

@@ -15,11 +15,15 @@ import { theme } from '@shared/theme';
 import AppViewWrapper from '@components/appViewWrapper';
 import Head from '@components/head';
 import ModalRoot from '@components/modals/modalRoot';
+import signedOutFallback from '@helpers/signed-out-fallback';
+import Navigation from '@views/navigation';
 import generateMetaInfo from '@shared/generate-meta-info';
 import GlobalStyles from './reset.css';
 import { LoadingView } from '@views/viewHelpers';
-import signedOutFallback from '@helpers/signed-out-fallback';
+import GlobalTitlebar from './views/globalTitlebar';
 import Login from '@views/login';
+import NewUser from '@views/newUser';
+import { NavigationContext } from '@helpers/navigation-context';
 
 /* prettier-ignore */
 const ErrorFallback = Loadable({
@@ -33,7 +37,25 @@ const Pages = Loadable({
   loading: ({ isLoading }) => isLoading && null,
 });
 
-const LoginFallback = signedOutFallback(Login, () => <Redirect to="/" />);
+const Clubs = Loadable({
+  loader: () => import('@views/clubs' /* webpackChunkName: "Clubs" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+
+const HomeViewRedirectFallback = signedOutFallback(
+  () => <Redirect to="/clubs" />,
+  Pages,
+);
+const LoginFallback = signedOutFallback(() => <Redirect to="/" />, Login);
+const NewUserFallback = signedOutFallback(() => <Redirect to="/" />, NewUser);
+
+const SubmitClub = Loadable({
+  loader: () => import('@views/newClub' /* webpackChunkName: "NewClub" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+const SubmitClubFallback = signedOutFallback(SubmitClub, () => (
+  <Redirect to="/login" />
+));
 
 export const RouteModalContext = React.createContext({
   isModal: false,
@@ -41,11 +63,22 @@ export const RouteModalContext = React.createContext({
 
 class Routes extends React.Component {
   previousLocation = this.props.location;
+  state = { navigationIsOpen: false };
+
+  setNavigationIsOpen = (val) => this.setState({ navigationIsOpen: val });
 
   render() {
-    const { location } = this.props;
+    const { navigationIsOpen } = this.state;
     const { title, description } = generateMetaInfo();
+
+    const { location } = this.props;
     const isModal = false;
+
+    // allows any UI in the tree to open or close the side navigation on mobile
+    const navigationContext = {
+      navigationIsOpen,
+      setNavigationIsOpen: this.setNavigationIsOpen,
+    };
 
     // allows any UI in the tree to know if it is existing within a modal or not
     // commonly used for background views to know that they are backgrounded
@@ -54,30 +87,46 @@ class Routes extends React.Component {
     return (
       <ErrorBoundary fallbackComponent={ErrorFallback}>
         <ThemeProvider theme={theme}>
-          {/* meta tags get overridden by anything further down the tree */}
-          <Head title={title} description={description} />
-          <GlobalStyles />
+          <NavigationContext.Provider value={navigationContext}>
+            {/* meta tags get overridden by anything further down the tree */}
+            <Head title={title} description={description} />
+            <GlobalStyles />
 
-          {/* dont let non-critical pieces of UI crash the whole app */}
-          <ErrorBoundary>
-            <ModalRoot />
-          </ErrorBoundary>
+            {/* dont let non-critical pieces of UI crash the whole app */}
+            <ErrorBoundary>
+              <ModalRoot />
+            </ErrorBoundary>
 
-          <RouteModalContext.Provider value={routeModalContext}>
-            {/*
+            <RouteModalContext.Provider value={routeModalContext}>
+              {/*
               we tell the app view wrapper any time the modal state
               changes so that we can restore the scroll position to where
               it was before the modal was opened
             */}
-            <AppViewWrapper {...routeModalContext}>
-              <Switch location={isModal ? this.previousLocation : location}>
-                {/* Public Pages */}
-                <Route path="/" component={Pages} exact />
-                <Route path="/login" component={LoginFallback} />
-                <Route path="/privacy" component={Pages} />
-              </Switch>
-            </AppViewWrapper>
-          </RouteModalContext.Provider>
+              <AppViewWrapper {...routeModalContext}>
+                <Route component={Navigation} />
+                <Route component={GlobalTitlebar} />
+
+                <div css={isModal ? { overflow: 'hidden' } : {}}>
+                  <Switch location={isModal ? this.previousLocation : location}>
+                    {/* Public Pages */}
+                    <Route
+                      path="/"
+                      component={HomeViewRedirectFallback}
+                      exact
+                    />
+                    <Route path="/privacy" component={Pages} />
+
+                    {/* App Pages */}
+                    <Route path="/login" component={LoginFallback} />
+                    <Route path="/new/user" component={NewUserFallback} />
+                    <Route path="/clubs" component={Clubs} />
+                    <Route path="/new/club" component={SubmitClubFallback} />
+                  </Switch>
+                </div>
+              </AppViewWrapper>
+            </RouteModalContext.Provider>
+          </NavigationContext.Provider>
         </ThemeProvider>
       </ErrorBoundary>
     );

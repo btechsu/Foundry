@@ -1,17 +1,23 @@
 // @flow
 import { combineReducers } from 'redux';
-import { reducer as firebase } from 'react-redux-firebase';
-import { reducer as firestore } from 'react-redux-firebase';
+import { firebaseReducer } from 'react-redux-firebase';
+import { firestoreReducer } from 'redux-firestore';
 
 import auth from './auth';
 import modals from './modals';
+import notifications from './notifications';
+import titlebar from './titlebar';
+import toasts from './toasts';
 
 const getReducers = () => {
   return combineReducers({
     auth,
     modals,
-    firebase,
-    firestore,
+    notifications,
+    titlebar,
+    toasts,
+    firebase: firebaseReducer,
+    firestore: firestoreReducer,
   });
 };
 

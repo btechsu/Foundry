@@ -2,6 +2,7 @@
 import React from 'react';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
+import { isViewingMarketingPage } from '@helpers/is-viewing-marketing-page';
 import { StyledAppViewWrapper } from './style';
 
 class AppViewWrapper extends React.Component {
@@ -46,12 +47,11 @@ class AppViewWrapper extends React.Component {
   }
 
   render() {
-    /*
-      update this later to test if we're not viewing the app
-      page, then to keep a single column layout, otherwise
-      update it to a two column layout
-    */
-    const isTwoColumn = false;
+    const { currentUser, history, location } = this.props;
+
+    const isMarketingPage = isViewingMarketingPage(history, currentUser);
+    const isViewingExplore = location && location.pathname === '/explore';
+    const isTwoColumn = isViewingExplore || !isMarketingPage;
 
     return (
       <StyledAppViewWrapper

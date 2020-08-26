@@ -1,5 +1,4 @@
 import * as actions from '@actions/actionTypes';
-import { act } from 'react-dom/test-utils';
 
 const initialState = {
   modalType: null,

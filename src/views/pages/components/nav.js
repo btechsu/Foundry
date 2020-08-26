@@ -2,32 +2,25 @@
 import * as React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { PrimaryButton } from 'src/components/button';
-import Icon from '../../../components/icon';
+import { PrimaryButton } from '@components/button';
+import Icon from '@components/icon';
 import { Link } from 'react-router-dom';
-import { Logo } from 'src/components/logo';
-import { UserAvatar } from 'src/components/avatar';
-import Head from 'src/components/head';
-import { withCurrentUser } from 'src/components/withCurrentUser';
+import { Logo } from '@components/logo';
+// import { UserAvatar } from 'src/components/avatar';
+import Head from '@components/head';
 import {
   NavContainer,
   Tabs,
   LogoTab,
   MenuTab,
-  SupportTab,
-  FeaturesTab,
-  AppsTab,
+  LoginTab,
   AuthTab,
   LogoLink,
   AuthLink,
-  SupportLink,
-  FeaturesLink,
-  AppsLink,
-  ExploreLink,
+  LoginLink,
   MenuContainer,
   MenuOverlay,
 } from '../style';
-import { track, events } from 'src/helpers/analytics';
 
 class Nav extends React.Component {
   state = { menuIsOpen: false };
@@ -53,64 +46,49 @@ class Nav extends React.Component {
         <Tabs>
           <LogoTab
             dark={this.props.dark}
-            to="/about"
+            to="/"
             data-cy="navigation-splash-about"
           >
-            <h1>Foundry</h1>
+            <Logo />
+            <Icon glyph={'logo'} />
           </LogoTab>
-          <FeaturesTab
-            dark={this.props.dark}
-            selected={this.props.location === 'features'}
-            to="/features"
-            data-cy="navigation-splash-features"
-          >
-            Features
-          </FeaturesTab>
-          <AppsTab
-            dark={this.props.dark}
-            selected={this.props.location === 'apps'}
-            to="/apps"
-            data-cy="navigation-splash-apps"
-          >
-            Apps
-          </AppsTab>
-          <SupportTab
-            dark={this.props.dark}
-            selected={this.props.location === 'support'}
-            to="/support"
-            data-cy="navigation-splash-support"
-          >
-            Support
-          </SupportTab>
-          <AuthTab dark={this.props.dark}>
-            {this.props.currentUser ? (
-              <Link to={'/'}>
-                <UserAvatar
-                  user={this.props.currentUser}
-                  dataCy="navigation-splash-profile"
-                  clickable={false}
-                  showOnlineStatus={false}
-                  showHoverProfile={false}
-                />
-              </Link>
-            ) : (
-              <Link
-                to="/login"
-                onClick={() => track(events.HOME_PAGE_SIGN_IN_CLICKED)}
+          {this.props.authed ? (
+            <AuthTab dark={this.props.dark}>
+              <LoginTab
+                dark={this.props.dark}
+                selected={this.props.location === 'login'}
+                to="/"
+                data-cy="navigation-splash-login"
               >
-                <PrimaryButton
-                  data-cy="navigation-splash-signin"
-                  style={{
-                    fontWeight: '700',
-                    fontSize: '16px',
-                    letterSpacing: '0.5px',
-                  }}
-                >
-                  Log in or sign up
-                </PrimaryButton>
-              </Link>
-            )}
-          </AuthTab>
+                Dashbard
+              </LoginTab>
+            </AuthTab>
+          ) : (
+            <React.Fragment>
+              <LoginTab
+                dark={this.props.dark}
+                selected={this.props.location === 'login'}
+                to="/login"
+                data-cy="navigation-splash-login"
+              >
+                Log in
+              </LoginTab>
+              <AuthTab dark={this.props.dark}>
+                <Link to="/new/user">
+                  <PrimaryButton
+                    data-cy="navigation-splash-signin"
+                    style={{
+                      fontWeight: '700',
+                      fontSize: '16px',
+                      letterSpacing: '0.5px',
+                    }}
+                  >
+                    Sign up
+                  </PrimaryButton>
+                </Link>
+              </AuthTab>
+            </React.Fragment>
+          )}
           <MenuTab dark={this.props.dark} open={this.state.menuIsOpen}>
             <Icon
               glyph={this.state.menuIsOpen ? 'view-close' : 'menu'}
@@ -120,38 +98,19 @@ class Nav extends React.Component {
               <LogoLink to="/">
                 <Logo />
               </LogoLink>
-              <FeaturesLink
-                to="/features"
-                selected={this.props.location === 'features'}
-              >
-                Features
-              </FeaturesLink>
-              <AppsLink to="/apps" selected={this.props.location === 'apps'}>
-                Apps
-              </AppsLink>
-              <SupportLink
-                to="/support"
-                selected={this.props.location === 'support'}
-              >
-                Support
-              </SupportLink>
-              <ExploreLink
-                to="/explore"
-                selected={this.props.location === 'explore'}
-              >
-                Explore
-              </ExploreLink>
-              {this.props.currentUser ? (
+              {this.props.authed ? (
                 <AuthLink to={'/'}>
                   <span>Return home</span>
                 </AuthLink>
               ) : (
-                <AuthLink
-                  to={'/login'}
-                  onClick={() => track(events.HOME_PAGE_SIGN_IN_CLICKED)}
-                >
-                  <span>Log in or sign up</span>
-                </AuthLink>
+                <React.Fragment>
+                  <LoginLink to={'/login'}>
+                    <span>Log in</span>
+                  </LoginLink>
+                  <AuthLink to={'/new/user'}>
+                    <span>Sign up</span>
+                  </AuthLink>
+                </React.Fragment>
               )}
             </MenuContainer>
             <MenuOverlay
@@ -165,4 +124,8 @@ class Nav extends React.Component {
   }
 }
 
-export default compose(withCurrentUser, connect())(Nav);
+export default compose(
+  connect(({ firebase: { auth } }) => ({
+    authed: !!auth && !!auth.uid,
+  })),
+)(Nav);
