@@ -56,7 +56,6 @@
     "eject": "react-scripts eject",
     "flow": "flow",
     "webpack-defaults": "webpack-defaults",
-    "postbuild": "react-snap",
     "lint": "eslint ."
   },
   "browserslist": {
