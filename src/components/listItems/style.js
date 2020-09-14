@@ -1,8 +1,8 @@
 // @flow
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import { Link } from 'react-router-dom';
-import { MEDIA_BREAK } from '@components/layout';
+import { MEDIA_BREAK } from 'src/components/layout';
 import {
   Truncate,
   FlexCol,
@@ -10,7 +10,7 @@ import {
   H3,
   H4,
   Transition,
-} from '@components/globals';
+} from 'src/components/globals';
 
 export const Wrapper = styled(FlexCol)`
   flex: 1 0 auto;

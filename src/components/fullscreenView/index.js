@@ -1,8 +1,8 @@
 // @flow
 import React, { Component } from 'react';
-import Icon from '@components/icon';
+import Icon from 'src/components/icon';
 import { FullscreenViewContainer, CloseLink } from './style';
-import { ESC } from '@helpers/keycodes';
+import { ESC } from 'src/helpers/keycodes';
 
 class FullscreenView extends Component {
   componentDidMount() {

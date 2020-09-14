@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { Spinner } from '@components/globals';
+import { Spinner } from 'src/components/globals';
 import {
   SearchWrapper,
   SearchInput,

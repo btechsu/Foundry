@@ -3,9 +3,9 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { MobileTitlebar } from '@components/titlebar';
-import { ErrorBoundary } from '@components/error';
-import { isViewingMarketingPage } from '@helpers/is-viewing-marketing-page';
+import { MobileTitlebar } from 'src/components/titlebar';
+import { ErrorBoundary } from 'src/components/error';
+import { isViewingMarketingPage } from 'src/helpers/is-viewing-marketing-page';
 
 const GlobalTitlebar = (props) => {
   const {

@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
 import { GoogleButton, Label } from './style';
-import Icon from '@components/icon';
+import Icon from 'src/components/icon';
 
 export const GoogleSigninButton = (props) => {
   const { onClickHandler, newUser, loading } = props;

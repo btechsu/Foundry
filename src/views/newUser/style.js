@@ -1,5 +1,5 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled from 'styled-components';
 import {
   FlexRow,
@@ -8,9 +8,9 @@ import {
   Shadow,
   hexa,
   zIndex,
-} from '@components/globals';
-import { Button } from '@components/button';
-import { MEDIA_BREAK } from '@components/layout';
+} from 'src/components/globals';
+import { Button } from 'src/components/button';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const Title = styled.h1`
   color: ${theme.text.default};
@@ -112,7 +112,8 @@ export const NullCol = styled(FlexCol)`
 `;
 
 export const NullRow = styled(FlexRow)`
-  background-image: url('/img/fills/${(props) => props.bg ? `${props.bg}` : 'locked'}.svg');
+  background-image: url('/img/fills/${(props) =>
+    props.bg ? `${props.bg}` : 'locked'}.svg');
   background-color: transparent;
   background-size: 110% auto;
   background-repeat: no-repeat;

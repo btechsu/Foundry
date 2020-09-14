@@ -1,27 +1,22 @@
-// @flow
 import * as React from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withFirestore, withFirebase } from 'react-redux-firebase';
-import { PrimaryOutlineButton } from '@components/button';
+import { PrimaryOutlineButton } from 'src/components/button';
+import JoditEditor from 'jodit-react';
 
-import EditorJs from 'react-editor-js';
-import Paragraph from '@editorjs/paragraph';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Underline from '@editorjs/underline';
-
-import { Error } from '@components/formElements';
+import { Error } from 'src/components/formElements';
 import { FormContainer, Form, Actions } from '../../style';
 
 class SubmitClubEditor extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { isLoading: false, error: false };
-  }
-  componentDidMount() {
-    return this.editorInstance;
+    this.state = {
+      isLoading: false,
+      error: false,
+      content: '',
+    };
   }
 
   getFileExtension(imageType) {
@@ -40,12 +35,21 @@ class SubmitClubEditor extends React.Component {
     return imageName.split('.').pop();
   }
 
+  onSave = (e) => {
+    if (e) {
+      return this.setState({
+        content: e.target.innerHTML,
+        error: false,
+      });
+    }
+  };
+
   submit = async () => {
     try {
       this.setState({ isLoading: true });
       const { prevPage, user, firebase, firestore } = this.props;
-      const rawText = await this.editorInstance.save();
-      const editorText = JSON.stringify(rawText.blocks);
+      // const rawText = await this.editorInstance.save();
+      const editorText = this.state.content;
 
       if (editorText.length > 1010000) {
         return this.setState({
@@ -106,61 +110,26 @@ class SubmitClubEditor extends React.Component {
   };
 
   render() {
-    const EDITOR_JS_TOOLS = {
-      paragraph: {
-        class: Paragraph,
-        inlineToolbar: true,
-      },
-      list: List,
-      header: {
-        class: Header,
-        inlineToolbar: true,
-      },
-      underline: Underline,
-    };
-    let data = {
-      blocks: [
-        {
-          type: 'header',
-          data: {
-            text: 'Replace this with something about your club',
-            level: 1,
-          },
-        },
-        {
-          type: 'paragraph',
-          data: {
-            text:
-              'Your club description will go here. Our advanced editor allows you to add different components like paragraphs, lists, and images. We recommend you be as descriptive as you can when writing this section, as this is what someone will look at the most before joining a club.',
-          },
-        },
-        {
-          type: 'paragraph',
-          data: {
-            text:
-              'You can add things like club hours, dates, things you do, why you should join, things to have ready, people in the club, etc.',
-          },
-        },
-        {
-          type: 'paragraph',
-          data: {
-            text:
-              'You should keep writing, the more the better! (Hint: try pasting an image URL)',
-          },
-        },
-      ],
-    };
-
     const { isLoading, error } = this.state;
 
     return (
       <FormContainer>
         <Form>
-          <EditorJs
-            tools={EDITOR_JS_TOOLS}
-            instanceRef={(instance) => (this.editorInstance = instance)}
-            data={data}
-            logLevel="ERROR"
+          <JoditEditor
+            config={{
+              readonly: false,
+              removeButtons: [
+                'source',
+                'eraser',
+                'font',
+                'file',
+                'copyformat',
+                'print',
+                'about',
+              ],
+            }}
+            tabIndex={1} // tabIndex of textarea
+            onBlur={this.onSave}
           />
           {error && <Error>{error}</Error>}
         </Form>

@@ -1,20 +1,20 @@
 // @flow
 import * as React from 'react';
-import * as actions from '@actions/auth';
+import * as actions from 'src/actions/auth';
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { Link } from 'react-router-dom';
-import FullscreenView from '@components/fullscreenView';
-import LoginButtonSet from '@components/loginButtonSet';
-import { Error } from '@components/formElements';
+import FullscreenView from 'src/components/fullscreenView';
+import LoginButtonSet from 'src/components/loginButtonSet';
+import { Error } from 'src/components/formElements';
 import {
   LargeTitle,
   LargeSubtitle,
   FullscreenContent,
   CodeOfConduct,
 } from './style';
-import { setTitlebarProps } from '@actions/titlebar';
+import { setTitlebarProps } from 'src/actions/titlebar';
 
 class NewUser extends React.Component {
   componentDidMount() {

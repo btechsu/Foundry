@@ -1,7 +1,7 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled, { keyframes } from 'styled-components';
-import { MEDIA_BREAK } from '@components/layout';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const ToastsContainer = styled.div`
   position: fixed;

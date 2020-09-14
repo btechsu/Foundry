@@ -1,6 +1,6 @@
 // @flow
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 
 export const NAVBAR_WIDTH = 72;
 export const NAVBAR_EXPANDED_WIDTH = 256;

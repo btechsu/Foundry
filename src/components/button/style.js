@@ -1,6 +1,6 @@
 // @flow
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import { Link } from 'react-router-dom';
 import { tint, hexa } from '../globals';
 

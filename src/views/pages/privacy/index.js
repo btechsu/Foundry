@@ -12,7 +12,7 @@ import {
 import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import Head from '@components/head';
+import Head from 'src/components/head';
 
 class Terms extends React.Component {
   render() {

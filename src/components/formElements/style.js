@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import { FlexRow, Transition, hexa, zIndex } from '../globals';
 import Textarea from 'react-textarea-autosize';
 

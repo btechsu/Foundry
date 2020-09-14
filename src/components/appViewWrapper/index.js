@@ -2,7 +2,7 @@
 import React from 'react';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
-import { isViewingMarketingPage } from '@helpers/is-viewing-marketing-page';
+import { isViewingMarketingPage } from 'src/helpers/is-viewing-marketing-page';
 import { StyledAppViewWrapper } from './style';
 
 class AppViewWrapper extends React.Component {

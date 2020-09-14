@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Tooltip from '@components/tooltip';
+import Tooltip from 'src/components/tooltip';
 import compose from 'recompose/compose';
-import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from '@components/layout';
-import Icon from '@components/icon';
+import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from 'src/components/layout';
+import Icon from 'src/components/icon';
 import { getAccessibilityActiveState } from './accessibility';
-import { NavigationContext } from '@helpers/navigation-context';
+import { NavigationContext } from 'src/helpers/navigation-context';
 import { AvatarGrid, AvatarLink, Label, IconWrapper, RedDot } from './style';
 
 const NotificationsTab = (props) => {

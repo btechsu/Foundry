@@ -10,8 +10,8 @@ import {
   SocialLinks,
 } from '../style';
 import { Link } from 'react-router-dom';
-import Icon from '@components/icon';
-import { Logo } from '@components/logo';
+import Icon from 'src/components/icon';
+import { Logo } from 'src/components/logo';
 
 export default () => {
   return (

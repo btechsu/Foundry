@@ -1,8 +1,8 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled from 'styled-components';
-import { zIndex } from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
+import { zIndex } from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const Container = styled.div`
   display: flex;

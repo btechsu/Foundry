@@ -2,12 +2,12 @@
 import * as React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import { PrimaryButton } from '@components/button';
-import Icon from '@components/icon';
+import { PrimaryButton } from 'src/components/button';
+import Icon from 'src/components/icon';
 import { Link } from 'react-router-dom';
-import { Logo } from '@components/logo';
+import { Logo } from 'src/components/logo';
 // import { UserAvatar } from 'src/components/avatar';
-import Head from '@components/head';
+import Head from 'src/components/head';
 import {
   NavContainer,
   Tabs,

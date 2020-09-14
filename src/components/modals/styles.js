@@ -1,8 +1,8 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled from 'styled-components';
 import { zIndex } from '../globals';
-import { isMobile } from '@helpers/utils';
+import { isMobile } from 'src/helpers/utils';
 import Icon from '../icon';
 
 /*

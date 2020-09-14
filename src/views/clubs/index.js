@@ -2,13 +2,13 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import generateMetaInfo from '@shared/generate-meta-info';
-import Head from '@components/head';
+import generateMetaInfo from 'shared/generate-meta-info';
+import Head from 'src/components/head';
 import Search from './components/search';
 import ClubSearchWrapper from './components/clubSearchWrapper';
-import { ErrorBoundary } from '@components/error';
-import { ViewGrid } from '@components/layout';
-import { setTitlebarProps } from '@actions/titlebar';
+import { ErrorBoundary } from 'src/components/error';
+import { ViewGrid } from 'src/components/layout';
+import { setTitlebarProps } from 'src/actions/titlebar';
 import { Charts } from './view';
 
 class Explore extends React.Component {

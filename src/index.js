@@ -39,11 +39,7 @@ const renderMethod = rootElement.hasChildNodes()
   : ReactDOM.render;
 
 function render() {
-  return renderMethod(
-    <App />,
-    // $FlowIssue
-    rootElement,
-  );
+  return renderMethod(<App />, rootElement);
 }
 
 OfflinePluginRuntime.install({
@@ -52,7 +48,6 @@ OfflinePluginRuntime.install({
 });
 
 if ('serviceWorker' in navigator && 'PushManager' in window) {
-  // $FlowIssue
   navigator.serviceWorker.ready.then((registration) => {
     webPushManager.set(registration.pushManager);
   });

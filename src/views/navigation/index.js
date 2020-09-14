@@ -3,8 +3,8 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
-import Tooltip from '@components/tooltip';
-import { isViewingMarketingPage } from '@helpers/is-viewing-marketing-page';
+import Tooltip from 'src/components/tooltip';
+import { isViewingMarketingPage } from 'src/helpers/is-viewing-marketing-page';
 import {
   Overlay,
   NavigationWrapper,
@@ -16,12 +16,12 @@ import {
   Divider,
   DesktopMenuIconsCover,
 } from './style';
-import Icon from '@components/icon';
+import Icon from 'src/components/icon';
 import NavHead from './navHead';
 import NotificationsTab from './notificationsTab';
 import { Skip, getAccessibilityActiveState } from './accessibility';
-import { NavigationContext } from '@helpers/navigation-context';
-import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from '@components/layout';
+import { NavigationContext } from 'src/helpers/navigation-context';
+import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from 'src/components/layout';
 
 const Navigation = (props) => {
   const { authed, isLoaded, history } = props;
@@ -190,9 +190,7 @@ const Navigation = (props) => {
                       >
                         <AvatarGrid
                           isActive={
-                            match &&
-                            match.url === '/new/club' &&
-                            match.isExact
+                            match && match.url === '/new/club' && match.isExact
                           }
                         >
                           <AvatarLink

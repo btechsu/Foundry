@@ -1,7 +1,7 @@
 // @flow
 import * as React from 'react';
-import Icon from '@components/icon';
-import { WhiteOutlineButton } from '@components/button';
+import Icon from 'src/components/icon';
+import { WhiteOutlineButton } from 'src/components/button';
 import {
   StyledLabel,
   StyledPrefixLabel,

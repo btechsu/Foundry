@@ -2,7 +2,7 @@
 import * as React from 'react';
 import AvatarImage from './image';
 import { Container, AvatarLink } from './style';
-import ConditionalWrap from '@components/conditionalWrap';
+import ConditionalWrap from 'src/components/conditionalWrap';
 
 class Avatar extends React.Component {
   render() {

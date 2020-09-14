@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import SubmitClubForm from './components/submitClubForm';
 import SubmitClubEditor from './components/submitClubEditor';
 import Stepper from './components/stepper';
-import Head from '@components/head';
-import { ViewGrid, SingleColumnGrid } from '@components/layout';
-import Login from '@views/login';
-import { setTitlebarProps } from '@actions/titlebar';
-import { LoadingView } from '@views/viewHelpers';
+import Head from 'src/components/head';
+import { ViewGrid, SingleColumnGrid } from 'src/components/layout';
+import Login from 'src/views/login';
+import { setTitlebarProps } from 'src/actions/titlebar';
+import { LoadingView } from 'src/views/viewHelpers';
 import { Container, Title, Description } from './style';
 
 class NewClub extends React.Component {
@@ -61,7 +61,7 @@ class NewClub extends React.Component {
       }
       case 2: {
         return `Kickstart ${
-          club ? `the ${club.name}` : 'your club'
+          club ? `${club.name}` : 'your club'
         } by telling us more about it. The more you write the better! You'll be able to edit this description at any time you would like if you're not sure what to write about quite yet.`;
       }
       case 3: {

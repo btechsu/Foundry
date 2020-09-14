@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import BaseTitlebar from './base';
 
 export const MobileTitlebar = (props) => (

@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
-import { OutlineButton, PrimaryButton } from '@components/button';
+import { OutlineButton, PrimaryButton } from 'src/components/button';
 import { Emoji, Heading, Description, ActionsRow, Card } from './style';
-import { ViewGrid, CenteredGrid } from '@components/layout';
+import { ViewGrid, CenteredGrid } from 'src/components/layout';
 
 export const ErrorView = (props) => {
   const {

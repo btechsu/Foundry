@@ -1,9 +1,9 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled, { css } from 'styled-components';
-import { FlexCol, FlexRow } from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
-import { hexa } from '@components/globals';
+import { FlexCol, FlexRow } from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
+import { hexa } from 'src/components/globals';
 
 export const DeleteCoverWrapper = styled(FlexRow)`
   justify-content: flex-end;

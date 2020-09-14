@@ -1,10 +1,10 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import React from 'react';
 import styled from 'styled-components';
-import Goop from '@components/goop';
-import { FlexCol, hexa } from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
+import Goop from 'src/components/goop';
+import { FlexCol, hexa } from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const Default = styled(FlexCol)`
   display: flex;
@@ -117,11 +117,7 @@ export const Illustrated = styled(Default)`
 const Section = (props) => {
   switch (props.background) {
     default:
-      return (
-        <Default>
-          {props.children}
-        </Default>
-      );
+      return <Default>{props.children}</Default>;
     case 'blank':
       return (
         <Default>

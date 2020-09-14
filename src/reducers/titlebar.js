@@ -1,5 +1,5 @@
 // @flow
-import * as actions from '@actions/actionTypes';
+import * as actions from 'src/actions/actionTypes';
 
 const initialState = {
   title: '',

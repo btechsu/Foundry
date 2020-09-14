@@ -2,7 +2,7 @@
 import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
-import Head from '@components/head';
+import Head from 'src/components/head';
 
 const NavHead = (props) => {
   const { notificationCounts } = props;

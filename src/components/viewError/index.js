@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import * as React from 'react';
 import { FillSpaceError, LargeEmoji, Heading, Subheading } from './style';
-import { PrimaryButton } from '@components/button';
+import { PrimaryButton } from 'src/components/button';
 
 /*
   A generic error component which will fill the space of any container its placed in.

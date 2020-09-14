@@ -5,17 +5,17 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withFirestore } from 'react-redux-firebase';
 import slugg from 'slugg';
-import { Notice } from '@components/listItems/style';
-import { throttle } from '@helpers/utils';
-import { addToastWithTimeout } from '@actions/toasts';
-import { CLUB_SLUG_DENY_LIST } from '@shared/slug-deny-lists';
-import { PrimaryOutlineButton } from '@components/button';
+import { Notice } from 'src/components/listItems/style';
+import { throttle } from 'src/helpers/utils';
+import { addToastWithTimeout } from 'src/actions/toasts';
+import { CLUB_SLUG_DENY_LIST } from 'shared/slug-deny-lists';
+import { PrimaryOutlineButton } from 'src/components/button';
 import {
   whiteSpaceRegex,
   oddHyphenRegex,
-} from '@views/viewHelpers/textValidationHelper';
-import Icon from '@components/icon';
-import { StyledLabel } from '@components/formElements/style';
+} from 'src/views/viewHelpers/textValidationHelper';
+import Icon from 'src/components/icon';
+import { StyledLabel } from 'src/components/formElements/style';
 import {
   Input,
   UnderlineInput,
@@ -24,7 +24,7 @@ import {
   CoverInput,
   Error,
   Checkbox,
-} from '@components/formElements';
+} from 'src/components/formElements';
 import {
   ImageInputWrapper,
   Spacer,
@@ -140,7 +140,6 @@ class SubmitClubForm extends React.Component {
         slugTaken: false,
       });
 
-      // $FlowIssue
       this.checkSlug(slug);
     }
   };
@@ -153,12 +152,16 @@ class SubmitClubForm extends React.Component {
         collection: 'clubs',
         doc: slug,
       });
+      const secondDoc = await this.props.firestore.get({
+        collection: 'clubSubmissions',
+        doc: slug,
+      });
 
       if (CLUB_SLUG_DENY_LIST.indexOf(this.state.slug) > -1) {
         return this.setState({ slugTaken: true });
       }
 
-      if (doc.exists) {
+      if (doc.exists || secondDoc.exists) {
         return this.setState({ slugTaken: true });
       } else {
         return this.setState({ slugTaken: false });

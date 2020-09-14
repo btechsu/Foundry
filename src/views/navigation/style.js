@@ -1,14 +1,14 @@
 // @flow
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { theme } from '@shared/theme';
-import { hexa, Truncate } from '@components/globals';
+import { theme } from 'shared/theme';
+import { hexa, Truncate } from 'src/components/globals';
 import {
   MEDIA_BREAK,
   NAVBAR_WIDTH,
   NAVBAR_EXPANDED_WIDTH,
   MIN_WIDTH_TO_EXPAND_NAVIGATION,
-} from '@components/layout';
+} from 'src/components/layout';
 
 export const Overlay = styled.div`
   position: fixed;

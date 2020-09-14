@@ -1,11 +1,11 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
-import { Primary } from '@components/themedSection';
-import { Button } from '@components/button';
-import { Tagline, Copy } from '@views/pages/style';
-import { MEDIA_BREAK } from '@components/layout';
+import { theme } from 'shared/theme';
+import { Primary } from 'src/components/themedSection';
+import { Button } from 'src/components/button';
+import { Tagline, Copy } from 'src/views/pages/style';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 // $FlowFixMe
 const ClubSearchWrapper = (props) => {

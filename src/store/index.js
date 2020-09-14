@@ -1,8 +1,8 @@
 // @flow
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import crashReporter from '@helpers/sentry-redux-middleware';
-import getReducers from '@reducers';
+import crashReporter from 'src/helpers/sentry-redux-middleware';
+import getReducers from 'src/reducers';
 import { getFirebase } from 'react-redux-firebase';
 
 // this enables the chrome devtools for redux only in development

@@ -1,5 +1,5 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import React from 'react';
 import compose from 'recompose/compose';
 import styled from 'styled-components';

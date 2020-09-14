@@ -11,11 +11,11 @@ import {
   CollectionWrapper,
   ProfileCardWrapper,
 } from './style';
-import { SegmentedControl, Segment } from '@components/segmentedControl';
-import { ErrorBoundary } from '@components/error';
-import { Loading } from '@components/loading';
-import { ErrorView } from '@views/viewHelpers';
-import { ClubCard } from '@components/entities';
+import { SegmentedControl, Segment } from 'src/components/segmentedControl';
+import { ErrorBoundary } from 'src/components/error';
+import { Loading } from 'src/components/loading';
+import { ErrorView } from 'src/views/viewHelpers';
+import { ClubCard } from 'src/components/entities';
 
 const ChartGrid = styled.div`
   display: flex;

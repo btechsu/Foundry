@@ -10,35 +10,35 @@ import compose from 'recompose/compose';
 import { Route, Switch, withRouter, Redirect } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 import Loadable from 'react-loadable';
-import { ErrorBoundary } from '@components/error';
-import { theme } from '@shared/theme';
-import AppViewWrapper from '@components/appViewWrapper';
-import Head from '@components/head';
-import ModalRoot from '@components/modals/modalRoot';
-import signedOutFallback from '@helpers/signed-out-fallback';
-import Navigation from '@views/navigation';
-import generateMetaInfo from '@shared/generate-meta-info';
+import { ErrorBoundary } from 'src/components/error';
+import { theme } from 'shared/theme';
+import AppViewWrapper from 'src/components/appViewWrapper';
+import Head from 'src/components/head';
+import ModalRoot from 'src/components/modals/modalRoot';
+import signedOutFallback from 'src/helpers/signed-out-fallback';
+import Navigation from 'src/views/navigation';
+import generateMetaInfo from 'shared/generate-meta-info';
 import GlobalStyles from './reset.css';
-import { LoadingView } from '@views/viewHelpers';
+import { LoadingView } from 'src/views/viewHelpers';
 import GlobalTitlebar from './views/globalTitlebar';
-import Login from '@views/login';
-import NewUser from '@views/newUser';
-import { NavigationContext } from '@helpers/navigation-context';
+import Login from 'src/views/login';
+import NewUser from 'src/views/newUser';
+import { NavigationContext } from 'src/helpers/navigation-context';
 
 /* prettier-ignore */
 const ErrorFallback = Loadable({
-  loader: () => import('@components/error'/* webpackChunkName: "Error" */),
+  loader: () => import('src/components/error'/* webpackChunkName: "Error" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
 /* prettier-ignore */
 const Pages = Loadable({
-  loader: () => import('@views/pages'/* webpackChunkName: "Splash" */),
+  loader: () => import('src/views/pages'/* webpackChunkName: "Splash" */),
   loading: ({ isLoading }) => isLoading && null,
 });
 
 const Clubs = Loadable({
-  loader: () => import('@views/clubs' /* webpackChunkName: "Clubs" */),
+  loader: () => import('src/views/clubs' /* webpackChunkName: "Clubs" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
@@ -50,7 +50,7 @@ const LoginFallback = signedOutFallback(() => <Redirect to="/" />, Login);
 const NewUserFallback = signedOutFallback(() => <Redirect to="/" />, NewUser);
 
 const SubmitClub = Loadable({
-  loader: () => import('@views/newClub' /* webpackChunkName: "NewClub" */),
+  loader: () => import('src/views/newClub' /* webpackChunkName: "NewClub" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 const SubmitClubFallback = signedOutFallback(SubmitClub, () => (

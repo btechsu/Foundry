@@ -3,10 +3,10 @@ import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { ErrorBoundary } from '@components/error';
-import { NavigationContext } from '@helpers/navigation-context';
-import Icon from '@components/icon';
-import { RedDot } from '@views/navigation/style';
+import { ErrorBoundary } from 'src/components/error';
+import { NavigationContext } from 'src/helpers/navigation-context';
+import Icon from 'src/components/icon';
+import { RedDot } from 'src/views/navigation/style';
 import {
   TitlebarContainer,
   Content,

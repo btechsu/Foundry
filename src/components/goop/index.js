@@ -1,8 +1,8 @@
 // @flow
 import React from 'react';
 import styled from 'styled-components';
-import { zIndex } from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
+import { zIndex } from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 /* eslint no-eval: 0 */
 

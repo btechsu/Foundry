@@ -1,6 +1,6 @@
 // @flow
 import styled, { css } from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import { MEDIA_BREAK } from '../../components/layout';
 
 export const Emoji = styled.span`

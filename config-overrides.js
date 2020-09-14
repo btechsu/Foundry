@@ -5,7 +5,6 @@
  */
 
 const debug = require('debug')('build:config-overrides');
-const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const webpack = require('webpack');
 const { injectBabelPlugin } = require('react-app-rewired');
 const rewireStyledComponents = require('react-app-rewire-styled-components');
@@ -75,6 +74,9 @@ const transpileShared = (config) => {
 };
 
 module.exports = function override(config, env) {
+  if (process.env.REACT_APP_MAINTENANCE_MODE === 'enabled') {
+    console.error('\n\n⚠️ ----MAINTENANCE MODE ENABLED----⚠️\n\n');
+  }
   if (process.env.NODE_ENV === 'development') {
     config.output.path = path.join(__dirname, './build');
     config = rewireReactHotLoader(config, env);
@@ -132,6 +134,18 @@ module.exports = function override(config, env) {
       AppCache: false,
     }),
   );
+  if (process.env.ANALYZE_BUNDLE === 'true') {
+    debug('Bundle analyzer enabled');
+    config.plugins.push(
+      new BundleAnalyzerPlugin({
+        analyzerMode: 'static',
+        openAnalyzer: false,
+      }),
+    );
+  }
+  if (process.env.BUNDLE_BUDDY === 'true') {
+    config.plugins.push(new BundleBuddyWebpackPlugin());
+  }
   config.plugins.unshift(
     new webpack.optimize.CommonsChunkPlugin({
       names: ['bootstrap'],
@@ -149,10 +163,6 @@ module.exports = function override(config, env) {
         },
       }),
     );
-    config.module.rules.push({
-      test: /react-editor-js/,
-      use: 'null-loader',
-    });
   }
 
   // NOTE(@mxstbr): This works around an issue where webpack was resolving the "module" path of b2a
@@ -168,21 +178,6 @@ module.exports = function override(config, env) {
       exclude: /a\.js|react-redux-firebase|routes.js/,
     }),
   );
-  config.resolve.plugins = config.resolve.plugins.filter(
-    (plugin) => !(plugin instanceof ModuleScopePlugin),
-  );
-  // add import aliases to webpack config
-  config.resolve = {
-    alias: {
-      '@components': path.resolve(__dirname, 'src/components'),
-      '@actions': path.resolve(__dirname, 'src/actions'),
-      '@store': path.resolve(__dirname, 'src/views'),
-      '@reducers': path.resolve(__dirname, 'src/reducers'),
-      '@helpers': path.resolve(__dirname, 'src/helpers'),
-      '@views': path.resolve(__dirname, 'src/views'),
-      '@shared': path.resolve(__dirname, 'shared'),
-    },
-  };
-  // config = rewireUglifyjs(config);
+
   return rewireStyledComponents(config, env, { ssr: true });
 };

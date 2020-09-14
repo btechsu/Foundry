@@ -2,7 +2,7 @@
 /* eslint-disable max-len */
 import * as React from 'react';
 import queryString from 'query-string';
-import { history } from '@helpers/history';
+import { history } from 'src/helpers/history';
 import { isLoaded } from 'react-redux-firebase';
 import Routes from '../../hot-routes';
 

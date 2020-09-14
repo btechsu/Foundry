@@ -9,7 +9,7 @@ import { Provider } from 'react-redux';
 import {
   firebase as fbConfig,
   reduxFirebase as rfConfig,
-} from '@helpers/firebase-config';
+} from 'src/helpers/firebase-config';
 
 // Initialize Firebase instance
 firebase.initializeApp(fbConfig);

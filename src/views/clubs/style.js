@@ -1,5 +1,5 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import {
@@ -14,12 +14,12 @@ import {
   hexa,
   Truncate,
   zIndex,
-} from '@components/globals';
-import Card from '@components/card';
-import { StyledCard } from '@components/listItems/style';
-import Icon from '@components/icon';
-import ScrollRow from '@components/scrollRow';
-import { MEDIA_BREAK } from '@components/layout';
+} from 'src/components/globals';
+import Card from 'src/components/card';
+import { StyledCard } from 'src/components/listItems/style';
+import Icon from 'src/components/icon';
+import ScrollRow from 'src/components/scrollRow';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const ViewTitle = styled(H1)`
   margin-left: 48px;
@@ -149,7 +149,8 @@ export const Item = styled(FlexCol)`
   box-shadow: ${Shadow.low} ${(props) => hexa(props.theme.text.placeholder, 1)};
   transition: ${Transition.hover.off};
   &:hover {
-    box-shadow: ${Shadow.high} ${(props) => hexa(props.theme.text.placeholder, 1)};
+    box-shadow: ${Shadow.high}
+      ${(props) => hexa(props.theme.text.placeholder, 1)};
     transition: ${Transition.hover.on};
     opacity: 1;
   }

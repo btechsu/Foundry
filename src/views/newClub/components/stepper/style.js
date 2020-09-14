@@ -1,8 +1,8 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 // $FlowFixMe
 import styled from 'styled-components';
-import { zIndex } from '@components/globals';
+import { zIndex } from 'src/components/globals';
 
 export const Container = styled.div`
   display: flex;

@@ -1,8 +1,8 @@
 // @flow
 import styled, { css } from 'styled-components';
-import { theme } from '@shared/theme';
-import { tint } from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
+import { theme } from 'shared/theme';
+import { tint } from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const StyledSegmentedControl = styled.div`
   display: flex;

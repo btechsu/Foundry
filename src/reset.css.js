@@ -1,7 +1,7 @@
 // @flow
 import { createGlobalStyle } from 'styled-components';
 // $FlowIssue
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 
 export default createGlobalStyle`
   * {

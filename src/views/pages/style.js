@@ -1,9 +1,9 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Button } from '@components/button';
-import { ViewGrid } from '@components/layout';
+import { Button } from 'src/components/button';
+import { ViewGrid } from 'src/components/layout';
 import {
   H2,
   FlexCol,
@@ -14,8 +14,8 @@ import {
   zIndex,
   hexa,
   Gradient,
-} from '@components/globals';
-import { MEDIA_BREAK } from '@components/layout';
+} from 'src/components/globals';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const Page = styled.main`
   position: relative;
@@ -557,7 +557,8 @@ export const AuthLink = styled(DropdownLink)`
   font-weight: 700;
   border-top: none;
   color: ${theme.text.reverse};
-  background-image: ${(props) => Gradient(props.theme.brand.alt, props.theme.brand.default)};
+  background-image: ${(props) =>
+    Gradient(props.theme.brand.alt, props.theme.brand.default)};
   justify-content: center;
   &:hover {
     color: ${theme.text.reverse};

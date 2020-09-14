@@ -1,7 +1,7 @@
 // @flow
 import { Link } from 'react-router-dom';
 import styled, { keyframes } from 'styled-components';
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import { Card } from '../card';
 import { hexa, FlexCol, zIndex } from '../globals';
 import { MEDIA_BREAK } from '../layout';

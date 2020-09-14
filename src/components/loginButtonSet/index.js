@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import { OutlineButton } from '@components/button';
+import { OutlineButton } from 'src/components/button';
 import { withRouter } from 'react-router';
 import { Container } from './style';
 import { GoogleSigninButton } from './google';

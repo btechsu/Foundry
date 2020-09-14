@@ -1,16 +1,16 @@
 // @flow
-import { theme } from '@shared/theme';
+import { theme } from 'shared/theme';
 import React from 'react';
 import styled from 'styled-components';
-import { FlexCol } from '@components/globals';
-import Section from '@components/themedSection';
+import { FlexCol } from 'src/components/globals';
+import Section from 'src/components/themedSection';
 import {
   PrimaryButton,
   WhiteOutlineButton,
   WhiteButton,
-} from '@components/button';
+} from 'src/components/button';
 import { Tagline, Copy, Content } from './style';
-import { MEDIA_BREAK } from '@components/layout';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const Overview = () => {
   const ThisContent = styled(Content)`

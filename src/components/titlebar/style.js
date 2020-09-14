@@ -1,8 +1,8 @@
 // @flow
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
-import { Truncate } from '@components/globals';
-import { MEDIA_BREAK, TITLEBAR_HEIGHT } from '@components/layout';
+import { theme } from 'shared/theme';
+import { Truncate } from 'src/components/globals';
+import { MEDIA_BREAK, TITLEBAR_HEIGHT } from 'src/components/layout';
 
 export const TitlebarContainer = styled.div`
   display: flex;

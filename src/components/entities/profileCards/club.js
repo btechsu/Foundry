@@ -1,9 +1,9 @@
 // @flow
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ClubAvatar } from '@components/avatar';
+import { ClubAvatar } from 'src/components/avatar';
 import { ClubMeta } from './components/clubMeta';
-import { PrimaryButton } from '@components/button';
+import { PrimaryButton } from 'src/components/button';
 import {
   ProfileContainer,
   ActionsRowContainer,

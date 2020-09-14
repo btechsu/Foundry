@@ -1,8 +1,8 @@
 // @flow
 import styled from 'styled-components';
-import { theme } from '@shared/theme';
-import { Truncate } from '@components/globals';
-import { MEDIA_BREAK, MAX_SECONDARY_COLUMN_WIDTH } from '@components/layout';
+import { theme } from 'shared/theme';
+import { Truncate } from 'src/components/globals';
+import { MEDIA_BREAK, MAX_SECONDARY_COLUMN_WIDTH } from 'src/components/layout';
 
 export const ProfileContainer = styled.div`
   display: flex;
