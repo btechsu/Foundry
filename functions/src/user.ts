@@ -118,6 +118,10 @@ export const addClub = functions.https.onCall((data, context) => {
 
     return batch.commit();
   } else {
-    return 'ok';
+    return admin
+      .firestore()
+      .collection('clubSubmissions')
+      .doc(data.id)
+      .delete();
   }
 });

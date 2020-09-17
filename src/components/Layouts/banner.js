@@ -54,8 +54,8 @@ const Banner = () => {
           <ContentWrapper>
             {!success && !error && (
               <StyledTitle>
-                <strong>Uh-oh!</strong> Looks like your email isn't verified!
-                Click{' '}
+                <strong>Uh-oh!</strong> To get access to all features, please
+                verify your email. Click{' '}
                 <StyledButton
                   onClick={() => {
                     firebase

@@ -72,6 +72,7 @@ const CheckBoxWrapper = styled.label`
   cursor: pointer;
   user-select: none;
   margin-bottom: 1rem;
+  text-transform: capitalize;
 
   input {
     display: none;
