@@ -62,7 +62,7 @@ class NewClub extends React.Component {
       case 2: {
         return `Kickstart ${
           club ? `${club.name}` : 'your club'
-        } by telling us more about it. The more you write the better! You'll be able to edit this description at any time you would like if you're not sure what to write about quite yet.`;
+        } by telling us more about it. The more you write the better! You'll be able to edit this description at any time you would like later on if your club is accepted.`;
       }
       case 3: {
         return "You're all set! We'll send you an email when we approve your club. You will soon be able to start creating posts, and get the conversation started!";

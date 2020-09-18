@@ -1,5 +1,6 @@
 // @flow
 import React from 'react';
+// import * as actions from 'src/actions/auth';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
@@ -42,31 +43,6 @@ const Navigation = (props) => {
 
             <NavigationGrid isOpen={navigationIsOpen}>
               <DesktopMenuIconsCover />
-
-              <Route path="/about">
-                {({ match }) => (
-                  <Tooltip
-                    content="Home"
-                    placement={'left'}
-                    isEnabled={!isWideViewport}
-                  >
-                    <AvatarGrid isActive={!!match}>
-                      <AvatarLink
-                        to={'/'}
-                        data-cy="navigation-home"
-                        onClick={() => setNavigationIsOpen(false)}
-                        {...getAccessibilityActiveState(!!match)}
-                      >
-                        <IconWrapper>
-                          <Icon glyph="logo" />
-                        </IconWrapper>
-
-                        <Label>Home</Label>
-                      </AvatarLink>
-                    </AvatarGrid>
-                  </Tooltip>
-                )}
-              </Route>
 
               <Route path="/clubs">
                 {({ match }) => (
@@ -126,7 +102,7 @@ const Navigation = (props) => {
     );
   }
 
-  if (authed) {
+  if (isLoaded && authed) {
     return (
       <NavigationContext.Consumer>
         {({ navigationIsOpen, setNavigationIsOpen }) => (
@@ -178,42 +154,36 @@ const Navigation = (props) => {
 
               <Divider />
 
-              {authed && (
-                <React.Fragment>
-                  <Divider />
-                  <Route path="/new/club">
-                    {({ match }) => (
-                      <Tooltip
-                        content="Submit a club"
-                        placement={'left'}
-                        isEnabled={!isWideViewport}
+              <Divider />
+              <Route path="/new/club">
+                {({ match }) => (
+                  <Tooltip
+                    content="Submit a club"
+                    placement={'left'}
+                    isEnabled={!isWideViewport}
+                  >
+                    <AvatarGrid
+                      isActive={
+                        match && match.url === '/new/club' && match.isExact
+                      }
+                    >
+                      <AvatarLink
+                        to={'/new/club'}
+                        data-cy="navigation-new-club"
+                        {...getAccessibilityActiveState(
+                          match && match.url === '/new/club' && match.isExact,
+                        )}
                       >
-                        <AvatarGrid
-                          isActive={
-                            match && match.url === '/new/club' && match.isExact
-                          }
-                        >
-                          <AvatarLink
-                            to={'/new/club'}
-                            data-cy="navigation-new-club"
-                            {...getAccessibilityActiveState(
-                              match &&
-                                match.url === '/new/club' &&
-                                match.isExact,
-                            )}
-                          >
-                            <IconWrapper>
-                              <Icon glyph="plus" />
-                            </IconWrapper>
+                        <IconWrapper>
+                          <Icon glyph="plus" />
+                        </IconWrapper>
 
-                            <Label>Submit a club</Label>
-                          </AvatarLink>
-                        </AvatarGrid>
-                      </Tooltip>
-                    )}
-                  </Route>
-                </React.Fragment>
-              )}
+                        <Label>Submit a club</Label>
+                      </AvatarLink>
+                    </AvatarGrid>
+                  </Tooltip>
+                )}
+              </Route>
             </NavigationGrid>
           </NavigationWrapper>
         )}
@@ -228,6 +198,7 @@ export default compose(
   connect(({ firebase: { auth } }) => ({
     isLoaded: auth.isLoaded,
     authed: !!auth && !!auth.uid,
+    // logout: actions.signOut,
   })),
   withRouter,
 )(Navigation);

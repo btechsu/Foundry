@@ -1,7 +1,7 @@
 // @flow
 import { theme } from 'shared/theme';
 import styled, { css } from 'styled-components';
-import { FlexCol, FlexRow } from 'src/components/globals';
+import { FlexCol, FlexRow, zIndex } from 'src/components/globals';
 import { MEDIA_BREAK } from 'src/components/layout';
 import { hexa } from 'src/components/globals';
 
@@ -199,5 +199,66 @@ export const RequiredSelector = styled(Selector)`
     transition: box-shadow 0.2s ease-in-out;
     box-shadow: 0 0 0 2px ${theme.bg.default},
       0 0 0 4px ${hexa(theme.brand.alt, 0.64)};
+  }
+`;
+
+export const ThreadInputs = styled(FlexCol)`
+  position: relative;
+  padding: 32px;
+  padding-bottom: 0;
+  background-color: ${theme.bg.default};
+  z-index: ${zIndex.composer};
+  height: 100%;
+  @media (max-width: ${MEDIA_BREAK}px) {
+    padding: 24px;
+  }
+`;
+
+export const ThreadDescription = {
+  fontSize: '16px', // has to be 16px to avoid zoom on iOS
+  fontWeight: '400',
+  width: '100%',
+  display: 'inline-block',
+  lineHeight: '1.4',
+  outline: 'none',
+  border: '0',
+  boxShadow: 'none',
+  color: '#16171A',
+  whiteSpace: 'pre-wrap',
+  wordBreak: 'break-word',
+  overflowY: 'scroll',
+  position: 'relative',
+  margin: '9px 0 25px 0',
+};
+
+export const InputHints = styled(FlexRow)`
+  color: ${theme.text.alt};
+  font-size: 14px;
+`;
+
+export const DesktopLink = styled.a`
+  display: flex;
+  @media (max-width: ${MEDIA_BREAK}px) {
+    display: none;
+  }
+`;
+
+export const Actions = styled.div`
+  background: ${theme.bg.wash};
+  border-top: 1px solid ${theme.bg.border};
+  padding: 8px 16px;
+  align-self: stretch;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  flex: 1 0 auto;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
+  @media (max-width: ${MEDIA_BREAK}px) {
+    padding: 8px;
+    z-index: ${zIndex.chrome + 1};
   }
 `;

@@ -3,9 +3,20 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withFirestore, withFirebase } from 'react-redux-firebase';
 import { PrimaryOutlineButton } from 'src/components/button';
-import JoditEditor from 'jodit-react';
+import Icon from 'src/components/icon';
+import Tooltip from 'src/components/tooltip';
+import Textarea from 'react-textarea-autosize';
+import { SegmentedControl, Segment } from 'src/components/segmentedControl';
+import ReactMarkdown from 'react-markdown';
 
 import { Error } from 'src/components/formElements';
+import {
+  ThreadInputs,
+  ThreadDescription,
+  InputHints,
+  DesktopLink,
+  Actions as MardownActions,
+} from '../submitClubForm/style';
 import { FormContainer, Form, Actions } from '../../style';
 
 class SubmitClubEditor extends React.Component {
@@ -16,19 +27,8 @@ class SubmitClubEditor extends React.Component {
       isLoading: false,
       error: false,
       content: '',
+      showPreview: false,
     };
-  }
-
-  getFileExtension(imageType) {
-    if (
-      imageType === 'image/jpg' ||
-      imageType === 'image/jpeg' ||
-      imageType === 'image/png'
-    ) {
-      return true;
-    }
-
-    return false;
   }
 
   cutFileExtension(imageName) {
@@ -48,13 +48,29 @@ class SubmitClubEditor extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { prevPage, user, firebase, firestore } = this.props;
-      // const rawText = await this.editorInstance.save();
       const editorText = this.state.content;
+      let coverFile = null;
+      let pfpFile = null;
 
       if (editorText.length > 1010000) {
         return this.setState({
           error: 'The text is too long - trim it up a bit!',
         });
+      }
+
+      if (prevPage.coverFile !== null) {
+        const uploadRef = await firebase.uploadFile(
+          `clubSubmissions/${prevPage.slug}/cover`,
+          prevPage.coverFile,
+        );
+        coverFile = await uploadRef.uploadTaskSnaphot.ref.getDownloadURL();
+      }
+      if (prevPage.file !== null) {
+        const uploadRef = await firebase.uploadFile(
+          `clubSubmissions/${prevPage.slug}/pfp`,
+          prevPage.file,
+        );
+        pfpFile = await uploadRef.uploadTaskSnaphot.ref.getDownloadURL();
       }
 
       await firestore.collection('clubSubmissions').doc(prevPage.slug).set({
@@ -67,40 +83,9 @@ class SubmitClubEditor extends React.Component {
         type: prevPage.type,
         credits: prevPage.credits,
         text: editorText,
+        cover: coverFile,
+        pfp: pfpFile,
       });
-
-      // don't let insignifcant tasks stop the whole submission proccess. no error handling here
-      if (prevPage.coverFile !== null) {
-        if (this.getFileExtension(prevPage.coverFile.type)) {
-          await firebase.uploadFile(
-            `clubSubmissions/${prevPage.slug}/`,
-            prevPage.coverFile,
-          );
-          //   const coverRef = storageRef.child(
-          //     `clubSubmissions/${prevPage.slug}/cover.${this.cutFileExtension(
-          //       prevPage.coverFile.name,
-          //     )}`,
-          //   );
-
-          //   await coverRef.put(prevPage.coverFile);
-        }
-      }
-      if (prevPage.file !== null) {
-        if (this.getFileExtension(prevPage.file.type)) {
-          await firebase.uploadFile(
-            `clubSubmissions/${prevPage.slug}/`,
-            prevPage.file,
-          );
-
-          //   const coverRef = storageRef.child(
-          //     `clubSubmissions/${prevPage.slug}/cover.${this.cutFileExtension(
-          //       prevPage.file.name,
-          //     )}`,
-          //   );
-
-          //   await coverRef.put(prevPage.file);
-        }
-      }
 
       this.setState({ isLoading: false });
       this.props.finalPage();
@@ -110,27 +95,53 @@ class SubmitClubEditor extends React.Component {
   };
 
   render() {
-    const { isLoading, error } = this.state;
+    const { isLoading, error, showPreview, content } = this.state;
 
     return (
       <FormContainer>
         <Form>
-          <JoditEditor
-            config={{
-              readonly: false,
-              removeButtons: [
-                'source',
-                'eraser',
-                'font',
-                'file',
-                'copyformat',
-                'print',
-                'about',
-              ],
-            }}
-            tabIndex={1} // tabIndex of textarea
-            onBlur={this.onSave}
-          />
+          <SegmentedControl css={{ background: '#FFF', minHeight: '52px' }}>
+            <Segment
+              isActive={!showPreview}
+              onClick={() => this.setState({ showPreview: false })}
+            >
+              Write
+            </Segment>
+            <Segment
+              isActive={showPreview}
+              onClick={() => this.setState({ showPreview: true })}
+            >
+              Preview
+            </Segment>
+          </SegmentedControl>
+          <ThreadInputs>
+            {showPreview ? (
+              <div style={{ marginBottom: '25px' }}>
+                <ReactMarkdown source={content} />
+              </div>
+            ) : (
+              <Textarea
+                value={content}
+                onChange={(e) => this.setState({ content: e.target.value })}
+                style={ThreadDescription}
+                placeholder="Type more about your club here"
+                className={'threadComposer'}
+                dataCy="rich-text-editor"
+              />
+            )}
+          </ThreadInputs>
+          <MardownActions>
+            <InputHints>
+              <Tooltip content={'Style with Markdown'}>
+                <DesktopLink
+                  target="_blank"
+                  href="https://guides.github.com/features/mastering-markdown/"
+                >
+                  <Icon glyph="markdown" />
+                </DesktopLink>
+              </Tooltip>
+            </InputHints>
+          </MardownActions>
           {error && <Error>{error}</Error>}
         </Form>
 
