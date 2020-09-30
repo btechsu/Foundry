@@ -14,7 +14,7 @@
 
 ## 🚀 Installing
 
-1.  For development, you will only need Node.js installed on your environement.
+1.  For development, you will only need Node.js installed on your environment.
 
 2.  Clone the repository
 
