@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 // import * as actions from 'src/actions/auth';
 import compose from 'recompose/compose';
@@ -21,6 +20,7 @@ import Icon from 'src/components/icon';
 import NavHead from './navHead';
 import NotificationsTab from './notificationsTab';
 import { Skip, getAccessibilityActiveState } from './accessibility';
+import ClubList from './clubList';
 import { NavigationContext } from 'src/helpers/navigation-context';
 import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from 'src/components/layout';
 
@@ -154,6 +154,12 @@ const Navigation = (props) => {
 
               <Divider />
 
+              <ClubList
+                setNavigationIsOpen={setNavigationIsOpen}
+                navigationIsOpen={navigationIsOpen}
+                uid={authed}
+              />
+
               <Divider />
               <Route path="/new/club">
                 {({ match }) => (
@@ -197,7 +203,7 @@ const Navigation = (props) => {
 export default compose(
   connect(({ firebase: { auth } }) => ({
     isLoaded: auth.isLoaded,
-    authed: !!auth && !!auth.uid,
+    authed: auth.uid || false,
     // logout: actions.signOut,
   })),
   withRouter,

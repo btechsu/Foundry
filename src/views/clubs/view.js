@@ -199,7 +199,7 @@ export const Category = compose(
       storeAs: 'volunteering',
     },
   ]),
-  connect((state, props) => {
+  connect((state) => {
     return { clubs: state.firestore.ordered };
   }),
 )(CategoryList);

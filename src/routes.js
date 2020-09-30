@@ -57,6 +57,11 @@ const SubmitClubFallback = signedOutFallback(SubmitClub, () => (
   <Redirect to="/login" />
 ));
 
+const ClubView = Loadable({
+  loader: () => import('./views/club' /* webpackChunkName: "ClubView" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+
 export const RouteModalContext = React.createContext({
   isModal: false,
 });
@@ -122,6 +127,7 @@ class Routes extends React.Component {
                     <Route path="/new/user" component={NewUserFallback} />
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/new/club" component={SubmitClubFallback} />
+                    <Route path="/:clubSlug" component={ClubView} />
                   </Switch>
                 </div>
               </AppViewWrapper>
