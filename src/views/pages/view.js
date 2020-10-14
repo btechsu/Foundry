@@ -182,15 +182,17 @@ export const Centralized = () => {
       <ThisContent>
         <DiscoverImage src="/img/discover.svg" alt="" />
         <FlexCol>
-          <ThisTagline>This is a really cool title</ThisTagline>
+          <ThisTagline>Club fair soon!</ThisTagline>
           <ThisCopy>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco.
+            As a result of the COVID-19 pandemic and associated 
+            social distancing protocols, this year's club fair won't be in person. 
+            But don't fret! Foundry will be your one stop shop 
+            for club fair activities!
           </ThisCopy>
           <ThisCopy>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Interested in putting your club up or 
+            viewing those Tech already offers? 
+            Click the button below.
           </ThisCopy>
 
           <Actions>
