@@ -124,7 +124,6 @@ const CategoryList = (props) => {
   const { ref, inView } = useInView({ threshold: 0.5 });
 
   React.useEffect(() => {
-    console.log(inView);
     async function fetchData() {
       setIsLoading(true);
       try {
