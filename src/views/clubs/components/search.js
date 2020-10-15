@@ -15,7 +15,6 @@ import {
   SearchResultMetadata,
   SearchLink,
   SearchIcon,
-  SearchResultImage,
 } from '../style';
 import { ClubAvatar } from 'src/components/avatar';
 import algoliasearch from 'algoliasearch/lite';

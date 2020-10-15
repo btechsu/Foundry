@@ -18,11 +18,8 @@ import {
 import Card from 'src/components/card';
 import { StyledCard } from 'src/components/listItems/style';
 import Icon from 'src/components/icon';
-import { ClubAvatar } from 'src/components/avatar';
 import ScrollRow from 'src/components/scrollRow';
 import { MEDIA_BREAK } from 'src/components/layout';
-
-export const SearchResultImage = styled(ClubAvatar)``;
 
 export const ViewTitle = styled(H1)`
   margin-left: 48px;

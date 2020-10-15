@@ -21,332 +21,145 @@ class Terms extends React.Component {
         <Head title={'Foundry · Terms'} />
 
         <ContentContainer>
-          <Heading>Terms of Service</Heading>
+          <Heading>Privacy Policy</Heading>
 
-          <Copy>Last updated July 6, 2020</Copy>
+          <Copy>Last updated October 14, 2020</Copy>
 
           <Section>
             <SectionDescription>
-              These terms of service ("Terms") apply to your access and use of
-              bths.social (the "Service"). Please read them carefully.
+              At Foundry, accessible from https://bths.social, one of our main
+              priorities is the privacy of our visitors. This Privacy Policy
+              document contains types of information that is collected and
+              recorded by Foundry and how we use it.
+            </SectionDescription>
+
+            <SectionDescription>
+              If you have additional questions or require more information about
+              our Privacy Policy, do not hesitate to contact us.
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Accepting these Terms</SectionTitle>
+            <SectionTitle>Log Files</SectionTitle>
 
             <SectionDescription>
-              If you access or use the Service, it means you agree to be bound
-              by all of the terms below. So, before you use the Service, please
-              read all of the terms. If you don’t agree to all of the terms
-              below, please do not use the Service. Also, if a term does not
-              make sense to you, please let us know by e-mailing
-              support@bths.social.
+              Foundry follows a standard procedure of using log files. These
+              files log visitors when they visit websites. All hosting companies
+              do this and a part of hosting services' analytics. The information
+              collected by log files include internet protocol (IP) addresses,
+              browser type, Internet Service Provider (ISP), date and time
+              stamp, referring/exit pages, and possibly the number of clicks.
+              These are not linked to any information that is personally
+              identifiable. The purpose of the information is for analyzing
+              trends, administering the site, tracking users' movement on the
+              website, and gathering demographic information.
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Changes to these Terms</SectionTitle>
+            <SectionTitle>Cookies and Web Beacons</SectionTitle>
 
             <SectionDescription>
-              We reserve the right to modify these Terms at any time. For
-              instance, we may need to change these Terms if we come out with a
-              new feature or for some other reason.
+              Like any other website, Foundry uses 'cookies'. These cookies are
+              used to store information including visitors' preferences, and the
+              pages on the website that the visitor accessed or visited. The
+              information is used to optimize the users' experience by
+              customizing our web page content based on visitors' browser type
+              and/or other information.
             </SectionDescription>
 
             <SectionDescription>
-              Whenever we make changes to these Terms, the changes are effective
-              2 days after we post such revised Terms (indicated by revising the
-              date at the top of these Terms) or upon your acceptance if we
-              provide a mechanism for your immediate acceptance of the revised
-              Terms (such as a click-through confirmation or acceptance button).
-              It is your responsibility to check Foundry for changes to these
-              Terms.
-            </SectionDescription>
-
-            <SectionDescription>
-              If you continue to use the Service after the revised Terms go into
-              effect, then you have accepted the changes to these Terms.
+              For more general information on cookies, please read the "What Are
+              Cookies" article on{' '}
+              <a href="https://www.cookieconsent.com/what-are-cookies/">
+                Cookie Consent website
+              </a>
+              .
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Privacy Policy</SectionTitle>
+            <SectionTitle>Privacy Policies</SectionTitle>
 
             <SectionDescription>
-              For information about how we collect and use information about
-              users of the Service, please check out our privacy policy
-              available at https://bths.social/privacy.
+              You may consult this list to find the Privacy Policy for each of
+              the advertising partners of Foundry.
+            </SectionDescription>
+
+            <SectionDescription>
+              Third-party ad servers or ad networks uses technologies like
+              cookies, JavaScript, or Web Beacons that are used in their
+              respective advertisements and links that appear on Foundry, which
+              are sent directly to users' browser. They automatically receive
+              your IP address when this occurs. These technologies are used to
+              measure the effectiveness of their advertising campaigns and/or to
+              personalize the advertising content that you see on websites that
+              you visit.
+            </SectionDescription>
+
+            <SectionDescription>
+              Note that Foundry has no access to or control over these cookies
+              that are used by third-party advertisers.
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Third-Party Services</SectionTitle>
+            <SectionTitle>Third Party Privacy Policies</SectionTitle>
 
             <SectionDescription>
-              From time to time, we may provide you with links to third party
-              websites or services that we do not own or control. Your use of
-              the Service may also include the use of applications that are
-              developed or owned by a third party. Your use of such third party
-              applications, websites, and services is governed by that party’s
-              own terms of service or privacy policies. We encourage you to read
-              the terms and conditions and privacy policy of any third party
-              application, website or service that you visit or use.
+              Foundry's Privacy Policy does not apply to other advertisers or
+              websites. Thus, we are advising you to consult the respective
+              Privacy Policies of these third-party ad servers for more detailed
+              information. It may include their practices and instructions about
+              how to opt-out of certain options.{' '}
+            </SectionDescription>
+
+            <SectionDescription>
+              You can choose to disable cookies through your individual browser
+              options. To know more detailed information about cookie management
+              with specific web browsers, it can be found at the browsers'
+              respective websites. What Are Cookies?
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Creating Accounts</SectionTitle>
+            <SectionTitle>Children's Information</SectionTitle>
 
             <SectionDescription>
-              When you create an account or use another service to log in to the
-              Service, you agree to maintain the security of your password and
-              accept all risks of unauthorized access to any data or other
-              information you provide to the Service.
+              Another part of our priority is adding protection for children
+              while using the internet. We encourage parents and guardians to
+              observe, participate in, and/or monitor and guide their online
+              activity.
             </SectionDescription>
 
             <SectionDescription>
-              If you discover or suspect any Service security breaches, please
-              let us know as soon as possible.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Your Content &amp; Conduct</SectionTitle>
-
-            <SectionDescription>
-              Our Service allows you and other users to post, link and otherwise
-              make available content. You are responsible for the content that
-              you make available to the Service, including its legality,
-              reliability, and appropriateness.
-            </SectionDescription>
-
-            <SectionDescription>
-              When you post, link or otherwise make available content to the
-              Service, you grant us the right and license to use, reproduce,
-              modify, publicly perform, publicly display and distribute your
-              content on or through the Service. We may format your content for
-              display throughout the Service, but we will not edit or revise the
-              substance of your content itself.
-            </SectionDescription>
-
-            <SectionDescription>
-              Aside from our limited right to your content, you retain all of
-              your rights to the content you post, link and otherwise make
-              available on or through the Service.
-            </SectionDescription>
-
-            <SectionDescription>
-              You can remove the content that you posted by deleting it. Once
-              you delete your content, it will not appear on the Service, but
-              copies of your deleted content may remain in our system or backups
-              for some period of time.
-            </SectionDescription>
-
-            <SectionDescription>
-              You may not post, link and otherwise make available on or through
-              the Service any of the following:
-            </SectionDescription>
-
-            <SectionDescription>
-              Also, you agree that you will not do any of the following in
-              connection with the Service or other users:
+              Foundry does not knowingly collect any Personal Identifiable
+              Information from children under the age of 13. If you think that
+              your child provided this kind of information on our website, we
+              strongly encourage you to contact us immediately and we will do
+              our best efforts to promptly remove such information from our
+              records.
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>GitHub Materials</SectionTitle>
+            <SectionTitle>Online Privacy Policy Only</SectionTitle>
 
             <SectionDescription>
-              We put a lot of effort into creating the Service including, the
-              logo and all designs, text, graphics, pictures, information and
-              other content (excluding your content). This property is owned by
-              us or our licensors and it is protected by U.S. and international
-              copyright laws. We grant you the right to use it.
-            </SectionDescription>
-
-            <SectionDescription>
-              However, unless we expressly state otherwise, your rights do not
-              include: (i) publicly performing or publicly displaying the
-              Service; (ii) modifying or otherwise making any derivative uses of
-              the Service or any portion thereof; (iii) using any data mining,
-              robots or similar data gathering or extraction methods; (iv)
-              downloading (other than page caching) of any portion of the
-              Service or any information contained therein; (v) reverse
-              engineering or accessing the Service in order to build a
-              competitive product or service; or (vi) using the Service other
-              than for its intended purposes. If you do any of this stuff, we
-              may terminate your use of the Service.
+              This Privacy Policy applies only to our online activities and is
+              valid for visitors to our website with regards to the information
+              that they shared and/or collect in Foundry. This policy is not
+              applicable to any information collected offline or via channels
+              other than this website.
             </SectionDescription>
           </Section>
 
           <Section>
-            <SectionTitle>Hyperlinks and Third Party Content</SectionTitle>
+            <SectionTitle>Consent</SectionTitle>
 
             <SectionDescription>
-              You may create a hyperlink to the Service. But, you may not use,
-              frame or utilize framing techniques to enclose any of our
-              trademarks, logos or other proprietary information without our
-              express written consent.
-            </SectionDescription>
-
-            <SectionDescription>
-              GitHub, Inc. makes no claim or representation regarding, and
-              accepts no responsibility for third party websites accessible by
-              hyperlink from the Service or websites linking to the Service.
-              When you leave the Service, you should be aware that these Terms
-              and our policies no longer govern.
-            </SectionDescription>
-
-            <SectionDescription>
-              If there is any content on the Service from you and others, we
-              don’t review, verify or authenticate it, and it may include
-              inaccuracies or false information. We make no representations,
-              warranties, or guarantees relating to the quality, suitability,
-              truth, accuracy or completeness of any content contained in the
-              Service. You acknowledge sole responsibility for and assume all
-              risk arising from your use of or reliance on any content.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Unavoidable Legal Stuff</SectionTitle>
-
-            <SectionDescription>
-              THE SERVICE AND ANY OTHER SERVICE AND CONTENT INCLUDED ON OR
-              OTHERWISE MADE AVAILABLE TO YOU THROUGH THE SERVICE ARE PROVIDED
-              TO YOU ON AN AS IS OR AS AVAILABLE BASIS WITHOUT ANY
-              REPRESENTATIONS OR WARRANTIES OF ANY KIND. WE DISCLAIM ANY AND ALL
-              WARRANTIES AND REPRESENTATIONS (EXPRESS OR IMPLIED, ORAL OR
-              WRITTEN) WITH RESPECT TO THE SERVICE AND CONTENT INCLUDED ON OR
-              OTHERWISE MADE AVAILABLE TO YOU THROUGH THE SERVICE WHETHER
-              ALLEGED TO ARISE BY OPERATION OF LAW, BY REASON OF CUSTOM OR USAGE
-              IN THE TRADE, BY COURSE OF DEALING OR OTHERWISE.
-            </SectionDescription>
-
-            <SectionDescription>
-              IN NO EVENT WILL GITHUB, INC. BE LIABLE TO YOU OR ANY THIRD PARTY
-              FOR ANY SPECIAL, INDIRECT, INCIDENTAL, EXEMPLARY OR CONSEQUENTIAL
-              DAMAGES OF ANY KIND ARISING OUT OF OR IN CONNECTION WITH THE
-              SERVICE OR ANY OTHER SERVICE AND/OR CONTENT INCLUDED ON OR
-              OTHERWISE MADE AVAILABLE TO YOU THROUGH THE SERVICE, REGARDLESS OF
-              THE FORM OF ACTION, WHETHER IN CONTRACT, TORT, STRICT LIABILITY OR
-              OTHERWISE, EVEN IF WE HAVE BEEN ADVISED OF THE POSSIBILITY OF SUCH
-              DAMAGES OR ARE AWARE OF THE POSSIBILITY OF SUCH DAMAGES. OUR TOTAL
-              LIABILITY FOR ALL CAUSES OF ACTION AND UNDER ALL THEORIES OF
-              LIABILITY WILL BE LIMITED TO THE AMOUNT YOU PAID TO GITHUB, INC.
-              THIS SECTION WILL BE GIVEN FULL EFFECT EVEN IF ANY REMEDY
-              SPECIFIED IN THIS AGREEMENT IS DEEMED TO HAVE FAILED OF ITS
-              ESSENTIAL PURPOSE.
-            </SectionDescription>
-
-            <SectionDescription>
-              You agree to defend, indemnify and hold us harmless from and
-              against any and all costs, damages, liabilities, and expenses
-              (including attorneys’ fees, costs, penalties, interest and
-              disbursements) we incur in relation to, arising from, or for the
-              purpose of avoiding, any claim or demand from a third party
-              relating to your use of the Service or the use of the Service by
-              any person using your account, including any claim that your use
-              of the Service violates any applicable law or regulation, or the
-              rights of any third party, and/or your violation of these Terms.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Copyright Complaints</SectionTitle>
-
-            <SectionDescription>
-              We take intellectual property rights seriously. In accordance with
-              the Digital Millennium Copyright Act ("DMCA") and other applicable
-              law, we have adopted a policy of terminating, in appropriate
-              circumstances and, at our sole discretion, access to the service
-              for users who are deemed to be repeat infringers. See
-              https://github.com/withFoundry/code-of-conduct for more
-              information.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Governing Law</SectionTitle>
-
-            <SectionDescription>
-              The validity of these Terms and the rights, obligations, and
-              relations of the parties under these Terms will be construed and
-              determined under and in accordance with the laws of the Delaware
-              state, without regard to conflicts of law principles.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Jurisdiction</SectionTitle>
-
-            <SectionDescription>
-              You expressly agree that exclusive jurisdiction for any dispute
-              with the Service or relating to your use of it, resides in the
-              courts of the Delaware state and you further agree and expressly
-              consent to the exercise of personal jurisdiction in the courts of
-              the Delaware state in connection with any such dispute including
-              any claim involving Service. You further agree that you and
-              Service will not commence against the other a class action, class
-              arbitration or other representative action or proceeding.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Termination</SectionTitle>
-
-            <SectionDescription>
-              If you breach any of these Terms, we have the right to suspend or
-              disable your access to or use of the Service.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Assignment</SectionTitle>
-
-            <SectionDescription>
-              We may assign or delegate these Terms of Service and/or the
-              Privacy Policy, in whole or in part, to any person or entity at
-              any time with or without your consent, including the license grant
-              in the "Your Content & Conduct" section. You may not assign or
-              delegate any rights or obligations under the Terms of Service or
-              Privacy Policy without our prior written consent, and any
-              unauthorized assignment and delegation by you is void.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Entire Agreement</SectionTitle>
-
-            <SectionDescription>
-              These Terms constitute the entire agreement between you and Space
-              Program, Inc. regarding the use of the Service, superseding any
-              prior agreements between you and Space Program, Inc. relating to
-              your use of the Service.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Feedback</SectionTitle>
-
-            <SectionDescription>
-              Please let us know what you think of the Service, these Terms and,
-              in general, Foundry. When you provide us with any feedback,
-              comments or suggestions about the Service, these Terms and, in
-              general, Foundry, you irrevocably assign to us all of your right,
-              title and interest in and to your feedback, comments and
-              suggestions.
-            </SectionDescription>
-          </Section>
-
-          <Section>
-            <SectionTitle>Questions &amp; Contact Information</SectionTitle>
-
-            <SectionDescription>
-              Questions or comments about the Service may be directed to us at
-              the email address{' '}
-              <a href="mailto:support@bths.social">support@bths.social</a>.
+              By using our website, you hereby consent to our Privacy Policy and
+              agree to its Terms and Conditions.
             </SectionDescription>
           </Section>
         </ContentContainer>
