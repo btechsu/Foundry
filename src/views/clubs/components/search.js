@@ -15,7 +15,9 @@ import {
   SearchResultMetadata,
   SearchLink,
   SearchIcon,
+  SearchResultImage,
 } from '../style';
+import { ClubAvatar } from 'src/components/avatar';
 import algoliasearch from 'algoliasearch/lite';
 import {
   InstantSearch,
@@ -31,7 +33,7 @@ const searchClient = algoliasearch(
 
 const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
   <React.Fragment>
-    {isSearchStalled && (
+    {isSearchStalled && currentRefinement.length !== 0 && (
       <SearchSpinnerContainer>
         <Spinner size={16} color={'brand.default'} />
       </SearchSpinnerContainer>
@@ -45,7 +47,7 @@ const SearchBox = ({ currentRefinement, isSearchStalled, refine }) => (
         onChange={(event) => refine(event.currentTarget.value)}
       />
     </SearchInputWrapper>
-    {isSearchStalled && (
+    {isSearchStalled && currentRefinement.length !== 0 && (
       <SearchResult>
         <SearchResultTextContainer>
           <SearchResultNull>
@@ -61,7 +63,8 @@ const Hits = ({ hits }) => (
   <SearchResultsDropdown>
     {hits.map((hit, i) => (
       <SearchResult key={i}>
-        <SearchLink to={`/clubs/${hit.objectID}`}>
+        <SearchLink to={`/${hit.objectID}`}>
+          <ClubAvatar showHoverProfile={false} club={hit} />
           <SearchResultTextContainer>
             <SearchResultMetaWrapper>
               <SearchResultName>{hit.name}</SearchResultName>
@@ -100,6 +103,7 @@ const Results = connectStateResults(
 
 const CustomSearchBox = connectSearchBox(SearchBox);
 const CustomHits = connectHits(Hits);
+
 const Search = () => {
   return (
     <SearchWrapper>

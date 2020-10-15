@@ -12,9 +12,10 @@ class Avatar extends React.Component {
       isClickable = true,
       mobilesize,
       style,
+      id,
     } = this.props;
 
-    const src = club.profilePhoto;
+    const src = club.pfp;
 
     const clubFallback = '/img/default_club.svg';
     const source = [src, clubFallback];
@@ -29,7 +30,7 @@ class Avatar extends React.Component {
         <ConditionalWrap
           condition={isClickable}
           wrap={(children) => (
-            <AvatarLink to={`/${club.id}`}>{children}</AvatarLink>
+            <AvatarLink to={`/${club.id || id}`}>{children}</AvatarLink>
           )}
         >
           <AvatarImage

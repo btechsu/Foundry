@@ -2,8 +2,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import compose from 'recompose/compose';
-import { connect } from 'react-redux';
-import { isLoaded, firestoreConnect } from 'react-redux-firebase';
+import { useInView } from 'react-intersection-observer';
+import { useFirestore } from 'react-redux-firebase';
 import {
   ListWithTitle,
   ListWrapper,
@@ -56,16 +56,28 @@ class CollectionSwitcher extends React.Component {
   render() {
     const collections = [
       {
-        title: 'Social clubs',
+        title: 'Social',
         curatedContentType: 'social',
       },
       {
-        title: 'STEM clubs',
+        title: 'STEM',
         curatedContentType: 'stem',
       },
       {
-        title: 'Volunteering clubs',
+        title: 'Volunteering',
         curatedContentType: 'volunteering',
+      },
+      {
+        title: 'Acedemic',
+        curatedContentType: 'acedemic',
+      },
+      {
+        title: 'Publications',
+        curatedContentType: 'publications',
+      },
+      {
+        title: 'Sports',
+        curatedContentType: 'sports',
       },
     ];
 
@@ -101,105 +113,70 @@ class CollectionSwitcher extends React.Component {
 }
 
 const CategoryList = (props) => {
-  const { slugs, clubs } = props;
-  // useFirestoreConnect([
-  //   { collection: 'clubs', where: ['type', '==', 'social'], storeAs: slugs },
-  // ]);
-  // const clubs = useSelector((state) => state.firestore.ordered.clubs);
+  const { slugs } = props;
+  const [lastClub, setLastClub] = React.useState(0);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [clubs, setClubs] = React.useState([]);
+  const [err, setErr] = React.useState(null);
 
-  if (clubs.social && clubs.stem && clubs.volunteering) {
+  const firestore = useFirestore();
+
+  const { ref, inView } = useInView({ threshold: 0.5 });
+
+  React.useEffect(() => {
+    console.log(inView);
+    async function fetchData() {
+      setIsLoading(true);
+      try {
+        const queryClubs = await firestore
+          .collection('clubs')
+          .where('type', '==', slugs)
+          .orderBy('name')
+          .startAfter(lastClub)
+          .limit(9)
+          .get();
+        setClubs((prev) => [...prev, ...queryClubs.docs]);
+        setLastClub(queryClubs.docs[queryClubs.docs.length - 1]);
+        setIsLoading(false);
+      } catch (err) {
+        setErr(err);
+        setIsLoading(false);
+      }
+    }
+
+    if (inView) fetchData();
+
+    return;
+  }, [inView]);
+
+  if (clubs.length >= 0)
     return (
       <ListWithTitle>
         <ListWrapper>
-          {slugs === 'social' && (
-            <React.Fragment>
-              {clubs.social.map((club, i) => (
-                <ErrorBoundary key={i}>
-                  <ProfileCardWrapper>
-                    <ClubCard
-                      club={{
-                        name: club.name,
-                        id: club.id,
-                        description: club.description,
-                        metaData: {
-                          room: club.room,
-                          time: `${club.days} @ ${club.time}`,
-                        },
-                      }}
-                    />
-                  </ProfileCardWrapper>
-                </ErrorBoundary>
-              ))}
-            </React.Fragment>
-          )}
-          {slugs === 'stem' && (
-            <React.Fragment>
-              {clubs.stem.map((club, i) => (
-                <ErrorBoundary key={i}>
-                  <ProfileCardWrapper>
-                    <ClubCard
-                      club={{
-                        name: club.name,
-                        id: club.id,
-                        description: club.description,
-                        metaData: {
-                          room: club.room,
-                          time: `${club.days} @ ${club.time}`,
-                        },
-                      }}
-                    />
-                  </ProfileCardWrapper>
-                </ErrorBoundary>
-              ))}
-            </React.Fragment>
-          )}
-          {slugs === 'volunteering' && (
-            <React.Fragment>
-              {clubs.volunteering.map((club, i) => (
-                <ErrorBoundary key={i}>
-                  <ProfileCardWrapper>
-                    <ClubCard
-                      club={{
-                        name: club.name,
-                        id: club.id,
-                        description: club.description,
-                        metaData: {
-                          room: club.room,
-                          time: `${club.days} @ ${club.time}`,
-                        },
-                      }}
-                    />
-                  </ProfileCardWrapper>
-                </ErrorBoundary>
-              ))}
-            </React.Fragment>
-          )}
+          <ErrorBoundary>
+            {clubs.map((club, i) => (
+              <ProfileCardWrapper key={i}>
+                <ClubCard club={club.data()} id={club.id} />
+              </ProfileCardWrapper>
+            ))}
+          </ErrorBoundary>
         </ListWrapper>
+        <div ref={ref}>
+          {isLoading && <Loading styles={{ padding: '64px 32px' }} />}
+        </div>
       </ListWithTitle>
     );
-  }
-  if (
-    !isLoaded(clubs.social) ||
-    !isLoaded(clubs.stem) ||
-    !isLoaded(clubs.volunteering)
-  ) {
-    return <Loading style={{ padding: '64px 32px', minHeight: '100vh' }} />;
+
+  if (err) {
+    return (
+      <ErrorView
+        heading="Oops, looks like we couldn't load the results"
+        subheading={err.message ? err.message : err}
+      />
+    );
   }
 
   return <ErrorView />;
 };
 
-export const Category = compose(
-  firestoreConnect(() => [
-    { collection: 'clubs', where: ['type', '==', 'social'], storeAs: 'social' },
-    { collection: 'clubs', where: ['type', '==', 'stem'], storeAs: 'stem' },
-    {
-      collection: 'clubs',
-      where: ['type', '==', 'volunteering'],
-      storeAs: 'volunteering',
-    },
-  ]),
-  connect((state) => {
-    return { clubs: state.firestore.ordered };
-  }),
-)(CategoryList);
+export const Category = compose()(CategoryList);

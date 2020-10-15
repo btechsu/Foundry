@@ -18,8 +18,11 @@ import {
 import Card from 'src/components/card';
 import { StyledCard } from 'src/components/listItems/style';
 import Icon from 'src/components/icon';
+import { ClubAvatar } from 'src/components/avatar';
 import ScrollRow from 'src/components/scrollRow';
 import { MEDIA_BREAK } from 'src/components/layout';
+
+export const SearchResultImage = styled(ClubAvatar)``;
 
 export const ViewTitle = styled(H1)`
   margin-left: 48px;
@@ -352,7 +355,7 @@ export const ListTitle = styled(H2)`
 export const ListWrapper = styled(FlexRow)`
   display: grid;
   grid-template-columns: repeat(3, minmax(320px, 1fr));
-  align-items: start;
+  align-items: stretch;
   grid-gap: 16px;
   padding-bottom: 32px;
   @media (max-width: ${MEDIA_BREAK}px) {

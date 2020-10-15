@@ -11,26 +11,24 @@ import {
 } from '../style';
 
 export const ClubMeta = (props) => {
-  const { club } = props;
+  const { club, id } = props;
 
   return (
     <MetaContainer>
-      <Link to={`/${club.id}`}>
+      <Link to={`/${club.id || id}`}>
         <Name>{club.name}</Name>
       </Link>
 
       {club.description && <Description>{club.description}</Description>}
 
       <MetaLinksContainer>
-        {club.metaData && (
+        {club.room && club.time && (
           <React.Fragment>
-            <MetaRow as={Link} to={`/${club.id}`}>
-              <Icon glyph={'home'} size={20} />{' '}
-              {club.metaData.room.toLocaleString()}
+            <MetaRow as={Link} to={`/${club.id || id}`}>
+              <Icon glyph={'home'} size={20} /> {club.room}
             </MetaRow>
-            <MetaRow as={Link} to={`/${club.id}`}>
-              <Icon glyph={'pin'} size={20} />{' '}
-              {club.metaData.time.toLocaleString()}
+            <MetaRow as={Link} to={`/${club.id || id}`}>
+              <Icon glyph={'pin'} size={20} /> {`${club.days} @ ${club.time}`}
             </MetaRow>
           </React.Fragment>
         )}

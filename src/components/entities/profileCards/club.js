@@ -12,22 +12,22 @@ import {
 } from './style';
 
 export const ClubCard = (props) => {
-  const { club } = props;
+  const { club, id } = props;
 
   return (
     <ProfileContainer data-cy="club-profile-card">
-      <Link to={`/${club.id}`}>
+      <Link to={`/${club.id || id}`}>
         <CoverPhoto src={club.coverPhoto} />
       </Link>
 
       <ProfileAvatarContainer>
-        <ClubAvatar showHoverProfile={false} size={60} club={club} />
+        <ClubAvatar showHoverProfile={false} size={60} club={club} id={id} />
       </ProfileAvatarContainer>
 
-      <ClubMeta club={club} />
+      <ClubMeta club={club} id={id} />
 
       <ActionsRowContainer>
-        <PrimaryButton to={`/${props.club.id}`}>View more info</PrimaryButton>
+        <PrimaryButton to={`/${club.id || id}`}>View more info</PrimaryButton>
       </ActionsRowContainer>
     </ProfileContainer>
   );
