@@ -29,7 +29,7 @@ export const Charts = () => {
 
 class CollectionSwitcher extends React.Component {
   state = {
-    selectedView: 'social',
+    selectedView: 'all',
   };
 
   parentRef = null;
@@ -55,6 +55,10 @@ class CollectionSwitcher extends React.Component {
 
   render() {
     const collections = [
+      {
+        title: 'All',
+        curatedContentType: 'all',
+      },
       {
         title: 'Social',
         curatedContentType: 'social',
@@ -121,19 +125,27 @@ const CategoryList = (props) => {
 
   const firestore = useFirestore();
 
-  const { ref, inView } = useInView({ threshold: 0.5 });
+  const { ref, inView } = useInView({ threshold: 0.8 });
 
   React.useEffect(() => {
     async function fetchData() {
       setIsLoading(true);
       try {
-        const queryClubs = await firestore
-          .collection('clubs')
-          .where('type', '==', slugs)
-          .orderBy('name')
-          .startAfter(lastClub)
-          .limit(9)
-          .get();
+        const queryClubs =
+          slugs === 'all'
+            ? await firestore
+                .collection('clubs')
+                .orderBy('name')
+                .startAfter(lastClub)
+                .limit(9)
+                .get()
+            : await firestore
+                .collection('clubs')
+                .where('type', '==', slugs)
+                .orderBy('name')
+                .startAfter(lastClub)
+                .limit(9)
+                .get();
         setClubs((prev) => [...prev, ...queryClubs.docs]);
         setLastClub(queryClubs.docs[queryClubs.docs.length - 1]);
         setIsLoading(false);
@@ -161,7 +173,7 @@ const CategoryList = (props) => {
           </ErrorBoundary>
         </ListWrapper>
         <div ref={ref}>
-          {isLoading && <Loading styles={{ padding: '64px 32px' }} />}
+          {isLoading && <Loading styles={{ padding: '100px 32px' }} />}
         </div>
       </ListWithTitle>
     );
