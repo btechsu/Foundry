@@ -3,9 +3,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import SubmitClubModal from './submitClub';
+import LoginModal from './LoginModal';
 
 const MODAL_COMPONENTS = {
   SUBMIT_CLUB_MODAL: SubmitClubModal,
+  LOGIN_MODAL: LoginModal,
 };
 
 /*

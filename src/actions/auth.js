@@ -35,7 +35,7 @@ export const signIn = () => async (dispatch, getState, { getFirebase }) => {
   dispatch({ type: actions.AUTH_START });
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await firebase.auth().signInWithPopup(provider);
+    await firebase.auth().signInWithRedirect(provider);
     dispatch({ type: actions.AUTH_SUCCESS });
   } catch (err) {
     dispatch({ type: actions.AUTH_FAIL, code: err.code, payload: err.message });

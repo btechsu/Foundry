@@ -137,14 +137,14 @@ const CategoryList = (props) => {
                 .collection('clubs')
                 .orderBy('name')
                 .startAfter(lastClub)
-                .limit(9)
+                .limit(6)
                 .get()
             : await firestore
                 .collection('clubs')
                 .where('type', '==', slugs)
                 .orderBy('name')
                 .startAfter(lastClub)
-                .limit(9)
+                .limit(6)
                 .get();
         setClubs((prev) => [...prev, ...queryClubs.docs]);
         setLastClub(queryClubs.docs[queryClubs.docs.length - 1]);

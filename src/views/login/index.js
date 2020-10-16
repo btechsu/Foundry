@@ -60,8 +60,7 @@ class Login extends React.Component {
 
           <CodeOfConduct>
             By using Foundry, you agree to our{' '}
-            <Link to={'/privacy'}>Privacy Policy</Link> and{' '}
-            <Link to={'/terms'}>Terms of Service</Link>.
+            <Link to={'/privacy'}>Privacy Policy</Link>
           </CodeOfConduct>
         </FullscreenContent>
       </FullscreenView>

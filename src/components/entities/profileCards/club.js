@@ -1,16 +1,11 @@
-// @flow
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ClubAvatar } from 'src/components/avatar';
 import { ClubMeta } from './components/clubMeta';
 import { PrimaryButton, OutlineButton } from 'src/components/button';
-import {
-  ProfileContainer,
-  ActionsRowContainer,
-  ProfileAvatarContainer,
-  CoverPhoto,
-} from './style';
+import { ClubActions } from './components/clubActions';
+import { ProfileContainer, ProfileAvatarContainer, CoverPhoto } from './style';
 
 const IsInClub = (clubsArray, clubID) => {
   var temp = [];
@@ -23,13 +18,7 @@ const IsInClub = (clubsArray, clubID) => {
 };
 
 const ClubCard = (props) => {
-  const { club, id, profile } = props;
-  if (profile.isLoaded) console.log(IsInClub(profile.clubs.approved, id));
-
-  const [isHovering, setHover] = useState(false);
-  const onMouseEnter = () => setHover(true);
-  const onMouseLeave = () => setHover(false);
-
+  const { club, id } = props;
   return (
     <ProfileContainer data-cy="club-profile-card">
       <Link to={`/${club.id || id}`}>
@@ -42,29 +31,7 @@ const ClubCard = (props) => {
 
       <ClubMeta club={club} id={id} />
 
-      <ActionsRowContainer>
-        {profile.isLoaded && IsInClub(profile.clubs.approved, id) ? (
-          <OutlineButton
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            // onClick={leaveCommunity}
-            data-cy="leave-club-button"
-          >
-            {isHovering ? 'Leave club' : 'Member'}
-          </OutlineButton>
-        ) : profile.isLoaded && IsInClub(profile.clubs.pending, id) ? (
-          <OutlineButton
-            onMouseEnter={onMouseEnter}
-            onMouseLeave={onMouseLeave}
-            // onClick={leaveCommunity}
-            data-cy="leave-club-button"
-          >
-            Pending application
-          </OutlineButton>
-        ) : (
-          <PrimaryButton to={`/${club.id || id}`}>Join club</PrimaryButton>
-        )}
-      </ActionsRowContainer>
+      <ClubActions club={club} id={id} />
     </ProfileContainer>
   );
 };

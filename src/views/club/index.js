@@ -15,7 +15,6 @@ const ClubView = (props) => {
   const [error, setError] = useState(false);
   const [club, setClub] = useState(null);
   const firestore = useFirestore();
-  console.log(props);
 
   useEffect(() => {
     async function fetchData() {
