@@ -72,7 +72,7 @@ class CollectionSwitcher extends React.Component {
         curatedContentType: 'volunteering',
       },
       {
-        title: 'Acedemic',
+        title: 'Academic',
         curatedContentType: 'acedemic',
       },
       {
