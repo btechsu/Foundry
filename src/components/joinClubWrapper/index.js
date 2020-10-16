@@ -11,7 +11,7 @@ const JoinClub = (props) => {
   const firestore = useFirestore();
 
   const addMember = async () => {
-    if (profile.isEmpty && !auth.uid) {
+    if (profile.isEmpty || !auth.uid) {
       return dispatch(openModal('LOGIN_MODAL'));
     }
 

@@ -6,13 +6,9 @@ import JoinClub from 'src/components/joinClubWrapper';
 import { ActionsRowContainer } from '../style';
 
 const IsInClub = (clubsArray, clubID) => {
-  var temp = [];
+  const check = clubsArray.filter((club) => club.id === clubID);
 
-  clubsArray.forEach((element) => {
-    if (element.id === clubID) temp.push(element.id);
-  });
-
-  if (temp.length === 0) return false;
+  if (check.length === 0) return false;
   else return true;
 };
 
@@ -26,7 +22,7 @@ export const UnconnectedClubActions = (props) => {
   const leaveClub = () =>
     dispatch(
       openModal('DELETE_DOUBLE_CHECK_MODAL', {
-        id: community.id,
+        id: club.id || id,
         entity: 'team-member-leaving-club',
         message: 'Are you sure you want to leave this club?',
         buttonLabel: 'Leave Club',
