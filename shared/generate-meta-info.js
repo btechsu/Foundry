@@ -88,20 +88,8 @@ function generateMetaInfo(input /*: Input */) /*: Meta */ {
     case 'clubs': {
       return {
         title: 'Clubs',
-        description: 'Explore the clubs on Foundry',
+        description: 'Explore clubs on Foundry',
       };
-    }
-    case 'thread': {
-      if (data.privateChannel)
-        return setDefault({
-          extra: HIDE_FROM_CRAWLERS,
-        });
-
-      var body = data && data.body;
-      return setDefault({
-        title: data && data.title + ' · ' + data.communityName,
-        description: body,
-      });
     }
     case 'user': {
       return setDefault({
@@ -109,25 +97,9 @@ function generateMetaInfo(input /*: Input */) /*: Meta */ {
         description: data && data.description,
       });
     }
-    case 'channel': {
-      if (data.private)
-        return setDefault({
-          extra: HIDE_FROM_CRAWLERS,
-        });
-      return setDefault({
-        title: data && data.communityName + ' · ' + data.name,
-        description: data && data.description,
-      });
-    }
-    case 'community': {
+    case 'club': {
       return setDefault({
         title: data && data.name,
-        description: data && data.description,
-      });
-    }
-    case 'directMessage': {
-      return setDefault({
-        title: data && data.title,
         description: data && data.description,
       });
     }

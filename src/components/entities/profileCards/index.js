@@ -1,4 +1,4 @@
 // @flow
-import { ClubCard } from './club';
+import ClubCard from './club';
 
 export { ClubCard };

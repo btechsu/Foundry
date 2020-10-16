@@ -1,9 +1,10 @@
 // @flow
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { ClubAvatar } from 'src/components/avatar';
 import { ClubMeta } from './components/clubMeta';
-import { PrimaryButton } from 'src/components/button';
+import { PrimaryButton, OutlineButton } from 'src/components/button';
 import {
   ProfileContainer,
   ActionsRowContainer,
@@ -11,8 +12,23 @@ import {
   CoverPhoto,
 } from './style';
 
-export const ClubCard = (props) => {
-  const { club, id } = props;
+const IsInClub = (clubsArray, clubID) => {
+  var temp = [];
+  clubsArray.forEach((element) => {
+    if (element.id === clubID) temp.push(element.id);
+  });
+
+  if (temp.length === 0) return false;
+  else return true;
+};
+
+const ClubCard = (props) => {
+  const { club, id, profile } = props;
+  if (profile.isLoaded) console.log(IsInClub(profile.clubs.approved, id));
+
+  const [isHovering, setHover] = useState(false);
+  const onMouseEnter = () => setHover(true);
+  const onMouseLeave = () => setHover(false);
 
   return (
     <ProfileContainer data-cy="club-profile-card">
@@ -27,8 +43,30 @@ export const ClubCard = (props) => {
       <ClubMeta club={club} id={id} />
 
       <ActionsRowContainer>
-        <PrimaryButton to={`/${club.id || id}`}>View more info</PrimaryButton>
+        {profile.isLoaded && IsInClub(profile.clubs.approved, id) ? (
+          <OutlineButton
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            // onClick={leaveCommunity}
+            data-cy="leave-club-button"
+          >
+            {isHovering ? 'Leave club' : 'Member'}
+          </OutlineButton>
+        ) : profile.isLoaded && IsInClub(profile.clubs.pending, id) ? (
+          <OutlineButton
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            // onClick={leaveCommunity}
+            data-cy="leave-club-button"
+          >
+            Pending application
+          </OutlineButton>
+        ) : (
+          <PrimaryButton to={`/${club.id || id}`}>Join club</PrimaryButton>
+        )}
       </ActionsRowContainer>
     </ProfileContainer>
   );
 };
+
+export default connect(({ firebase: { profile } }) => ({ profile }))(ClubCard);

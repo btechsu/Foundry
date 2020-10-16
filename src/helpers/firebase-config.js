@@ -17,6 +17,8 @@ export const firebase = {
 // For more details, visit http://react-redux-firebase.com/docs/api/enhancer.html
 export const reduxFirebase = {
   enableLogging: false, // enable/disable Firebase Database Logging
+  userProfile: 'users',
+  useFirestoreForProfile: true,
 };
 
 export default {

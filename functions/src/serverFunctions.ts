@@ -21,7 +21,7 @@ export const verifyCaptchaToken = functions.https.onCall(
     if (data.token === undefined || data.token === null || data.token === '') {
       throw new functions.https.HttpsError(
         'invalid-argument',
-        'Incorrect token or type passed. Please contact an administrator or try again.'
+        'Incorrect token or type passed. Please contact an administrator or try again.',
       );
     }
 
@@ -38,7 +38,7 @@ export const verifyCaptchaToken = functions.https.onCall(
     if (!bodyResponsee.success) {
       throw new functions.https.HttpsError(
         'permission-denied',
-        "Couldn't verify the recaptcha value. Please try again."
+        "Couldn't verify the recaptcha value. Please try again.",
       );
     }
 
@@ -46,7 +46,7 @@ export const verifyCaptchaToken = functions.https.onCall(
       success: true,
       message: 'Successfully verified captcha on the server.',
     };
-  }
+  },
 );
 export const userDeleted = functions.auth.user().onDelete((user) => {
   return admin.firestore().collection('users').doc(user.uid).delete();
