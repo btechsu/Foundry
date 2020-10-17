@@ -1,4 +1,3 @@
-// @flow
 import styled, { css } from 'styled-components';
 import { theme } from 'shared/theme';
 import { tint } from 'src/components/globals';

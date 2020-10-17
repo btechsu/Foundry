@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Spinner } from 'src/components/globals';
 import {

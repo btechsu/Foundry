@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { Overview, Centralized } from '../view';
 import PageFooter from '../components/footer';

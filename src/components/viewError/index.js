@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable max-len */
 import * as React from 'react';
 import { FillSpaceError, LargeEmoji, Heading, Subheading } from './style';

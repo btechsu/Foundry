@@ -1,4 +1,3 @@
-// @flow
 import { theme } from 'shared/theme';
 import React from 'react';
 import styled from 'styled-components';
@@ -184,15 +183,14 @@ export const Centralized = () => {
         <FlexCol>
           <ThisTagline>Club fair soon!</ThisTagline>
           <ThisCopy>
-            As a result of the COVID-19 pandemic and associated 
-            social distancing protocols, this year's club fair won't be in person. 
-            But don't fret! Foundry will be your one stop shop 
-            for club fair activities!
+            As a result of the COVID-19 pandemic and associated social
+            distancing protocols, this year's club fair won't be in person. But
+            don't fret! Foundry will be your one stop shop for club fair
+            activities!
           </ThisCopy>
           <ThisCopy>
-            Interested in putting your club up or 
-            viewing those Tech already offers? 
-            Click the button below.
+            Interested in putting your club up or viewing those Tech already
+            offers? Click the button below.
           </ThisCopy>
 
           <Actions>

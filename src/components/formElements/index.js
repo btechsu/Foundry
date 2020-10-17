@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Icon from 'src/components/icon';
 import { WhiteOutlineButton } from 'src/components/button';

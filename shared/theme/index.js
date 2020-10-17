@@ -1,5 +1,3 @@
-// @flow
-
 export const theme = {
   bg: {
     default: '#FFFFFF',

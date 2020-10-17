@@ -1,4 +1,3 @@
-// @flow
 import { theme } from 'shared/theme';
 import styled from 'styled-components';
 import {

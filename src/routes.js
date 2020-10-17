@@ -1,4 +1,3 @@
-// @flow
 /**
  * This components acts as the layout for the entire app. Meaning, every single
  * page and component is wrapped in this file. This component sorts though the

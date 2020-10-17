@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { StyledSegmentedControl, StyledSegment } from './style';
 import { Link } from 'react-router-dom';

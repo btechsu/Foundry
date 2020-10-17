@@ -1,4 +1,3 @@
-// @flow
 import ErrorBoundary from './ErrorBoundary';
 import BlueScreen from './BlueScreen';
 

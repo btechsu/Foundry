@@ -1,4 +1,3 @@
-// @flow
 import * as actions from './actionTypes';
 
 export const openModal = (name, props) => {

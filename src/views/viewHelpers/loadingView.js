@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { Loading } from '../../components/loading';
 import { ViewGrid, CenteredGrid } from '../../components/layout';

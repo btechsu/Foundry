@@ -1,4 +1,3 @@
-// @flow
 import { theme } from 'shared/theme';
 import styled, { keyframes } from 'styled-components';
 import { MEDIA_BREAK } from 'src/components/layout';

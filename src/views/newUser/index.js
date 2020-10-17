@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import * as actions from 'src/actions/auth';
 import { withRouter } from 'react-router';

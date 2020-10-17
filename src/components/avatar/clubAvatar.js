@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import AvatarImage from './image';
 import { Container, AvatarLink } from './style';

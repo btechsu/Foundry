@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router-dom';

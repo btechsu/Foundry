@@ -1,4 +1,3 @@
-// @flow
 /**
  * Collection of unicode code points that represent whitespaces and some other non visual characters.
  */

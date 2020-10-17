@@ -1,4 +1,3 @@
-// @flow
 import { theme } from 'shared/theme';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';

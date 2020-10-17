@@ -1,4 +1,3 @@
-// @flow
 import * as actions from './actionTypes';
 
 const addToast = (id, kind, message, timeout) => {

@@ -1,4 +1,3 @@
-// @flow
 import { createGlobalStyle } from 'styled-components';
 // $FlowIssue
 import { theme } from 'shared/theme';

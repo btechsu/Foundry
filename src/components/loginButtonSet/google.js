@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { GoogleButton, Label } from './style';
 import Icon from 'src/components/icon';

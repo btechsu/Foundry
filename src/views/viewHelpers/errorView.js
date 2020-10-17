@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { OutlineButton, PrimaryButton } from 'src/components/button';
 import { Emoji, Heading, Description, ActionsRow, Card } from './style';

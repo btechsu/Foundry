@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import Tippy from '@tippy.js/react';
 

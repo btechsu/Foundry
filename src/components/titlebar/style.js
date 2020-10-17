@@ -1,4 +1,3 @@
-// @flow
 import styled from 'styled-components';
 import { theme } from 'shared/theme';
 import { Truncate } from 'src/components/globals';

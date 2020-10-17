@@ -1,4 +1,3 @@
-// @flow
 import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import crashReporter from 'src/helpers/sentry-redux-middleware';

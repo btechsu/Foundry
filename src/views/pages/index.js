@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import Nav from './components/nav';
 import Home from './home';

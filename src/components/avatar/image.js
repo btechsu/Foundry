@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react';
 import { Img, FallbackImg, LoadingImg } from './style';
 import VisibilitySensor from 'react-visibility-sensor';

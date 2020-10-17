@@ -1,4 +1,3 @@
-// @flow
 import * as actions from './actionTypes';
 
 export const updateNotificationsCount = (countType, count) => ({

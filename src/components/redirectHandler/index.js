@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable max-len */
 import * as React from 'react';
 import queryString from 'query-string';

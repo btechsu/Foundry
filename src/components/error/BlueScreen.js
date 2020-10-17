@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable max-len */
 // This component is shown as a full replacement for the entire app in production whenever an error happens that would otherwise crash the app
 import React from 'react';

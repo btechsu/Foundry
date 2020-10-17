@@ -1,4 +1,3 @@
-// @flow
 import React from 'react';
 import { OutlineButton } from 'src/components/button';
 import { withRouter } from 'react-router';
