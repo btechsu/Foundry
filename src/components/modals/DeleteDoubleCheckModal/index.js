@@ -58,6 +58,29 @@ class DeleteDoubleCheckModal extends React.Component {
             });
           });
       }
+      case 'retract-club-application': {
+        const pendingClubs = this.props.profile.clubs.pending;
+
+        return this.props.firebase
+          .updateProfile({
+            clubs: {
+              pending: pendingClubs.filter((club) => club.id !== this.props.id),
+            },
+          })
+          .then(() => {
+            dispatch(addToastWithTimeout('neutral', 'Application removed'));
+            this.setState({
+              isLoading: false,
+            });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({
+              isLoading: false,
+            });
+          });
+      }
       default: {
         this.setState({
           isLoading: false,

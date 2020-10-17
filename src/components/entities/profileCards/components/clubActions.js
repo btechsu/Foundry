@@ -24,8 +24,20 @@ export const UnconnectedClubActions = (props) => {
       openModal('DELETE_DOUBLE_CHECK_MODAL', {
         id: club.id || id,
         entity: 'team-member-leaving-club',
-        message: 'Are you sure you want to leave this club?',
+        message:
+          'Are you sure you want to leave this club? This action cannot be undone and you will have to apply again.',
         buttonLabel: 'Leave Club',
+      }),
+    );
+
+  const retractApplication = () =>
+    dispatch(
+      openModal('DELETE_DOUBLE_CHECK_MODAL', {
+        id: club.id || id,
+        entity: 'retract-club-application',
+        message:
+          'Are you sure you want to retract your application? This action cannot be undone and you will have to apply again.',
+        buttonLabel: 'Retract Application',
       }),
     );
 
@@ -57,7 +69,14 @@ export const UnconnectedClubActions = (props) => {
   ) {
     return (
       <ActionsRowContainer>
-        <OutlineButton data-cy="club-button">Pending application</OutlineButton>
+        <OutlineButton
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={retractApplication}
+          data-cy="pending-club-button"
+        >
+          {isHovering ? 'Retract application' : 'Pending application'}
+        </OutlineButton>
       </ActionsRowContainer>
     );
   }
