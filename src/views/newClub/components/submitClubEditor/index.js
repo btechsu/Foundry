@@ -85,6 +85,8 @@ class SubmitClubEditor extends React.Component {
         text: editorText,
         cover: coverFile,
         pfp: pfpFile,
+        admins: [],
+        superadmin: user.email,
       });
 
       this.setState({ isLoading: false });

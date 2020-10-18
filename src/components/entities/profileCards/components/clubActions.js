@@ -11,9 +11,23 @@ const IsInClub = (clubsArray, clubID) => {
   if (check.length === 0) return false;
   else return true;
 };
+const isAdmin = (club, userID) => {
+  if (club.admins || club.superAdmin) {
+    const adminArray = club.admins;
+    const superAdmin = club.superAdmin;
+    const check = adminArray.filter((admin) => admin.id === userID);
+    const check2 = superAdmin === userID;
+
+    if (check.length > 0) return true;
+    else if (check2) return true;
+    else return false;
+  }
+
+  return false;
+};
 
 export const UnconnectedClubActions = (props) => {
-  const { club, id, profile, dispatch } = props;
+  const { club, id, profile, auth, dispatch } = props;
 
   const [isHovering, setHover] = useState(false);
   const onMouseEnter = () => setHover(true);
@@ -49,14 +63,20 @@ export const UnconnectedClubActions = (props) => {
   ) {
     return (
       <ActionsRowContainer>
-        <OutlineButton
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-          onClick={leaveClub}
-          data-cy="leave-club-button"
-        >
-          {isHovering ? 'Leave club' : 'Member'}
-        </OutlineButton>
+        {isAdmin(club, auth.uid) ? (
+          <OutlineButton to={`/${club.id || id}/settings`}>
+            Settings
+          </OutlineButton>
+        ) : (
+          <OutlineButton
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            onClick={leaveClub}
+            data-cy="leave-club-button"
+          >
+            {isHovering ? 'Leave club' : 'Member'}
+          </OutlineButton>
+        )}
       </ActionsRowContainer>
     );
   }
@@ -100,6 +120,7 @@ export const UnconnectedClubActions = (props) => {
   );
 };
 
-export const ClubActions = connect(({ firebase: { profile } }) => ({
+export const ClubActions = connect(({ firebase: { profile, auth } }) => ({
   profile,
+  auth,
 }))(UnconnectedClubActions);
