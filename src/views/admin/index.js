@@ -8,6 +8,7 @@ import { ViewGrid } from 'src/components/layout';
 import { setTitlebarProps } from 'src/actions/titlebar';
 import {Container, Heading, Subheading} from './style'
 import ClubList from './components/clubList'
+import Authorized from './components/authorized'
 
 class Admin extends React.Component {
   componentDidMount() {
@@ -25,11 +26,13 @@ class Admin extends React.Component {
         <Head title={title} description={description} />
         <ViewGrid data-cy="admin-page">
           <ErrorBoundary>
-            <Container>
-                <Heading>Admin</Heading>
-                <Subheading>Panel to manage clubs.</Subheading>
-                <ClubList />
-            </Container>
+            <Authorized>
+              <Container>
+                  <Heading>Admin</Heading>
+                  <Subheading>Panel to manage clubs.</Subheading>
+                  <ClubList />
+              </Container>
+            </Authorized>
           </ErrorBoundary>
         </ViewGrid>
       </React.Fragment>
