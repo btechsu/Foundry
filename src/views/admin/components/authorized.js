@@ -9,7 +9,7 @@ export default function Authorized(props){
     </Container>);
     let notLoggedIn = (<Container>
         <Heading>Oops!</Heading>
-        <Subheading>You aren't logged in.</Subheading>
+        <Subheading>You aren't logged in. If you are, refresh the page.</Subheading>
     </Container>);
 
     let [content, setContent] = useState(<Heading>Loading...</Heading>);
