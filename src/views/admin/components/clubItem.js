@@ -13,7 +13,7 @@ export default class ClubItem extends React.Component {
     render(){
         return (
             <ClubItemStyle>
-                <Name>{this.props.name}</Name> — <Description>{this.props.description}</Description>
+                <Name>{this.props.data.name}</Name> — <Description>{this.props.data.description.substring(0,100) + "..."}</Description>
                 <ControlButtons>
                     <DeleteButton onClick={this.handleDelete}><DeleteIcon src="/img/trash.svg" /></DeleteButton>{" "}
                     <EditButton onClick={this.handleEdit}><EditIcon src="/img/edit.svg" /></EditButton>{" "}
