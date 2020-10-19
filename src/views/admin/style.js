@@ -20,7 +20,7 @@ export const ClubListStyle = styled.ul`
 
 export const ClubItemStyle = styled.li`
     border-top: 1px solid rgba(0,0,0,0.2);
-    font-size: 20px;
+    font-size: 18px;
     padding: 5px;
 `;
 
@@ -34,14 +34,14 @@ export const Description = styled.span`
 
 export const DeleteButton = styled.a`
     color: red;
-    font-size: 15px;
+    font-size: 18px;
     margin-right: 20px;
     vertical-align: middle;
 `;
 
 export const EditButton = styled.a`
-    color: blue;
-    font-size: 15px;
+    color: #037ffc;
+    font-size: 18px;
     margin-right: 20px;
     vertical-align: middle;
 `;

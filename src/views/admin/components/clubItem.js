@@ -13,7 +13,9 @@ export default class ClubItem extends React.Component {
     render(){
         return (
             <ClubItemStyle>
-                <DeleteButton onClick={this.handleDelete}>Delete</DeleteButton> <EditButton onClick={this.handleEdit}>Edit</EditButton> <Name>{this.props.name}</Name> — <Description>{this.props.description}</Description>
+                <DeleteButton onClick={this.handleDelete}>Delete</DeleteButton>{" "}
+                <EditButton onClick={this.handleEdit}>Edit</EditButton>{" "}
+                <Name>{this.props.name}</Name> — <Description>{this.props.description}</Description>
             </ClubItemStyle>
         );
     }
