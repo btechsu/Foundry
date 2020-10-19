@@ -71,31 +71,6 @@ const Navigation = (props) => {
 
               <Divider />
 
-              <Route path="/admin">
-                {({ match }) => (
-                  <Tooltip
-                    content="Admin panel"
-                    placement={'left'}
-                    isEnabled={!isWideViewport}
-                  >
-                    <AvatarGrid isActive={!!match}>
-                      <AvatarLink
-                        to={'/admin'}
-                        data-cy="admin-page"
-                        onClick={() => setNavigationIsOpen(false)}
-                        {...getAccessibilityActiveState(!!match)}
-                      >
-                        <IconWrapper>
-                          <Icon glyph="settings" />
-                        </IconWrapper>
-
-                        <Label>Admin</Label>
-                      </AvatarLink>
-                    </AvatarGrid>
-                  </Tooltip>
-                )}
-              </Route>
-
               <Route path="/login">
                 {({ match }) => (
                   <Tooltip
