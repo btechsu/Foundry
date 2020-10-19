@@ -3,6 +3,8 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore'; // make sure you add this for firestore
 import 'firebase/storage';
+import 'firebase/functions';
+import 'firebase/analytics';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import { Provider } from 'react-redux';
@@ -15,6 +17,8 @@ import {
 firebase.initializeApp(fbConfig);
 firebase.firestore();
 firebase.storage();
+firebase.functions();
+firebase.analytics();
 
 const AppWrapper = ({ store, children }) => {
   return (

@@ -33,7 +33,7 @@ const Component = (props) => {
       generateMetaInfo({
         type: 'club',
         data: {
-          name: `${club.data().name} club`,
+          name: `${club.data().name || club.id}`,
           description: club.data().description,
         },
       }),
