@@ -47,4 +47,13 @@ export const EditButton = styled.a`
 `;
 
 export const ControlButtons = styled.div`
+    margin-top: 10px;
+`;
+
+export const DeleteIcon = styled.img`
+    width: 25px;
+`;
+
+export const EditIcon = styled.img`
+    width: 25px;
 `;
