@@ -11,24 +11,27 @@ export default function ClubList() {
     useEffect(() => {
         setClubs([
             {
+                id: 0,
                 name: "Cool Club",
                 description: "Club description"
             },
             {
+                id: 1,
                 name: "Awesome Club",
                 description: "Club description"
             },
             {
+                id: 2,
                 name: "Amazing Club",
                 description: "Club description"
             }
         ])
-    })
+    }, [])
 
     return (
         <ClubListStyle>
             {clubs.map(club => 
-                <ClubItem name={club.name} description={club.description} />
+                <ClubItem name={club.name} description={club.description} key={club.id} />
             )}
         </ClubListStyle>
     );

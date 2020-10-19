@@ -45,3 +45,6 @@ export const EditButton = styled.a`
     margin-right: 20px;
     vertical-align: middle;
 `;
+
+export const ControlButtons = styled.div`
+`;
