@@ -16,7 +16,6 @@ export default function Authorized(props){
 
     useEffect(() => {
         getFirebase().auth().onAuthStateChanged(currentUser => {
-            console.log(currentUser);
             if(currentUser === null){ 
                 setContent(notLoggedIn); 
             } else {
