@@ -7,17 +7,21 @@ export default function ClubList() {
     const firestore = useFirestore();
     const [clubs, setClubs] = useState([]);
 
-    useEffect(() => {
+    const refresh = () => {
         firestore.collection('clubs').limit(10).get()
-        .then(snapshot => {
-            setClubs(snapshot.docs)
-        })
+            .then(snapshot => {
+                setClubs(snapshot.docs)
+            });
+    }
+
+    useEffect(() => {
+        refresh()
     }, [])
 
     return (
         <ClubListStyle>
             {clubs.map(club => 
-                <ClubItem data={club.data()} key={club.id} />
+                <ClubItem data={club.data()} key={club.id} id={club.id} refresh={refresh} />
             )}
         </ClubListStyle>
     );
