@@ -1,9 +1,9 @@
 import React from 'react';
-import { useFirebase } from 'react-redux-firebase';
+import { getFirebase, useFirebase } from 'react-redux-firebase';
 import {Container, Heading, Subheading} from '../style'
 
 export default function Authorized(props){
-    const firebase = useFirebase();
+    const firebase = getFirebase();
     let currentUser = firebase.auth().currentUser;
     let unauthorized = (<Container>
         <Heading>Oops!</Heading>
