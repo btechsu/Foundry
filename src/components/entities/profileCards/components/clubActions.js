@@ -5,13 +5,13 @@ import { openModal } from 'src/actions/modals';
 import JoinClub from 'src/components/joinClubWrapper';
 import { ActionsRowContainer } from '../style';
 
-const IsInClub = (clubsArray, clubID) => {
+export const IsInClub = (clubsArray, clubID) => {
   const check = clubsArray.filter((club) => club.id === clubID);
 
   if (check.length === 0) return false;
   else return true;
 };
-const isAdmin = (club, userID) => {
+export const isAdmin = (club, userID) => {
   if (club.admins || club.superAdmin) {
     const adminArray = club.admins;
     const superAdmin = club.superAdmin;

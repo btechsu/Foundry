@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import generateMetaInfo from 'shared/generate-meta-info';
 import Head from 'src/components/head';
 import { ClubAvatar } from 'src/components/avatar';
+import { MobileClubAction } from 'src/components/titlebar/actions';
 import { setTitlebarProps } from 'src/actions/titlebar';
+import { ChannelsList } from '../components/channelsList';
 import { ClubCard } from 'src/components/entities';
 import { ErrorBoundary } from 'src/components/error';
 import { SidebarSection } from '../style';
+import Sidebar from 'src/components/clubSidebar';
 import {
   ViewGrid,
   SecondaryPrimaryColumnGrid,
@@ -16,7 +19,7 @@ import {
 } from 'src/components/layout';
 
 const Component = (props) => {
-  const { club } = props;
+  const { club, dispatch, location } = props;
 
   const [metaInfo, setMetaInfo] = useState(
     generateMetaInfo({
@@ -38,7 +41,28 @@ const Component = (props) => {
         },
       }),
     );
-  }, []);
+    dispatch(
+      setTitlebarProps({
+        title: club.data().name,
+        titleIcon: (
+          <ClubAvatar isClickable={false} club={club.data()} size={24} />
+        ),
+        rightAction: <MobileClubAction club={club} id={club.id} />,
+      }),
+    );
+  }, [club.id]);
+
+  useEffect(() => {
+    dispatch(
+      setTitlebarProps({
+        title: club.data().name,
+        titleIcon: (
+          <ClubAvatar isClickable={false} club={club.data()} size={24} />
+        ),
+        rightAction: <MobileClubAction club={club.data()} id={club.id} />,
+      }),
+    );
+  }, [location]);
 
   const { title, description } = metaInfo;
 
@@ -49,14 +73,7 @@ const Component = (props) => {
       <ViewGrid data-cy="club-view">
         <SecondaryPrimaryColumnGrid>
           <SecondaryColumn>
-            <SidebarSection>
-              <ClubCard club={club.data()} id={club.id} />
-            </SidebarSection>
-            <ErrorBoundary>
-              <SidebarSection>
-                {/* switch between info and announcements */}
-              </SidebarSection>
-            </ErrorBoundary>
+            <Sidebar club={club.data()} id={club.id} />
           </SecondaryColumn>
 
           <PrimaryColumn>

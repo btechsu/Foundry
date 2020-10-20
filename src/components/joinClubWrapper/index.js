@@ -5,7 +5,7 @@ import { openModal } from 'src/actions/modals';
 import { useFirebase, useFirestore } from 'react-redux-firebase';
 
 const JoinClub = (props) => {
-  const { club, id, dispatch, isLoaded, auth, render, profile } = props;
+  const { club, id, dispatch, auth, render, profile } = props;
   const [isLoading, setIsLoading] = React.useState(false);
   const firebase = useFirebase();
   const firestore = useFirestore();
@@ -53,7 +53,6 @@ const JoinClub = (props) => {
 };
 
 export default connect(({ firebase: { auth, profile } }) => ({
-  isLoaded: auth.isLoaded,
   auth: auth,
   profile: profile,
 }))(JoinClub);
