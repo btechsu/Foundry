@@ -46,6 +46,10 @@ const Admin = Loadable({
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
+const AdminRedirectFallback = signedOutFallback(Admin, () => (
+  <Redirect to="/login" />
+));
+
 const HomeViewRedirectFallback = signedOutFallback(
   () => <Redirect to="/clubs" />,
   Pages,
@@ -130,7 +134,7 @@ class Routes extends React.Component {
                     <Route path="/login" component={LoginFallback} />
                     <Route path="/new/user" component={NewUserFallback} />
                     <Route path="/clubs" component={Clubs} />
-                    <Route path="/admin" component={Admin} />
+                    <Route path="/admin" component={AdminRedirectFallback} />
                     <Route path="/new/club" component={SubmitClubFallback} />
                     <Route path="/:clubSlug" component={ClubView} />
                   </Switch>
