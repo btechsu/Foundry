@@ -66,7 +66,7 @@ const SubmitClubFallback = signedOutFallback(SubmitClub, () => (
 ));
 
 const ClubView = Loadable({
-  loader: () => import('./views/club' /* webpackChunkName: "ClubView" */),
+  loader: () => import('src/views/club' /* webpackChunkName: "ClubView" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 

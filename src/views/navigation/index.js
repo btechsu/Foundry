@@ -157,7 +157,7 @@ const Navigation = (props) => {
               <ClubList
                 setNavigationIsOpen={setNavigationIsOpen}
                 navigationIsOpen={navigationIsOpen}
-                uid={authed}
+                {...props}
               />
 
               <Divider />

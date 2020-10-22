@@ -36,19 +36,14 @@ const ClubView = (props) => {
 
     fetchData();
     return;
-  }, []);
+  }, [match.params.clubSlug]);
 
   if (loading) return <LoadingView />;
   if (error) return <ErrorView />;
-  // logic for if this club has been joined by this user and getting the actual club info will be done here
-  // then pass down the info through props
-  // while data is being fetched return <LoadingView />
-  // if club doesn't exist or some other error (specify) return <ErrorView />
   if (club) return <ClubInfo club={club} />;
   return null;
 };
 
 export default compose(connect(({ firebase: { profile } }) => ({ profile })))(
   ClubView,
-); //perform logic here as an HOC with recompose
-// https://react-redux-firebase.com
+);

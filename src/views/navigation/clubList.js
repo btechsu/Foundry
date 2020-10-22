@@ -37,7 +37,7 @@ const ClubListItem = (props) => {
       isEnabled={!isWideViewport}
     >
       <AvatarGrid isActive={isActive}>
-        <AvatarLink to={`/${club.id}`} onClick={onClick}>
+        <AvatarLink to={`/${club.id}?tab=posts`} onClick={onClick}>
           <Avatar
             src={clubDoc.pfp || '/img/default_club.svg'}
             size={sidenavIsOpen ? 32 : 36}
