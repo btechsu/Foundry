@@ -1,10 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import {
-  WhiteIconButton,
-  PrimaryButton,
-  OutlineButton,
-} from 'src/components/button';
+import { PrimaryButton, OutlineButton } from 'src/components/button';
 import { IsInClub } from 'src/components/entities/profileCards/components/clubActions';
 import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
 import getComposerLink from 'src/helpers/get-composer-link';
@@ -17,10 +13,10 @@ const MobileClub = (props) => {
   if (
     profile.isLoaded &&
     !profile.isEmpty &&
-    profile.clubs.approved &&
-    IsInClub(profile.clubs.approved, club.id || id)
+    profile.approved &&
+    IsInClub(profile.approved, club.id || id)
   ) {
-    if (isAdmin(club.id || id, auth.uid)) {
+    if (isAdmin(club, auth.uid)) {
       return (
         <OutlineButton
           size={'small'}
@@ -40,8 +36,8 @@ const MobileClub = (props) => {
   if (
     profile.isLoaded &&
     !profile.isEmpty &&
-    profile.clubs.pending &&
-    IsInClub(profile.clubs.pending, club.id || id)
+    profile.pending &&
+    IsInClub(profile.pending, club.id || id)
   ) {
     return null;
   }

@@ -32,7 +32,7 @@ const Channel = (props) => {
     const chevron = <Icon glyph="view-forward" size={24} />;
     if (!auth.uid) return chevron;
 
-    if (isAdmin(club.id || id, auth.uid)) {
+    if (isAdmin(club, auth.uid)) {
       return (
         <React.Fragment>
           <Tooltip content="Go to settings">

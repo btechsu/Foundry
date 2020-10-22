@@ -1,4 +1,4 @@
-import { ChannelListItem } from './listItems';
+import { ChannelListItem, UserListItem } from './listItems';
 import { ClubCard } from './profileCards';
 
-export { ClubCard, ChannelListItem };
+export { ClubCard, ChannelListItem, UserListItem };

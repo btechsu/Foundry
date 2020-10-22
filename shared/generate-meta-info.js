@@ -8,55 +8,9 @@ var DEFAULT_META = {
 
 var HIDE_FROM_CRAWLERS = '<meta name="robots" content="noindex, nofollow">';
 
-/*::
-type MaybeMeta = {
-  title?: string,
-  description?: string,
-  extra?: string,
-};
-type Meta = {
-  title: string,
-  description: string,
-  extra: string,
-};
-type OtherInput = {
-  type?: string,
-  data?: void,
-};
-type ThreadInput = {
-  type: 'thread',
-  data?: { title: string, body?: ?string, communityName?: string, privateChannel?: ?boolean type?: ?string },
-};
-type UserInput = {
-  type: 'user',
-  data?: { name: string, username: string, description?: string },
-};
-type ChannelInput = {
-  type: 'channel',
-  data?: { name: string, description?: string, communityName?: string, private?: ?boolean },
-};
-type CommunityInput = {
-  type: 'community',
-  data?: { name: string, description?: string },
-};
-type DirectMessageInput = {
-  type: 'directMessage',
-  data?: { title: string, description?: string },
-};
-type Input =
-  | ThreadInput
-  | UserInput
-  | ChannelInput
-  | CommunityInput
-  | OtherInput;
-*/
-
 function setDefault(input /*: MaybeMeta */) /*: Meta */ {
   var title = input.title || DEFAULT_META.title;
   var description = input.description || DEFAULT_META.description;
-  // If theres a custom title but no custom description
-  // prefix "On Foundry" to the description
-  // Otherwise you end up with "SpecFM | Where communities live"
   if (input.title && !input.description) {
     description = 'on Foundry, ' + DEFAULT_META.description.toLowerCase();
   }

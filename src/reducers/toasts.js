@@ -1,5 +1,3 @@
-import * as actions from 'src/actions/actionTypes';
-
 const initialState = {
   toasts: [],
 };
@@ -13,12 +11,12 @@ const initialState = {
   */
 export default function toasts(state = initialState, action) {
   switch (action.type) {
-    case actions.ADD_TOAST: {
+    case 'ADD_TOAST': {
       return Object.assign({}, state, {
         toasts: [...state.toasts, action.payload],
       });
     }
-    case actions.REMOVE_TOAST: {
+    case 'REMOVE_TOAST': {
       const toasts = state.toasts.filter((toast) => {
         return toast.id !== action.id;
       });

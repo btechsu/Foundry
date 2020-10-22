@@ -1,8 +1,6 @@
-import * as actions from './actionTypes';
-
 const addToast = (id, kind, message, timeout) => {
   return {
-    type: actions.ADD_TOAST,
+    type: 'ADD_TOAST',
     payload: {
       id,
       kind,
@@ -13,7 +11,7 @@ const addToast = (id, kind, message, timeout) => {
 };
 
 const removeToast = (id) => {
-  return { type: actions.REMOVE_TOAST, id };
+  return { type: 'REMOVE_TOAST', id };
 };
 
 let nextToastId = 0;

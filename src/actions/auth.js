@@ -1,22 +1,20 @@
-import * as actions from './actionTypes';
-
 // Clean up messages
 export const clean = () => ({
-  type: actions.CLEAN_UP,
+  type: 'CLEAN_UP',
 });
 
 // Sign up action creator
 export const signUp = (data) => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
-  dispatch({ type: actions.AUTH_START });
+  dispatch({ type: 'AUTH_START' });
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithPopup(provider);
-    dispatch({ type: actions.AUTH_SUCCESS });
+    dispatch({ type: 'AUTH_SUCCESS' });
   } catch (err) {
-    dispatch({ type: actions.AUTH_FAIL, code: err.code, payload: err.message });
+    dispatch({ type: 'AUTH_FAIL', code: err.code, payload: err.message });
   }
-  dispatch({ type: actions.AUTH_END });
+  dispatch({ type: 'AUTH_END' });
 };
 
 // Logout action creator
@@ -32,15 +30,15 @@ export const signOut = () => async (dispatch, getState, { getFirebase }) => {
 // Login action creator
 export const signIn = () => async (dispatch, getState, { getFirebase }) => {
   const firebase = getFirebase();
-  dispatch({ type: actions.AUTH_START });
+  dispatch({ type: 'AUTH_START' });
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
     await firebase.auth().signInWithRedirect(provider);
-    dispatch({ type: actions.AUTH_SUCCESS });
+    dispatch({ type: 'AUTH_SUCCESS' });
   } catch (err) {
-    dispatch({ type: actions.AUTH_FAIL, code: err.code, payload: err.message });
+    dispatch({ type: 'AUTH_FAIL', code: err.code, payload: err.message });
   }
-  dispatch({ type: actions.AUTH_END });
+  dispatch({ type: 'AUTH_END' });
 };
 
 // Edit profile
@@ -53,7 +51,7 @@ export const editProfile = (data) => async (
   const firestore = getFirestore();
   const user = firebase.auth().currentUser;
   const { uid: userId, email: userEmail } = getState().firebase.auth;
-  dispatch({ type: actions.PROFILE_EDIT_START });
+  dispatch({ type: 'PROFILE_EDIT_START' });
   try {
     //edit the user profile
     if (data.email !== userEmail) {
@@ -68,8 +66,8 @@ export const editProfile = (data) => async (
     if (data.password.length > 0) {
       await user.updatePassword(data.password);
     }
-    dispatch({ type: actions.PROFILE_EDIT_SUCCESS });
+    dispatch({ type: 'PROFILE_EDIT_SUCCESS' });
   } catch (err) {
-    dispatch({ type: actions.PROFILE_EDIT_FAIL, payload: err.message });
+    dispatch({ type: 'PROFILE_EDIT_FAIL', payload: err.message });
   }
 };

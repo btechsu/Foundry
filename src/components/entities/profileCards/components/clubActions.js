@@ -58,8 +58,8 @@ export const UnconnectedClubActions = (props) => {
   if (
     profile.isLoaded &&
     !profile.isEmpty &&
-    profile.clubs.approved &&
-    IsInClub(profile.clubs.approved, club.id || id)
+    profile.approved &&
+    IsInClub(profile.approved, club.id || id)
   ) {
     return (
       <ActionsRowContainer>
@@ -84,8 +84,8 @@ export const UnconnectedClubActions = (props) => {
   if (
     profile.isLoaded &&
     !profile.isEmpty &&
-    profile.clubs.pending &&
-    IsInClub(profile.clubs.pending, club.id || id)
+    profile.pending &&
+    IsInClub(profile.pending, club.id || id)
   ) {
     return (
       <ActionsRowContainer>

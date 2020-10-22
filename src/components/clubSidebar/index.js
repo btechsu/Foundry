@@ -1,5 +1,6 @@
 import React from 'react';
 import { SidebarSection } from 'src/views/club/style';
+import { TeamMembersList } from 'src/views/club/components/teamMembersList';
 import { ChannelsList } from 'src/views/club/components/channelsList';
 import { ClubCard } from 'src/components/entities';
 import { ErrorBoundary } from 'src/components/error';
@@ -13,6 +14,12 @@ export default ({ club, id }) => (
     <ErrorBoundary>
       <SidebarSection>
         <ChannelsList club={club} id={club.id || id} />
+      </SidebarSection>
+    </ErrorBoundary>
+
+    <ErrorBoundary>
+      <SidebarSection>
+        <TeamMembersList club={club} id={club.id || id} />
       </SidebarSection>
     </ErrorBoundary>
   </React.Fragment>

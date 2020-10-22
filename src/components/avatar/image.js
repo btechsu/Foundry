@@ -9,7 +9,7 @@ export default class Image extends React.Component {
     const fallbackSrc =
       type === 'user'
         ? '/img/default_avatar.svg'
-        : '/img/default_community.svg';
+        : '/img/default_club.svg';
 
     return (
       <VisibilitySensor>

@@ -1,5 +1,3 @@
-import * as actions from 'src/actions/actionTypes';
-
 const initialState = {
   error: null,
   loading: false,
@@ -109,37 +107,37 @@ const cleanUp = (state) => {
 
 export default (state = initialState, { type, payload }) => {
   switch (type) {
-    case actions.CLEAN_UP:
+    case 'CLEAN_UP':
       return cleanUp(state);
 
-    case actions.AUTH_START:
+    case 'AUTH_START':
       return authStart(state);
 
-    case actions.AUTH_END:
+    case 'AUTH_END':
       return authEnd(state);
 
-    case actions.AUTH_FAIL:
+    case 'AUTH_FAIL':
       return authFail(state, payload);
 
-    case actions.AUTH_SUCCESS:
+    case 'AUTH_SUCCESS':
       return authSuccess(state);
 
-    case actions.VERIFY_START:
+    case 'VERIFY_START':
       return verifyStart(state);
 
-    case actions.VERIFY_SUCCESS:
+    case 'VERIFY_SUCCESS':
       return verifySuccess(state);
 
-    case actions.VERIFY_FAIL:
+    case 'VERIFY_FAIL':
       return verifyFail(state, payload);
 
-    case actions.RECOVERY_START:
+    case 'RECOVERY_START':
       return recoveryStart(state);
 
-    case actions.RECOVERY_SUCCESS:
+    case 'RECOVERY_SUCCESS':
       return recoverySuccess(state);
 
-    case actions.RECOVERY_FAIL:
+    case 'RECOVERY_FAIL':
       return recoveryFail(state, payload);
 
     default:

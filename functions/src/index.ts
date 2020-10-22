@@ -9,5 +9,6 @@ export {
   onUpdateClubs,
   onUpdateUsers,
   onUpdateClubSubmissions,
+  newUser,
 } from './serverFunctions';
 export { createNewAccount, submitClub, deleteUser, addClub } from './user';

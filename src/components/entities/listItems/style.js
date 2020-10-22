@@ -1,10 +1,9 @@
 import theme from 'shared/theme';
 import styled, { css } from 'styled-components';
 import { Truncate } from 'src/components/globals';
-import { Link } from 'react-router-dom';
 import { hexa } from 'src/components/globals';
 
-export const CardLink = styled(Link)`
+export const CardLink = styled.div`
   display: block;
   position: relative;
 `;
@@ -41,7 +40,7 @@ export const RowWithAvatar = styled.div`
   background: ${theme.bg.default};
   border-bottom: 1px solid ${theme.bg.divider};
   grid-gap: 16px;
-  flex: 1;
+  flex: 1 1 0%;
   &:hover {
     background: ${theme.bg.wash};
     cursor: pointer;

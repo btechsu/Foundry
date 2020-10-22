@@ -16,19 +16,15 @@ const JoinClub = (props) => {
     }
 
     try {
-      profile.clubs.pending
+      profile.pending
         ? await firebase.updateProfile({
-            clubs: {
-              pending: [
-                ...profile.clubs.pending,
-                firestore.doc(`clubs/${club.id || id}`),
-              ],
-            },
+            pending: [
+              ...profile.pending,
+              firestore.doc(`clubs/${club.id || id}`),
+            ],
           })
         : await firebase.updateProfile({
-            clubs: {
-              pending: [firestore.doc(`clubs/${club.id || id}`)],
-            },
+            pending: [firestore.doc(`clubs/${club.id || id}`)],
           });
 
       dispatch(

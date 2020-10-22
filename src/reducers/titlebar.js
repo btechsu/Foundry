@@ -1,5 +1,3 @@
-import * as actions from 'src/actions/actionTypes';
-
 const initialState = {
   title: '',
   titleIcon: null,
@@ -10,7 +8,7 @@ const initialState = {
 export default function titlebar(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
-    case actions.SET_TITLEBAR_PROPS: {
+    case 'SET_TITLEBAR_PROPS': {
       return Object.assign({}, state, {
         title: payload.title && payload.title,
         titleIcon: payload.titleIcon && payload.titleIcon,

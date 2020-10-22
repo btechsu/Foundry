@@ -17,7 +17,7 @@ export const createNewAccount = functions.https.onCall(async (data) => {
     clubs: [],
   };
   const customClaims = {
-    admin: true,
+    admin: false,
   };
 
   try {

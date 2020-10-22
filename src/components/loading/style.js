@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import theme from 'shared/theme';
 import styled, { keyframes } from 'styled-components';
-import { theme } from 'shared/theme';
-import { Card } from '../card';
-import { hexa, FlexCol, zIndex } from '../globals';
-import { MEDIA_BREAK } from '../layout';
+import { Card } from 'src/components/card';
+import { hexa, FlexCol, zIndex } from 'src/components/globals';
+import { Link } from 'react-router-dom';
+import { MEDIA_BREAK } from 'src/components/layout';
 
 export const ShimmerList = styled(Card)`
   padding: 16px;
@@ -188,7 +188,7 @@ export const ShimmerLine = styled.span`
   background: linear-gradient(
     to right,
     ${theme.bg.wash} 10%,
-    ${hexa(theme.generic.default, 0.65)} 20%,
+    ${({ theme }) => hexa(theme.generic.default, 0.65)} 20%,
     ${theme.bg.wash} 30%
   );
   ${/* background-size: 100%; */ ''} animation-name: ${placeHolderShimmer};
@@ -201,7 +201,10 @@ export const Cover = styled.span`
 `;
 
 export const CircularCover = styled(Cover)`
-  background: radial-gradient(transparent 20px, ${theme.bg.default} 10px);
+  background: radial-gradient(
+    transparent 20px,
+    ${({ theme }) => theme.bg.default} 10px
+  );
 `;
 
 export const LoadingOverlay = styled.div`

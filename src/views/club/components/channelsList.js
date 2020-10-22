@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route, Link, withRouter } from 'react-router-dom';
 import compose from 'recompose/compose';
-import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect } from 'react-redux-firebase';
 import { ErrorBoundary } from 'src/components/error';
 import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
 import Icon from 'src/components/icon';

@@ -6,10 +6,7 @@ import Head from 'src/components/head';
 import { ClubAvatar } from 'src/components/avatar';
 import { MobileClubAction } from 'src/components/titlebar/actions';
 import { setTitlebarProps } from 'src/actions/titlebar';
-import { ChannelsList } from '../components/channelsList';
-import { ClubCard } from 'src/components/entities';
-import { ErrorBoundary } from 'src/components/error';
-import { SidebarSection } from '../style';
+import { ClubFeeds } from '../components/clubFeeds';
 import Sidebar from 'src/components/clubSidebar';
 import {
   ViewGrid,
@@ -77,7 +74,7 @@ const Component = (props) => {
           </SecondaryColumn>
 
           <PrimaryColumn>
-            {/* the info and announcements are presented here */}
+            <ClubFeeds club={club.data()} id={club.id} />
           </PrimaryColumn>
         </SecondaryPrimaryColumnGrid>
       </ViewGrid>

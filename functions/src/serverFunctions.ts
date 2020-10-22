@@ -104,3 +104,18 @@ export const onUpdateClubSubmissions = functions.firestore
       });
     }
   });
+export const newUser = functions.auth.user().onCreate((user) => {
+  const docData = {
+    year: null,
+    name: user.displayName,
+    email: user.email,
+    joined: admin.firestore.FieldValue.serverTimestamp(),
+    pending: [],
+    approved: [],
+    denied: [],
+    pfp: user.photoURL,
+    studentId: null,
+  };
+
+  return admin.firestore().collection('users').doc(user.uid).set(docData);
+});

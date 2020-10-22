@@ -5,7 +5,7 @@ import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
 import { closeModal } from 'src/actions/modals';
 import { addToastWithTimeout } from 'src/actions/toasts';
-import { firebaseConnect } from 'react-redux-firebase';
+import { firebaseConnect, firestoreConnect } from 'react-redux-firebase';
 
 import ModalContainer from '../modalContainer';
 import { TextButton, WarnButton } from 'src/components/button';
@@ -34,15 +34,11 @@ class DeleteDoubleCheckModal extends React.Component {
 
     switch (entity) {
       case 'team-member-leaving-club': {
-        const acceptedClubs = this.props.profile.clubs.approved;
+        const acceptedClubs = this.props.profile.approved;
 
         return this.props.firebase
           .updateProfile({
-            clubs: {
-              approved: acceptedClubs.filter(
-                (club) => club.id !== this.props.id,
-              ),
-            },
+            approved: acceptedClubs.filter((club) => club.id !== this.props.id),
           })
           .then(() => {
             dispatch(addToastWithTimeout('neutral', 'Left community'));
@@ -59,13 +55,11 @@ class DeleteDoubleCheckModal extends React.Component {
           });
       }
       case 'retract-club-application': {
-        const pendingClubs = this.props.profile.clubs.pending;
+        const pendingClubs = this.props.profile.pending;
 
         return this.props.firebase
           .updateProfile({
-            clubs: {
-              pending: pendingClubs.filter((club) => club.id !== this.props.id),
-            },
+            pending: pendingClubs.filter((club) => club.id !== this.props.id),
           })
           .then(() => {
             dispatch(addToastWithTimeout('neutral', 'Application removed'));
@@ -79,6 +73,55 @@ class DeleteDoubleCheckModal extends React.Component {
             this.setState({
               isLoading: false,
             });
+          });
+      }
+      case 'deny-club-application': {
+        const firestore = this.props.firestore;
+        const batch = firestore.batch();
+
+        const denyClub = firestore.collection('clubs').doc(this.props.id);
+        const currentUser = firestore
+          .collection('users')
+          .doc(this.props.userId);
+        batch.update(currentUser, {
+          pending: this.props.userObject.pending.filter(
+            (club) => club.id !== this.props.id,
+          ),
+        });
+        batch.update(currentUser, {
+          approved: firestore.FieldValue.arrayRemove(denyClub),
+        });
+
+        batch
+          .commit()
+          .then(() => {
+            dispatch(addToastWithTimeout('success', 'Denied user'));
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+      }
+      case 'kick-user': {
+        const firestore = this.props.firestore;
+        firestore.batch();
+
+        const removeClub = firestore.collection('clubs').doc(this.props.id);
+
+        firestore
+          .collection('users')
+          .doc(this.props.userId)
+          .update({ approved: firestore.FieldValue.arrayRemove(removeClub) })
+          .then(() => {
+            dispatch(addToastWithTimeout('success', `Kicked user.`));
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
           });
       }
       default: {
@@ -139,6 +182,7 @@ class DeleteDoubleCheckModal extends React.Component {
 const DeleteDoubleCheckModalWithMutations = compose(
   withRouter,
   firebaseConnect(),
+  firestoreConnect(),
   connect(({ firebase: { profile } }) => ({
     profile,
   })),
