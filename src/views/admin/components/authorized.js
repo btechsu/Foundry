@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { getFirebase, useFirebase } from 'react-redux-firebase';
+import { getFirebase } from 'react-redux-firebase';
 import { Container, Heading, Subheading } from '../style';
 
 export default function Authorized(props) {

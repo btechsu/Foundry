@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ClubAvatar } from 'src/components/avatar';
 import { ClubMeta } from './components/clubMeta';
-import { PrimaryButton, OutlineButton } from 'src/components/button';
 import { ClubActions } from './components/clubActions';
 import { ProfileContainer, ProfileAvatarContainer, CoverPhoto } from './style';
 

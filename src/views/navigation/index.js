@@ -160,6 +160,8 @@ const Navigation = (props) => {
                 uid={authed}
               />
 
+              <Divider />
+
               <Route path="/new/club">
                 {({ match }) => (
                   <Tooltip

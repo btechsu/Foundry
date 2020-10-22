@@ -23,10 +23,6 @@ function handleDelete(firestore, id, refresh) {
   refresh();
 }
 
-function handleEdit(firestore) {
-  alert('Function coming soon.');
-}
-
 export default function ClubItem(props) {
   let firestore = useFirestore();
 

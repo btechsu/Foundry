@@ -18,7 +18,6 @@ import {
   Content,
   Label,
   Sublabel,
-  Description,
   Actions,
   CardLink,
 } from './style';
@@ -33,7 +32,7 @@ const User = (props) => {
     dispatch,
     clubId,
     club,
-    studentId
+    studentId,
   } = props;
 
   const firestore = useFirestore();

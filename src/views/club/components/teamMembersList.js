@@ -15,21 +15,21 @@ class Component extends React.Component {
   state = { users: [], isLoading: null, hasError: null };
 
   componentDidMount() {
-    this.setState({ isLoading: true });
-
-    this.props.club.admins.forEach((user) => {
-      user
-        .get()
-        .then((adminDoc) => {
-          this.setState((prevState) => ({
-            users: [...prevState.users, adminDoc],
-            isLoading: false,
-          }));
-        })
-        .catch((err) => {
-          this.setState({ hasError: true });
-        });
-    });
+    this.props.admins &&
+      this.setState({ isLoading: true }) &&
+      this.props.club.admins.forEach((user) => {
+        user
+          .get()
+          .then((adminDoc) => {
+            this.setState((prevState) => ({
+              users: [...prevState.users, adminDoc],
+              isLoading: false,
+            }));
+          })
+          .catch((err) => {
+            this.setState({ hasError: true });
+          });
+      });
   }
 
   render() {

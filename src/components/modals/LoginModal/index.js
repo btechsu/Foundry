@@ -8,8 +8,8 @@ import ModalContainer from '../modalContainer';
 import { modalStyles } from '../styles';
 import { OutlineButton } from 'src/components/button';
 import LoginButtonSet from 'src/components/loginButtonSet';
+import { firebaseConnect } from 'react-redux-firebase';
 import { Container, CodeOfConduct } from './style';
-import { useFirebase } from 'react-redux-firebase';
 
 class LoginModal extends React.Component {
   close = () => {
@@ -46,7 +46,7 @@ class LoginModal extends React.Component {
               newUser={true}
               onlyButton={true}
               onClick={() =>
-                firebase.login({
+                this.props.firebase.login({
                   provider: 'google',
                   type: 'redirect',
                 })
@@ -83,4 +83,4 @@ const map = (state) => ({
 });
 
 // $FlowIssue
-export default compose(connect(map))(LoginModal);
+export default compose(firebaseConnect(), connect(map))(LoginModal);

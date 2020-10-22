@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { ClubInfo } from './containers/clubInfo';
 import { connect } from 'react-redux';
-import {
-  useFirestore,
-  firestoreConnect,
-  firebaseConnect,
-} from 'react-redux-firebase';
+import { useFirestore } from 'react-redux-firebase';
 import { ErrorView, LoadingView } from 'src/views/viewHelpers';
 
 const ClubView = (props) => {

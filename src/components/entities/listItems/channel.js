@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ErrorBoundary } from 'src/components/error';
 import { isAdmin } from '../profileCards/components/clubActions';
 import Icon from 'src/components/icon';
-import { OutlineButton, PrimaryOutlineButton } from 'src/components/button';
+import { OutlineButton } from 'src/components/button';
 import Tooltip from 'src/components/tooltip';
 import {
   ChannelRow,

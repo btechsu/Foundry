@@ -23,7 +23,6 @@ import {
   StyledErrorSelect,
   Cover,
   CircularCover,
-  LoadingOverlay,
   LoadingNavbarContainer,
   LogoLink,
   Logo,

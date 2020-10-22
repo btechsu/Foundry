@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { PrimaryButton, OutlineButton } from 'src/components/button';
 import { IsInClub } from 'src/components/entities/profileCards/components/clubActions';

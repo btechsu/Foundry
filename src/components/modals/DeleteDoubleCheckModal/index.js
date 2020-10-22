@@ -23,8 +23,7 @@ class DeleteDoubleCheckModal extends React.Component {
 
   triggerDelete = () => {
     const {
-      history,
-      modalProps: { id, entity, redirect, extraProps },
+      modalProps: { entity },
       dispatch,
     } = this.props;
 

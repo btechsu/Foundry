@@ -7,7 +7,6 @@ import theme from 'shared/theme';
 import Textarea from 'react-textarea-autosize';
 import { firestoreConnect } from 'react-redux-firebase';
 import { PrimaryButton, TextButton } from 'src/components/button';
-import ChannelSelector from 'src/components/composer/LocationSelectors/ChannelSelector';
 import Icon from 'src/components/icon';
 import getComposerLink from 'src/helpers/get-composer-link';
 import getThreadLink from 'src/helpers/get-thread-link';

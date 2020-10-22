@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import compose from 'recompose/compose';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ErrorBoundary } from 'src/components/error';
@@ -9,15 +9,8 @@ import Icon from 'src/components/icon';
 import { Loading } from 'src/components/loading';
 import Tooltip from 'src/components/tooltip';
 import { ChannelListItem } from 'src/components/entities';
-import { WhiteIconButton, OutlineButton } from 'src/components/button';
-import { Spinner } from 'src/components/globals';
+import { WhiteIconButton } from 'src/components/button';
 import { SidebarSectionHeader, SidebarSectionHeading, List } from '../style';
-import {
-  Row,
-  Content,
-  Label,
-  Actions,
-} from 'src/components/entities/listItems/style';
 
 // const ChatTab = ({ location, community, currentUser }) =>
 //   !community.watercoolerId ? null : (
@@ -132,7 +125,7 @@ class Component extends React.Component {
   }
 
   render() {
-    const { club, id, auth, location } = this.props;
+    const { club, id, auth } = this.props;
 
     if (!auth.isLoaded || this.state.isLoading) {
       return (
