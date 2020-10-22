@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -18,6 +18,7 @@ const Feeds = (props) => {
   const { club, id, location, history, auth } = props;
   const { search } = location;
   const { tab } = querystring.parse(search);
+  // const [currentTab, setCurretnTab] = useState(querystring.parse(search).tab)
 
   const changeTab = (tab) => {
     return history.replace({

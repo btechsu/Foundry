@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import generateMetaInfo from 'shared/generate-meta-info';
 import Head from 'src/components/head';
 import { ClubAvatar } from 'src/components/avatar';
@@ -82,4 +83,4 @@ const Component = (props) => {
   );
 };
 
-export const ClubInfo = compose(connect())(Component);
+export const ClubInfo = compose(withRouter, connect())(Component);
