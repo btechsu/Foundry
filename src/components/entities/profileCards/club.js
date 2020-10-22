@@ -6,16 +6,6 @@ import { ClubMeta } from './components/clubMeta';
 import { ClubActions } from './components/clubActions';
 import { ProfileContainer, ProfileAvatarContainer, CoverPhoto } from './style';
 
-const IsInClub = (clubsArray, clubID) => {
-  var temp = [];
-  clubsArray.forEach((element) => {
-    if (element.id === clubID) temp.push(element.id);
-  });
-
-  if (temp.length === 0) return false;
-  else return true;
-};
-
 const ClubCard = (props) => {
   const { club, id } = props;
   return (

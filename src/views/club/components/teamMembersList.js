@@ -15,8 +15,8 @@ class Component extends React.Component {
   state = { users: [], isLoading: null, hasError: null };
 
   componentDidMount() {
-    this.props.admins &&
-      this.setState({ isLoading: true }) &&
+    if (this.props.club.admins) {
+      this.setState({ isLoading: true });
       this.props.club.admins.forEach((user) => {
         user
           .get()
@@ -26,10 +26,11 @@ class Component extends React.Component {
               isLoading: false,
             }));
           })
-          .catch((err) => {
-            this.setState({ hasError: true });
+          .catch(() => {
+            this.setState({ hasError: true, isLoading: false });
           });
       });
+    }
   }
 
   render() {
