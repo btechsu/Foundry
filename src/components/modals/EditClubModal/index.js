@@ -26,7 +26,7 @@ class EditClubModal extends React.Component {
     firestore
       .collection('clubs')
       .doc(this.props.modalProps.clubID)
-      .set({
+      .update({
         name: this.state.name,
         description: this.state.description,
         credits: this.state.credits,
