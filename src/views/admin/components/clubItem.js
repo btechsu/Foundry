@@ -15,12 +15,6 @@ import {
 } from '../style';
 import Icon from 'src/components/icon';
 
-function edit(firestore, id, refresh, dispatch) {
-  alert('Edit modal opening...');
-  dispatch(openModal('EDIT_CLUB_MODAL', {}));
-}
-const handleEdit = compose(connect())(edit);
-
 function handleDelete(firestore, id, refresh) {
   firestore
     .collection('clubs')
@@ -50,7 +44,13 @@ function ClubItem(props) {
         </DeleteButton>{' '}
         <EditButton
           onClick={() =>
-            handleEdit(firestore, props.id, props.refresh, props.dispatch)
+            props.dispatch(
+              openModal('EDIT_CLUB_MODAL', {
+                clubID: props.id,
+                club: props.data,
+                firestore: firestore,
+              }),
+            )
           }
         >
           <Icon size={25} glyph="edit" />
