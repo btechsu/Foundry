@@ -1,5 +1,8 @@
 import React from 'react';
 import { useFirestore } from 'react-redux-firebase';
+import { openModal } from 'src/actions/modals';
+import { connect } from 'react-redux';
+import compose from 'recompose/compose';
 import {
   ClubItemStyle,
   Name,
@@ -10,6 +13,7 @@ import {
   DeleteIcon,
   EditIcon,
 } from '../style';
+import Icon from 'src/components/icon';
 
 function handleDelete(firestore, id, refresh) {
   firestore
@@ -23,7 +27,7 @@ function handleDelete(firestore, id, refresh) {
   refresh();
 }
 
-export default function ClubItem(props) {
+function ClubItem(props) {
   let firestore = useFirestore();
 
   return (
@@ -36,12 +40,24 @@ export default function ClubItem(props) {
         <DeleteButton
           onClick={() => handleDelete(firestore, props.id, props.refresh)}
         >
-          <DeleteIcon src="/img/trash.svg" />
+          <Icon size={25} glyph="delete" />
         </DeleteButton>{' '}
-        <EditButton onClick={() => handleDelete(firestore)}>
-          <EditIcon src="/img/edit.svg" />
+        <EditButton
+          onClick={() =>
+            props.dispatch(
+              openModal('EDIT_CLUB_MODAL', {
+                clubID: props.id,
+                club: props.data,
+                firestore: firestore,
+              }),
+            )
+          }
+        >
+          <Icon size={25} glyph="edit" />
         </EditButton>{' '}
       </ControlButtons>
     </ClubItemStyle>
   );
 }
+
+export default compose(connect())(ClubItem);
