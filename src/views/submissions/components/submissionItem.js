@@ -25,7 +25,7 @@ function handleReject(firestore, id, refresh) {
   refresh();
 }
 
-function handleReject(firestore, id, refresh) {
+function handleAccept(firestore, id, refresh) {
   // firestore
   //   .collection('clubSubmissions')
   //   .doc(id)
