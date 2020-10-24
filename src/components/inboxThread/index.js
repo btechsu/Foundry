@@ -46,6 +46,7 @@ const InboxThread = (props) => {
               threadId={thread.id}
               club={club}
               id={id}
+              user={user}
               channel={channel}
             />
           </ErrorBoundary>
