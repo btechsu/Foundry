@@ -26,7 +26,7 @@ class Component extends React.Component {
               isLoading: false,
             }));
           })
-          .catch(() => {
+          .catch((err) => {
             this.setState({ hasError: true, isLoading: false });
           });
       });
@@ -53,14 +53,23 @@ class Component extends React.Component {
       <React.Fragment>
         <SidebarSectionHeader>
           <SidebarSectionHeading>Team</SidebarSectionHeading>
-          {isAdmin(club, auth.uid) && (
-            <Tooltip content={'Manage team'}>
-              <span>
-                <WhiteIconButton to={`/${id}/settings`}>
-                  <Icon glyph={'settings'} size={24} />
-                </WhiteIconButton>
-              </span>
-            </Tooltip>
+          {auth.uid && isAdmin(club, auth.uid) && (
+            <React.Fragment>
+              <Tooltip content={'Manage team'}>
+                <span>
+                  <WhiteIconButton to={`/${id}/settings`}>
+                    <Icon glyph={'settings'} size={24} />
+                  </WhiteIconButton>
+                </span>
+              </Tooltip>
+              <Tooltip content={'View all'}>
+                <span>
+                  <WhiteIconButton to={`/${id}?tab=members`}>
+                    <Icon glyph={'view'} size={24} />
+                  </WhiteIconButton>
+                </span>
+              </Tooltip>
+            </React.Fragment>
           )}
         </SidebarSectionHeader>
 

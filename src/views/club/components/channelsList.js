@@ -143,7 +143,7 @@ class Component extends React.Component {
         <React.Fragment>
           <SidebarSectionHeader>
             <SidebarSectionHeading>Channels</SidebarSectionHeading>
-            {isAdmin(club, auth.uid) && (
+            {auth.uid && isAdmin(club, auth.uid) && (
               <Tooltip content={'Manage channels'}>
                 <span>
                   <WhiteIconButton to={`/${club.id || id}/settings`}>

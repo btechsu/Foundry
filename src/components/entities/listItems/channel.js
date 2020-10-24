@@ -16,16 +16,7 @@ import {
 } from './style';
 
 const Channel = (props) => {
-  const {
-    channel,
-    club,
-    id,
-    auth,
-    name,
-    description,
-    children,
-    isActive,
-  } = props;
+  const { channel, club, id, auth, name, children, isActive } = props;
   if (!channel) return null;
 
   const renderAction = () => {
@@ -60,16 +51,7 @@ const Channel = (props) => {
       <ChannelRow isActive={isActive}>
         <Link to={`/${club.id || id}/${channel.id}?tab=posts`}>
           <ChannelContent>
-            {name && (
-              <Label title={name}>
-                {channel.isPrivate && (
-                  <Icon glyph="private-outline" size={14} />
-                )}
-                # {name}
-              </Label>
-            )}
-
-            {description && <Description>{description}</Description>}
+            {name && <Label title={name}># {name}</Label>}
           </ChannelContent>
         </Link>
 

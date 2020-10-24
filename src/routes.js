@@ -70,6 +70,11 @@ const ClubView = Loadable({
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
+const ChannelView = Loadable({
+  loader: () => import('./views/channel' /* webpackChunkName: "ChannelView" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+
 export const RouteModalContext = React.createContext({
   isModal: false,
 });
@@ -136,6 +141,10 @@ class Routes extends React.Component {
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/admin" component={AdminRedirectFallback} />
                     <Route path="/new/club" component={SubmitClubFallback} />
+                    <Route
+                      path="/:clubSlug/:channelSlug"
+                      component={ChannelView}
+                    />
                     <Route path="/:clubSlug" component={ClubView} />
                   </Switch>
                 </div>

@@ -64,7 +64,7 @@ const MobileChannel = (props) => {
   const { club, channel, id, auth } = props;
   const { pathname, search } = getComposerLink({
     clubId: club.id || id,
-    channelId: channel.id,
+    channelId: channel ? channel.id : null,
   });
 
   if (auth.uid && isAdmin(club.id || id, auth.uid)) {

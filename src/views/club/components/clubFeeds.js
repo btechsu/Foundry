@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -18,7 +18,6 @@ const Feeds = (props) => {
   const { club, id, location, history, auth } = props;
   const { search } = location;
   const { tab } = querystring.parse(search);
-  // const [currentTab, setCurretnTab] = useState(querystring.parse(search).tab)
 
   const changeTab = (tab) => {
     return history.replace({
@@ -46,13 +45,11 @@ const Feeds = (props) => {
         return <PostsFeeds club={club} id={club.id || id} />;
       }
       case 'members': {
-        return (
-          <MembersList
-            club={club}
-            id={club.id || id}
-            filter={{ isMember: true, isBlocked: false }}
-          />
-        );
+        if (auth.uid && isAdmin(club, auth.uid)) {
+          return <MembersList club={club} id={club.id || id} />;
+        }
+
+        return null;
       }
       case 'info': {
         return (
@@ -101,9 +98,10 @@ const Feeds = (props) => {
     };
   }, []);
 
-  const segments = isAdmin(club, auth.uid)
-    ? ['posts', 'members', 'info']
-    : ['posts', 'info'];
+  const segments =
+    auth.uid && isAdmin(club, auth.uid)
+      ? ['posts', 'members', 'info']
+      : ['posts', 'info'];
 
   return (
     <FeedsContainer data-cy="club-view-content">

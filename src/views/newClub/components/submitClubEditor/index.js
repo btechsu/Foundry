@@ -89,6 +89,20 @@ class SubmitClubEditor extends React.Component {
         superadmin: user.email,
       });
 
+      // await firestore
+      //   .collection('clubSubmissions')
+      //   .doc(prevPage.slug)
+      //   .collection('channels')
+      //   .doc('welcome')
+      //   .set({ name: 'welcome' });
+
+      // await firestore
+      //   .collection('clubSubmissions')
+      //   .doc(prevPage.slug)
+      //   .collection('channels')
+      //   .doc('welcome')
+      //   .collection('posts').add({})
+
       this.setState({ isLoading: false });
       this.props.finalPage();
     } catch (err) {

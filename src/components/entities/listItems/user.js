@@ -33,6 +33,7 @@ const User = (props) => {
     clubId,
     club,
     studentId,
+    auth,
   } = props;
 
   const firestore = useFirestore();
@@ -108,14 +109,16 @@ const User = (props) => {
         </UserAvatarContainer>
 
         <Content>
-          {name && <Label title={name}>{name}</Label>}
-
+          {name && <Label title={name}>{name}</Label>}{' '}
+          {userObject.email && <Sublabel>{userObject.email}</Sublabel>}
           {studentId && <Sublabel>{studentId}</Sublabel>}
         </Content>
 
         <Actions>
           <ConditionalWrap
-            condition={IsInClub(userObject.pending, clubId)}
+            condition={
+              isAdmin(club, auth.uid) && IsInClub(userObject.pending, clubId)
+            }
             wrap={() => (
               <React.Fragment>
                 <PrimaryButton
@@ -142,7 +145,9 @@ const User = (props) => {
           />
           <ConditionalWrap
             condition={
-              IsInClub(userObject.approved, clubId) && !isAdmin(club, id)
+              isAdmin(club, auth.uid) &&
+              IsInClub(userObject.approved, clubId) &&
+              !isAdmin(club, id)
             }
             wrap={() => (
               <React.Fragment>
@@ -165,4 +170,7 @@ const User = (props) => {
   );
 };
 
-export const UserListItem = compose(withRouter, connect())(User);
+export const UserListItem = compose(
+  withRouter,
+  connect(({ firebase: { auth } }) => ({ auth })),
+)(User);

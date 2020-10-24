@@ -8,10 +8,11 @@ import { ProfileContainer, ProfileAvatarContainer, CoverPhoto } from './style';
 
 const ClubCard = (props) => {
   const { club, id } = props;
+  
   return (
     <ProfileContainer data-cy="club-profile-card">
       <Link to={`/${club.id || id}`}>
-        <CoverPhoto src={club.coverPhoto} />
+        <CoverPhoto src={club.cover} />
       </Link>
 
       <ProfileAvatarContainer>

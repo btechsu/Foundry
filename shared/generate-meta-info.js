@@ -42,6 +42,12 @@ function generateMetaInfo(input /*: Input */) /*: Meta */ {
         description: data && data.description,
       });
     }
+    case 'channel': {
+      return setDefault({
+        title: data && data.clubName + ' · ' + data.name,
+        description: data && data.description,
+      });
+    }
     case 'club': {
       return setDefault({
         title: data && data.name,

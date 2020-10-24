@@ -6,7 +6,7 @@ import { useFirestore } from 'react-redux-firebase';
 import { ErrorView, LoadingView } from 'src/views/viewHelpers';
 
 const ClubView = (props) => {
-  const { match } = props;
+  const { match, history } = props;
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [club, setClub] = useState(null);
