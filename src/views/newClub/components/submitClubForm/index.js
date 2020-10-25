@@ -504,7 +504,7 @@ class SubmitClubForm extends React.Component {
               <Link to="/privacy" target="_blank" rel="noopener noreferrer">
                 Foundry Privacy Policy
               </Link>{' '}
-              and agree to enforce it in my club.
+              and agree to enforce it.
             </span>
           </Checkbox>
           {createError && (

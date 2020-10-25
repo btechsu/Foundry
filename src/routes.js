@@ -38,6 +38,12 @@ const Pages = Loadable({
   loading: ({ isLoading }) => isLoading && null,
 });
 
+const Submissions = Loadable({
+  loader: () =>
+    import('src/views/submissions' /* webpackChunkName: "Submissions" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+
 const Clubs = Loadable({
   loader: () => import('src/views/clubs' /* webpackChunkName: "Clubs" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
@@ -49,6 +55,10 @@ const Admin = Loadable({
 });
 
 const AdminRedirectFallback = signedOutFallback(Admin, () => (
+  <Redirect to="/login" />
+));
+
+const SubmissionsRedirectFallback = signedOutFallback(Submissions, () => (
   <Redirect to="/login" />
 ));
 
@@ -149,6 +159,10 @@ class Routes extends React.Component {
                     <Route path="/new/user" component={NewUserFallback} />
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/admin" component={AdminRedirectFallback} />
+                    <Route
+                      path="/submissions"
+                      component={SubmissionsRedirectFallback}
+                    />
                     <Route path="/new/club" component={SubmitClubFallback} />
                     <Route path="/new/thread" component={ComposerFallback} />
                     <Route
