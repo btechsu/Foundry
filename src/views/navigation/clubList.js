@@ -57,7 +57,14 @@ const ClubList = (props) => {
 
   const approved = profile.approved;
   const pending = profile.pending;
-  const allClubs = approved.concat(pending);
+  const allClubs =
+    approved && pending
+      ? approved.concat(pending)
+      : approved
+      ? approved
+      : pending
+      ? pending
+      : [];
 
   return allClubs.map((club, index) => {
     if (!club) return null;

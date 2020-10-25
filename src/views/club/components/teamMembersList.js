@@ -79,8 +79,8 @@ class Component extends React.Component {
               <UserListItem
                 userObject={user.data()}
                 id={user.id}
-                name={user.data().name}
-                pfp={user.data().pfp}
+                name={user.data() && user.data().name}
+                pfp={user.data() && user.data().pfp}
                 avatarSize={40}
                 club={club}
                 clubId={club.id || id}
