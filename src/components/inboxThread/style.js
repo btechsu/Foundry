@@ -2,7 +2,6 @@ import theme from 'shared/theme';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import { zIndex, hexa } from 'src/components/globals';
-import ReactMarkdown from 'react-markdown';
 
 export const InboxThreadItem = styled.div`
   display: flex;
@@ -64,7 +63,7 @@ export const InboxThreadContent = styled.div`
   position: relative;
   z-index: ${zIndex.card + 1};
   align-items: flex-start;
-  pointer-events: none;
+  height: auto;
 `;
 
 export const Column = styled.div`

@@ -59,8 +59,7 @@ class ComposerWithData extends React.Component {
         title: 'New post',
       }),
     );
-
-    // $FlowIssue
+    
     document.addEventListener('keydown', this.handleGlobalKeyPress, false);
   }
 

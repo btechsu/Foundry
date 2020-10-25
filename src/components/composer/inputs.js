@@ -21,9 +21,7 @@ const ThreadHeading = styled(H1)`
 `;
 
 export default (props) => {
-  // $FlowIssue
   const [showPreview, setShowPreview] = React.useState(false);
-  // $FlowIssue
   const [previewBody, setPreviewBody] = React.useState(null);
 
   const {

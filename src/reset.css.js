@@ -108,7 +108,7 @@ export default createGlobalStyle`
   }
   .markdown img {
     margin-top: 16px;
-    max-width: 100%;
+    max-width: 90%;
     display: inline;
     border-radius: 4px;
     transition: box-shadow 0.2s;

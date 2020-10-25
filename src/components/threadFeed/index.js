@@ -7,7 +7,6 @@ import ViewError from 'src/components/viewError';
 import { ErrorBoundary } from 'src/components/error';
 import { useInView } from 'react-intersection-observer';
 import { firestoreConnect } from 'react-redux-firebase';
-import ReactMarkdown from 'react-markdown';
 import ThreadRenderer from '../threadRenderer';
 import { Container } from './style';
 import NullState from './nullState';
@@ -41,7 +40,7 @@ const ThreadFeedPure = (props) => {
           }
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setError(true);
           setLoading(false);
         });
@@ -65,10 +64,10 @@ const ThreadFeedPure = (props) => {
     );
   }
 
-  if (posts.length === 0 && !loading && !error && club) {
+  if (posts.length === 0 && !loading && !error && club && club.text) {
     return (
-      <Container data-cy="thread-feed">
-        {/* <ThreadRenderer body={JSON.parse(club.text)} />; */}
+      <Container data-cy="thread-feed" style={{ padding: '36px 24px' }}>
+        <ThreadRenderer body={JSON.parse(club.text)} />
       </Container>
     );
   }

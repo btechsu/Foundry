@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
+import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
 import Header from './header';
 import {
   InboxThreadItem,
-  InboxLinkWrapper,
   InboxThreadContent,
   ThreadTitle,
   ThreadSnippet,
@@ -15,9 +15,10 @@ import {
 import { UserAvatar } from 'src/components/avatar';
 import { ErrorBoundary } from 'src/components/error';
 import ThreadRenderer from '../threadRenderer';
+import ThreadControls from './controls/index';
 
 const InboxThread = (props) => {
-  const { thread, club, id, channel } = props;
+  const { thread, club, id, channel, auth } = props;
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -57,9 +58,16 @@ const InboxThread = (props) => {
             <ThreadRenderer body={JSON.parse(thread.data().body)} />
           </ThreadSnippet>
         </Column>
+
+        {auth.uid && isAdmin(club, auth.uid) && (
+          <ThreadControls thread={thread} club={club} id={id} channel={channel} />
+        )}
       </InboxThreadContent>
     </InboxThreadItem>
   );
 };
 
-export default compose(withRouter, connect())(InboxThread);
+export default compose(
+  withRouter,
+  connect(({ firebase: { auth } }) => ({ auth })),
+)(InboxThread);

@@ -123,6 +123,33 @@ class DeleteDoubleCheckModal extends React.Component {
             this.setState({ isLoading: false });
           });
       }
+      case 'thread': {
+        const { id, club, channel, firestore } = this.props;
+
+        this.setState({ isLoading: true });
+        return firestore
+          .collection('clubs')
+          .doc(club)
+          .collection('channels')
+          .doc(channel)
+          .collection('posts')
+          .doc(id)
+          .delete()
+          .then(() => {
+            dispatch(
+              addToastWithTimeout(
+                'success',
+                `Deleted post. You may need to refresh your page.`,
+              ),
+            );
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+      }
       default: {
         this.setState({
           isLoading: false,

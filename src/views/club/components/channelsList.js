@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { Route } from 'react-router-dom';
 import compose from 'recompose/compose';
+import { Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ErrorBoundary } from 'src/components/error';
 import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
@@ -11,6 +12,14 @@ import Tooltip from 'src/components/tooltip';
 import { ChannelListItem } from 'src/components/entities';
 import { WhiteIconButton } from 'src/components/button';
 import { SidebarSectionHeader, SidebarSectionHeading, List } from '../style';
+
+import {
+  ChannelRow,
+  ChannelContent,
+  Label,
+  Description,
+  ChannelActions,
+} from 'src/components/entities/listItems/style';
 
 // const ChatTab = ({ location, community, currentUser }) =>
 //   !community.watercoolerId ? null : (
@@ -155,11 +164,13 @@ class Component extends React.Component {
           </SidebarSectionHeader>
 
           <List data-cy="channel-list">
-            {/* <ChatTab
-              location={location}
-              community={community}
-              currentUser={currentUser}
-            /> */}
+            <ChannelRow>
+              <Link to={`/${club.id || id}?tab=posts`}>
+                <ChannelContent>
+                  <Label title={name}># Club description</Label>
+                </ChannelContent>
+              </Link>
+            </ChannelRow>
             {!this.state.isLoading &&
               this.state.channels &&
               this.state.channels.map((channel) => {
