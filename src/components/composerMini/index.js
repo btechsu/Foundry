@@ -10,7 +10,7 @@ import { PrimaryButton, TextButton } from 'src/components/button';
 import ChannelSelector from 'src/components/composer/LocationSelectors/ChannelSelector';
 import Icon from 'src/components/icon';
 import getComposerLink from 'src/helpers/get-composer-link';
-import { markdownToDraft } from 'markdown-draft-js';
+import { convertMdToDraft } from 'src/helpers/markdown';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import Tooltip from 'src/components/tooltip';
 import { Container, BodyContainer } from './style';
@@ -85,7 +85,7 @@ const MiniComposer = ({
 
     const thread = {
       title: title,
-      body: JSON.stringify(markdownToDraft(body)),
+      body: JSON.stringify(convertMdToDraft(body)),
       posted: firestore.Timestamp.fromDate(new Date()),
       authored: firestore.collection('users').doc(auth.uid),
     };

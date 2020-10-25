@@ -7,7 +7,7 @@ import Icon from 'src/components/icon';
 import Tooltip from 'src/components/tooltip';
 import Textarea from 'react-textarea-autosize';
 import { SegmentedControl, Segment } from 'src/components/segmentedControl';
-import { markdownToDraft } from 'markdown-draft-js';
+import { convertMdToDraft } from 'src/helpers/markdown';
 import ThreadRenderer from 'src/components/threadRenderer';
 
 import { Error } from 'src/components/formElements';
@@ -50,7 +50,7 @@ class SubmitClubEditor extends React.Component {
     try {
       this.setState({ isLoading: true });
       const { prevPage, user, firebase, firestore } = this.props;
-      const editorText = this.state.content;
+      const editorText = convertMdToDraft(this.state.content);
       let coverFile = null;
       let pfpFile = null;
 
@@ -75,21 +75,24 @@ class SubmitClubEditor extends React.Component {
         pfpFile = await uploadRef.uploadTaskSnaphot.ref.getDownloadURL();
       }
 
-      await firestore.collection('clubSubmissions').doc(prevPage.slug).set({
-        name: prevPage.name,
-        president: user.email,
-        description: prevPage.description,
-        room: prevPage.room,
-        days: prevPage.days,
-        time: prevPage.time,
-        type: prevPage.type,
-        credits: prevPage.credits,
-        text: editorText,
-        cover: coverFile,
-        pfp: pfpFile,
-        admins: [],
-        superadmin: user.email,
-      });
+      await firestore
+        .collection('clubSubmissions')
+        .doc(prevPage.slug)
+        .set({
+          name: prevPage.name,
+          president: user.email,
+          description: prevPage.description,
+          room: prevPage.room,
+          days: prevPage.days,
+          time: prevPage.time,
+          type: prevPage.type,
+          credits: prevPage.credits,
+          text: JSON.stringify(editorText),
+          cover: coverFile,
+          pfp: pfpFile,
+          admins: [],
+          superadmin: user.email,
+        });
 
       this.setState({ isLoading: false });
       this.props.finalPage();
@@ -105,7 +108,7 @@ class SubmitClubEditor extends React.Component {
     this.setState({ showPreview: show });
 
     if (show)
-      this.setState({ previewBody: markdownToDraft(this.state.content) });
+      this.setState({ previewBody: convertMdToDraft(this.state.content) });
   };
 
   render() {

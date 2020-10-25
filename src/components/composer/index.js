@@ -11,7 +11,7 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { TextButton } from 'src/components/button';
 import { PrimaryButton } from 'src/components/button';
 import Tooltip from 'src/components/tooltip';
-import { markdownToDraft } from 'markdown-draft-js';
+import { convertMdToDraft } from 'src/helpers/markdown';
 import {
   Overlay,
   Container,
@@ -197,7 +197,7 @@ class ComposerWithData extends React.Component {
 
     const thread = {
       title: title,
-      body: JSON.stringify(markdownToDraft(body)),
+      body: JSON.stringify(convertMdToDraft(body)),
       posted: this.props.firestore.Timestamp.fromDate(new Date()),
       authored: this.props.firestore
         .collection('users')
@@ -247,8 +247,6 @@ class ComposerWithData extends React.Component {
   };
 
   render() {
-    console.log(this.state.body);
-
     const { title, isLoading, selectedChannelId, selectedClubId } = this.state;
 
     const { isEditing, isModal } = this.props;

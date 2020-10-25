@@ -11,7 +11,7 @@ import {
 import { H1 } from 'src/components/globals';
 import { SegmentedControl, Segment } from 'src/components/segmentedControl';
 import ThreadRenderer from '../threadRenderer';
-import { markdownToDraft } from 'markdown-draft-js';
+import { convertMdToDraft } from 'src/helpers/markdown';
 
 const ThreadHeading = styled(H1)`
   font-size: 28px;
@@ -39,11 +39,8 @@ export default (props) => {
 
   const onClick = (show) => {
     setShowPreview(show);
-
-    if (show) setPreviewBody(markdownToDraft(body));
+    if (show) setPreviewBody(convertMdToDraft(body));
   };
-
-  console.log(JSON.stringify(previewBody));
 
   return (
     <InputsGrid isEditing={isEditing}>

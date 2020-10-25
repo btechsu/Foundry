@@ -8,6 +8,7 @@ import { ErrorBoundary } from 'src/components/error';
 import { useInView } from 'react-intersection-observer';
 import { firestoreConnect } from 'react-redux-firebase';
 import ReactMarkdown from 'react-markdown';
+import ThreadRenderer from '../threadRenderer';
 import { Container } from './style';
 import NullState from './nullState';
 
@@ -67,7 +68,7 @@ const ThreadFeedPure = (props) => {
   if (posts.length === 0 && !loading && !error && club) {
     return (
       <Container data-cy="thread-feed">
-        <ReactMarkdown source={club.text} />;
+        {/* <ThreadRenderer body={JSON.parse(club.text)} />; */}
       </Container>
     );
   }

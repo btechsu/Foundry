@@ -63,12 +63,8 @@ export const createRenderer = (options) => {
           {children}
         </span>
       ),
-      ITALIC: (children, { key }) => (
-        <em key={key}>{children}</em>
-      ),
-      CODE: (children, { key }) => (
-        <code key={key}>{children}</code>
-      ),
+      ITALIC: (children, { key }) => <em key={key}>{children}</em>,
+      CODE: (children, { key }) => <code key={key}>{children}</code>,
     },
     blocks: {
       unstyled: (children, { keys }) => {
@@ -134,14 +130,10 @@ export const createRenderer = (options) => {
           </a>
         );
       },
-      IMAGE: (
-        children,
-        data,
-        { key }
-      ) => <img key={key} src={data.src} alt={data.alt || 'Image'} />,
-      embed: (children, data, { key }) => (
-        <Embed key={key} {...data} />
+      IMAGE: (children, data, { key }) => (
+        <img key={key} src={data.src} alt={data.alt || 'Image'} />
       ),
+      embed: (children, data, { key }) => <Embed key={key} {...data} />,
     },
     decorators: [linksDecorator],
   };

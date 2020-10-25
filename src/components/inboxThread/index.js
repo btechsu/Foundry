@@ -11,7 +11,6 @@ import {
   ThreadSnippet,
   Column,
   AvatarLink,
-  CommunityAvatarLink,
 } from './style';
 import { UserAvatar } from 'src/components/avatar';
 import { ErrorBoundary } from 'src/components/error';
