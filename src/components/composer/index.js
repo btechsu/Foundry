@@ -229,9 +229,9 @@ class ComposerWithData extends React.Component {
           addToastWithTimeout('success', 'Thread published!'),
         );
         if (this.props.location.pathname === '/new/thread') {
-          this.props.history.replace(`/${clubId}`);
+          this.props.history.replace(`/${clubId}/${channelId}?tab=posts`);
         } else {
-          this.props.history.push(`/${clubId}`);
+          this.props.history.push(`/${clubId}/${channelId}?tab=posts`);
         }
         return;
       })
