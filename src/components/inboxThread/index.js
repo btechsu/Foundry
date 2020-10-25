@@ -15,6 +15,7 @@ import {
 } from './style';
 import { UserAvatar } from 'src/components/avatar';
 import { ErrorBoundary } from 'src/components/error';
+import ThreadRenderer from '../threadRenderer';
 
 const InboxThread = (props) => {
   const { thread, club, id, channel } = props;
@@ -53,7 +54,9 @@ const InboxThread = (props) => {
 
           <ThreadTitle>{thread.data().title}</ThreadTitle>
 
-          <ThreadSnippet source={thread.data().body} />
+          <ThreadSnippet>
+            <ThreadRenderer body={JSON.parse(thread.data().body)} />
+          </ThreadSnippet>
         </Column>
       </InboxThreadContent>
     </InboxThreadItem>

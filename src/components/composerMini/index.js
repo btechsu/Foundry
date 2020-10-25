@@ -10,6 +10,7 @@ import { PrimaryButton, TextButton } from 'src/components/button';
 import ChannelSelector from 'src/components/composer/LocationSelectors/ChannelSelector';
 import Icon from 'src/components/icon';
 import getComposerLink from 'src/helpers/get-composer-link';
+import { markdownToDraft } from 'markdown-draft-js';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import Tooltip from 'src/components/tooltip';
 import { Container, BodyContainer } from './style';
@@ -35,6 +36,7 @@ const MiniComposer = ({
   const [isLoading, setIsLoading] = useState(false);
   const titleWarningText =
     'Tip: good titles are shorter than 80 characters. Add more details below.';
+
   useEffect(() => {
     if (title.length >= 80 && !titleWarning) {
       setTitleWarning(titleWarningText);
@@ -83,7 +85,7 @@ const MiniComposer = ({
 
     const thread = {
       title: title,
-      body: body,
+      body: JSON.stringify(markdownToDraft(body)),
       posted: firestore.Timestamp.fromDate(new Date()),
       authored: firestore.collection('users').doc(auth.uid),
     };
@@ -95,7 +97,7 @@ const MiniComposer = ({
       .doc(channel.id || selectedChannelId)
       .collection('posts')
       .add(thread)
-      .then(async (data) => {
+      .then(async () => {
         setIsLoading(false);
         dispatch(addToastWithTimeout('success', 'Post published!'));
         await setBody('');

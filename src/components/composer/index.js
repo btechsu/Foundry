@@ -4,7 +4,6 @@ import { withRouter } from 'react-router';
 import { connect } from 'react-redux';
 import Icon from 'src/components/icon';
 import { openModal, closeModal } from 'src/actions/modals';
-import getThreadLink from 'src/helpers/get-thread-link';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import { setTitlebarProps } from 'src/actions/titlebar';
 import Head from 'src/components/head';
@@ -12,11 +11,11 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { TextButton } from 'src/components/button';
 import { PrimaryButton } from 'src/components/button';
 import Tooltip from 'src/components/tooltip';
+import { markdownToDraft } from 'markdown-draft-js';
 import {
   Overlay,
   Container,
   Actions,
-  DisabledWarning,
   InputHints,
   DesktopLink,
   ButtonRow,
@@ -29,8 +28,6 @@ import ComposerLocationSelectors from './LocationSelectors';
 export const DISCARD_DRAFT_MESSAGE =
   'Are you sure you want to discard this draft?';
 
-// We persist the body and title to localStorage
-// so in case the app crashes users don't loose content
 class ComposerWithData extends React.Component {
   bodyEditor;
 
@@ -190,9 +187,7 @@ class ComposerWithData extends React.Component {
     }
 
     // isLoading will change the publish button to a loading spinner
-    this.setState({
-      isLoading: true,
-    });
+    this.setState({ isLoading: true });
 
     // define new constants in order to construct the proper shape of the
     // input for the publishThread mutation
@@ -202,7 +197,7 @@ class ComposerWithData extends React.Component {
 
     const thread = {
       title: title,
-      body: body,
+      body: JSON.stringify(markdownToDraft(body)),
       posted: this.props.firestore.Timestamp.fromDate(new Date()),
       authored: this.props.firestore
         .collection('users')
@@ -252,6 +247,8 @@ class ComposerWithData extends React.Component {
   };
 
   render() {
+    console.log(this.state.body);
+
     const { title, isLoading, selectedChannelId, selectedClubId } = this.state;
 
     const { isEditing, isModal } = this.props;

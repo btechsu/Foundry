@@ -11,6 +11,7 @@ import {
 import { H1 } from 'src/components/globals';
 import { SegmentedControl, Segment } from 'src/components/segmentedControl';
 import ThreadRenderer from '../threadRenderer';
+import { markdownToDraft } from 'markdown-draft-js';
 
 const ThreadHeading = styled(H1)`
   font-size: 28px;
@@ -39,22 +40,10 @@ export default (props) => {
   const onClick = (show) => {
     setShowPreview(show);
 
-    if (show) {
-      setPreviewBody(null);
-      fetch('https://convert.spectrum.chat/from', {
-        method: 'POST',
-        body,
-      })
-        .then((res) => {
-          if (res.status < 200 || res.status >= 300)
-            throw new Error('Oops, something went wrong');
-          return res.json();
-        })
-        .then((json) => {
-          setPreviewBody(json);
-        });
-    }
+    if (show) setPreviewBody(markdownToDraft(body));
   };
+
+  console.log(JSON.stringify(previewBody));
 
   return (
     <InputsGrid isEditing={isEditing}>
@@ -79,7 +68,6 @@ export default (props) => {
       </SegmentedControl>
       <ThreadInputs>
         {showPreview ? (
-          /* $FlowFixMe */
           <RenderWrapper>
             <ThreadHeading>{title}</ThreadHeading>
             {previewBody === null ? (
@@ -99,7 +87,7 @@ export default (props) => {
               autoFocus={autoFocus}
             />
 
-            <input
+            <Textarea
               onChange={changeBody}
               value={body === null ? 'Loading...' : body}
               disabled={body === null}

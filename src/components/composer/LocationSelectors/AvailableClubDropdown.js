@@ -19,7 +19,6 @@ const AvailableClubsDropdown = (props) => {
   if (!isLoading && clubs.length === 0)
     return <ErrorSelect>You’re not an admin of any clubs</ErrorSelect>;
 
-  console.log(clubs);
   if (!isLoading)
     return (
       <RequiredSelector

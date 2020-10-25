@@ -83,7 +83,7 @@ export const ThreadTitle = styled.h3`
   line-height: 1.4;
 `;
 
-export const ThreadSnippet = styled(ReactMarkdown)`
+export const ThreadSnippet = styled.div`
   font-size: 15px;
   font-weight: 400;
   color: ${(props) =>

@@ -7,7 +7,8 @@ import Icon from 'src/components/icon';
 import Tooltip from 'src/components/tooltip';
 import Textarea from 'react-textarea-autosize';
 import { SegmentedControl, Segment } from 'src/components/segmentedControl';
-import ReactMarkdown from 'react-markdown';
+import { markdownToDraft } from 'markdown-draft-js';
+import ThreadRenderer from 'src/components/threadRenderer';
 
 import { Error } from 'src/components/formElements';
 import {
@@ -28,6 +29,7 @@ class SubmitClubEditor extends React.Component {
       error: false,
       content: '',
       showPreview: false,
+      previewBody: null,
     };
   }
 
@@ -99,9 +101,15 @@ class SubmitClubEditor extends React.Component {
     }
   };
 
+  getFormatted = (show) => {
+    this.setState({ showPreview: show });
+
+    if (show)
+      this.setState({ previewBody: markdownToDraft(this.state.content) });
+  };
+
   render() {
-    const { isLoading, error, showPreview, content } = this.state;
-    console.log(content);
+    const { isLoading, error, showPreview, content, previewBody } = this.state;
 
     return (
       <FormContainer>
@@ -109,13 +117,13 @@ class SubmitClubEditor extends React.Component {
           <SegmentedControl css={{ background: '#FFF', minHeight: '52px' }}>
             <Segment
               isActive={!showPreview}
-              onClick={() => this.setState({ showPreview: false })}
+              onClick={() => this.getFormatted(false)}
             >
               Write
             </Segment>
             <Segment
               isActive={showPreview}
-              onClick={() => this.setState({ showPreview: true })}
+              onClick={() => this.getFormatted(true)}
             >
               Preview
             </Segment>
@@ -123,7 +131,11 @@ class SubmitClubEditor extends React.Component {
           <ThreadInputs>
             {showPreview ? (
               <div style={{ marginBottom: '25px' }}>
-                <ReactMarkdown source={content} />
+                {previewBody === null ? (
+                  <p>Loading...</p>
+                ) : (
+                  <ThreadRenderer body={previewBody} />
+                )}
               </div>
             ) : (
               <Textarea

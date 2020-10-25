@@ -28,7 +28,7 @@ const ThreadFeedPure = (props) => {
       firestore
         .collection(`clubs/${id}/channels/${channel.id}/posts`)
         .orderBy('posted', 'desc')
-        .limit(10)
+        .limit(18)
         .get()
         .then((queryPosts) => {
           if (channel === prevChannel) {
