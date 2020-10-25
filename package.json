@@ -9,6 +9,13 @@
     "@tippy.js/react": "^2.1.1",
     "algoliasearch": "^4.4.0",
     "debug": "^4.1.0",
+    "draft-js": "npm:draft-js-fork-mxstbr@^0.10.4",
+    "draft-js-export-markdown": "^1.4.0",
+    "draft-js-focus-plugin": "^2.2.0",
+    "draft-js-import-markdown": "^1.4.0",
+    "draft-js-linkify-plugin": "^2.0.2",
+    "draft-js-markdown-plugin": "^3.0.5",
+    "draft-js-plugins-editor": "^2.1.1",
     "firebase": "^7.18.0",
     "formik": "^2.1.5",
     "history": "^4.6.1",
@@ -35,6 +42,7 @@
     "react-textarea-autosize": "^8.2.0",
     "react-visibility-sensor": "^5.0.1",
     "recompose": "^0.27.1",
+    "redraft": "^0.10.2",
     "redux": "^4.0.5",
     "redux-auth-wrapper": "^3.0.0",
     "redux-firestore": "^0.13.0",
@@ -43,6 +51,9 @@
     "striptags": "2.x",
     "styled-components": "^5.1.1",
     "yup": "^0.29.3"
+  },
+  "resolution": {
+    "draft-js": "npm:draft-js-fork-mxstbr"
   },
   "scripts": {
     "start": "cross-env NODE_PATH=./ react-app-rewired start",

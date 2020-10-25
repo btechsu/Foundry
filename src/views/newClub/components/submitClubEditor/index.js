@@ -89,29 +89,19 @@ class SubmitClubEditor extends React.Component {
         superadmin: user.email,
       });
 
-      // await firestore
-      //   .collection('clubSubmissions')
-      //   .doc(prevPage.slug)
-      //   .collection('channels')
-      //   .doc('welcome')
-      //   .set({ name: 'welcome' });
-
-      // await firestore
-      //   .collection('clubSubmissions')
-      //   .doc(prevPage.slug)
-      //   .collection('channels')
-      //   .doc('welcome')
-      //   .collection('posts').add({})
-
       this.setState({ isLoading: false });
       this.props.finalPage();
     } catch (err) {
-      this.setState({ isLoading: false, error: err });
+      this.setState({
+        isLoading: false,
+        error: err.message ? err.message : err,
+      });
     }
   };
 
   render() {
     const { isLoading, error, showPreview, content } = this.state;
+    console.log(content);
 
     return (
       <FormContainer>

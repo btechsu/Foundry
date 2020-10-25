@@ -73,7 +73,6 @@ class ChannelView extends React.Component {
     this.queryDatabase();
 
     if (!this.state.loading && this.state.channel && this.state.club) {
-      console.log(this.state.channel);
       this.props.dispatch(
         setTitlebarProps({
           title: `# ${this.state.channel.data().name}`,

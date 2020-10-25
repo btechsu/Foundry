@@ -11,8 +11,8 @@ const Posts = (props) => {
 
   return (
     <React.Fragment>
-      {auth.uid && isAdmin(club, auth.uid) && (
-        <MiniComposer club={club} id={club.id || id} />
+      {auth.uid && channel && isAdmin(club, auth.uid) && (
+        <MiniComposer club={club} id={club.id || id} channel={channel} />
       )}
 
       <ThreadFeed

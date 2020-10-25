@@ -1,96 +1,79 @@
-// import React from 'react';
-// import compose from 'recompose/compose';
-// import { withRouter } from 'react-router-dom';
-// import querystring from 'query-string';
-// import { LoadingSelect, ErrorSelect } from 'src/components/loading';
-// import Icon from 'src/components/icon';
-// import { RequiredSelector, ChannelPreview } from '../style';
+import React, { useState, useEffect } from 'react';
+import compose from 'recompose/compose';
+import { LoadingSelect, ErrorSelect } from 'src/components/loading';
+import { firestoreConnect } from 'react-redux-firebase';
+import { RequiredSelector } from '../style';
 
-// const ChannelSelector = (props) => {
-//   const {
-//     data,
-//     onChannelChange,
-//     selectedChannelId,
-//     selectedClubId,
-//     location,
-//     className,
-//     ...rest
-//   } = props;
-//   const { loading, error, community } = data;
-//   if (loading) return <LoadingSelect />;
-//   if (error)
-//     return <ErrorSelect>Something went wrong, try refreshing</ErrorSelect>;
+const ChannelSelector = (props) => {
+  const {
+    onChannelChange,
+    selectedChannelId,
+    selectedClubId,
+    location,
+    className,
+    club,
+    id,
+    firestore,
+    ...rest
+  } = props;
 
-//   const onChange = (evt) => onChannelChange(evt.target.value);
+  const [channels, setChannels] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
-//   const { search } = location;
-//   const { composerChannelId } = querystring.parse(search);
+  useEffect(() => {
+    if (club || id) {
+      setIsLoading(true);
+      firestore
+        .collection('clubs')
+        .doc(id)
+        .collection('channels')
+        .get()
+        .then((channels) => {
+          setIsLoading(false);
+          setChannels(channels.docs);
+        })
+        .catch(() => {
+          setIsLoading(false);
+          setError(true);
+        });
+    }
+  }, [id]);
 
-//   const { edges } = community.channelConnection;
-//   if (!edges || edges.length === 0)
-//     return <ErrorSelect>This club doesn’t have any channels</ErrorSelect>;
+  const onChange = (evt) => onChannelChange(evt.target.value);
 
-//   const shouldDisableChannelSelect =
-//     channelIsValid && composerChannelId === selectedChannelId;
+  if (isLoading) return <LoadingSelect />;
 
-//   if (shouldDisableChannelSelect) {
-//     if (!channel) {
-//       return (
-//         <RequiredSelector
-//           className={className}
-//           data-cy="composer-channel-selector"
-//           onChange={onChange}
-//           value={channelIsValid ? selectedChannelId : ''}
-//           emphasize={!selectedChannelId}
-//           {...rest}
-//         >
-//           <React.Fragment>
-//             <option value={''}>Choose a channel</option>
+  if (error)
+    return <ErrorSelect>Something went wrong, try refreshing</ErrorSelect>;
 
-//             {sortedNodes.map((channel) => {
-//               if (!channel) return null;
-//               return (
-//                 <option key={channel.id} value={channel.id}>
-//                   {channel.name}
-//                 </option>
-//               );
-//             })}
-//           </React.Fragment>
-//         </RequiredSelector>
-//       );
-//     }
+  if (!isLoading && channels.length === 0)
+    return <ErrorSelect>This club doesn’t have any channels</ErrorSelect>;
 
-//     return (
-//       <ChannelPreview className={className} data-cy="composer-channel-selected">
-//         <Icon glyph={'channel'} size={32} />
-//         {channel.name}
-//       </ChannelPreview>
-//     );
-//   }
+  return (
+    <RequiredSelector
+      className={className}
+      data-cy="composer-channel-selector"
+      onChange={onChange}
+      value={selectedChannelId || ''}
+      emphasize={!selectedChannelId}
+      {...rest}
+    >
+      <React.Fragment>
+        <option value={''}>Choose a channel</option>
 
-//   return (
-//     <RequiredSelector
-//       className={className}
-//       data-cy="composer-channel-selector"
-//       onChange={onChange}
-//       value={channelIsValid ? selectedChannelId : ''}
-//       emphasize={!selectedChannelId}
-//       {...rest}
-//     >
-//       <React.Fragment>
-//         <option value={''}>Choose a channel</option>
+        {channels.map((channel) => {
+          if (!channel) return null;
 
-//         {sortedNodes.map((channel) => {
-//           if (!channel) return null;
-//           return (
-//             <option key={channel.id} value={channel.id}>
-//               # {channel.name}
-//             </option>
-//           );
-//         })}
-//       </React.Fragment>
-//     </RequiredSelector>
-//   );
-// };
+          return (
+            <option key={channel.id} value={channel.id}>
+              # {channel.data().name}
+            </option>
+          );
+        })}
+      </React.Fragment>
+    </RequiredSelector>
+  );
+};
 
-// export default compose(withRouter)(ChannelSelector);
+export default compose(firestoreConnect())(ChannelSelector);

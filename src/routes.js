@@ -14,6 +14,8 @@ import { theme } from 'shared/theme';
 import AppViewWrapper from 'src/components/appViewWrapper';
 import Head from 'src/components/head';
 import ModalRoot from 'src/components/modals/modalRoot';
+import Toasts from 'src/components/toasts';
+import Composer from 'src/components/composer';
 import signedOutFallback from 'src/helpers/signed-out-fallback';
 import Navigation from 'src/views/navigation';
 import generateMetaInfo from 'shared/generate-meta-info';
@@ -75,6 +77,10 @@ const ChannelView = Loadable({
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
+const ComposerFallback = signedOutFallback(Composer, () => (
+  <Redirect to="/login" />
+));
+
 export const RouteModalContext = React.createContext({
   isModal: false,
 });
@@ -112,6 +118,9 @@ class Routes extends React.Component {
 
             {/* dont let non-critical pieces of UI crash the whole app */}
             <ErrorBoundary>
+              <Toasts />
+            </ErrorBoundary>
+            <ErrorBoundary>
               <ModalRoot />
             </ErrorBoundary>
 
@@ -141,6 +150,7 @@ class Routes extends React.Component {
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/admin" component={AdminRedirectFallback} />
                     <Route path="/new/club" component={SubmitClubFallback} />
+                    <Route path="/new/thread" component={ComposerFallback} />
                     <Route
                       path="/:clubSlug/:channelSlug"
                       component={ChannelView}

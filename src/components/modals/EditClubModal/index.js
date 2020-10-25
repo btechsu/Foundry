@@ -149,5 +149,4 @@ const map = (state) => ({
   modalProps: state.modals.modalProps,
 });
 
-// $FlowIssue
 export default compose(firebaseConnect(), connect(map))(EditClubModal);

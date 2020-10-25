@@ -7,9 +7,9 @@ import theme from 'shared/theme';
 import Textarea from 'react-textarea-autosize';
 import { firestoreConnect } from 'react-redux-firebase';
 import { PrimaryButton, TextButton } from 'src/components/button';
+import ChannelSelector from 'src/components/composer/LocationSelectors/ChannelSelector';
 import Icon from 'src/components/icon';
 import getComposerLink from 'src/helpers/get-composer-link';
-import getThreadLink from 'src/helpers/get-thread-link';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import Tooltip from 'src/components/tooltip';
 import { Container, BodyContainer } from './style';
@@ -20,15 +20,13 @@ const MiniComposer = ({
   profile,
   firestore,
   dispatch,
-  history,
-  selectedChannelId: defaultSelectedChannel,
   fixedChannelId,
+  channel,
+  auth,
 }) => {
   const titleEditor = useRef();
   const bodyEditor = useRef();
-  const [selectedChannelId, setSelectedChannelId] = useState(
-    defaultSelectedChannel,
-  );
+  const [selectedChannelId, setSelectedChannelId] = useState(channel.id);
   const [expanded, setExpanded] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -77,22 +75,24 @@ const MiniComposer = ({
   };
 
   const publish = () => {
-    if (!title.trim() || (!fixedChannelId && !selectedChannelId)) {
+    if (!selectedChannelId || !channel.id || !auth.isLoaded) {
       return;
     }
 
     setIsLoading(true);
 
     const thread = {
-      title: title.trim(),
-      body: body.replace(/@\[([a-z0-9_-]+)\]/g, '@$1'),
+      title: title,
+      body: body,
+      posted: firestore.Timestamp.fromDate(new Date()),
+      authored: firestore.collection('users').doc(auth.uid),
     };
 
     firestore
       .collection('clubs')
       .doc(club.id || id)
       .collection('channels')
-      .doc(fixedChannelId || selectedChannelId)
+      .doc(channel.id || selectedChannelId)
       .collection('posts')
       .add(thread)
       .then(async (data) => {
@@ -101,10 +101,7 @@ const MiniComposer = ({
         await setBody('');
         await setTitle('');
         await setExpanded(false);
-        return history.push({
-          pathname: getThreadLink(data.publishThread),
-          state: { modal: true },
-        });
+        return;
       })
       .catch((err) => {
         setIsLoading(false);
@@ -114,7 +111,7 @@ const MiniComposer = ({
 
   const { pathname, search } = getComposerLink({
     clubId: club.id || id,
-    channelId: fixedChannelId || selectedChannelId,
+    channelId: channel.id || selectedChannelId,
   });
 
   return (
@@ -223,8 +220,9 @@ const MiniComposer = ({
             }}
           >
             <div css={{ display: 'flex', alignItems: 'center' }}>
-              {/* {!fixedChannelId && (
+              {!channel.id && (
                 <ChannelSelector
+                  club={club}
                   id={club.id || id}
                   onChannelChange={(id) => {
                     setSelectedChannelId(id);
@@ -235,16 +233,17 @@ const MiniComposer = ({
                   tabIndex={3}
                 />
               )}
-              {fixedChannelId && (
+              {channel.id && (
                 <ChannelSelector
+                  club={club}
                   id={club.id || id}
                   selectedClubId={club.id || id}
-                  selectedChannelId={fixedChannelId}
+                  selectedChannelId={channel.id}
                   disabled
                   css={{ marginLeft: 0 }}
                   tabIndex={3}
                 />
-              )} */}
+              )}
               <Tooltip content="Open in fullscreen">
                 <span style={{ marginLeft: '8px' }}>
                   <Link
@@ -297,5 +296,5 @@ const MiniComposer = ({
 export default compose(
   firestoreConnect(),
   withRouter,
-  connect(({ firebase: { profile } }) => ({ profile })),
+  connect(({ firebase: { profile, auth } }) => ({ profile, auth })),
 )(MiniComposer);

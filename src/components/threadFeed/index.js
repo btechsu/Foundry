@@ -7,10 +7,12 @@ import ViewError from 'src/components/viewError';
 import { ErrorBoundary } from 'src/components/error';
 import { useInView } from 'react-intersection-observer';
 import { firestoreConnect } from 'react-redux-firebase';
+import ReactMarkdown from 'react-markdown';
 import { Container } from './style';
 import NullState from './nullState';
 
 const ThreadFeedPure = (props) => {
+  // TODO: ADD INFINITE SCROLL
   const [posts, setPosts] = useState([]);
   const [lastPost, setLastPost] = useState(0);
   const [prevChannel, setPrevChannel] = useState(channel);
@@ -22,7 +24,6 @@ const ThreadFeedPure = (props) => {
 
   useEffect(() => {
     if (channel) {
-      console.log(channel.id);
       setLoading(true);
       firestore
         .collection(`clubs/${id}/channels/${channel.id}/posts`)
@@ -40,7 +41,6 @@ const ThreadFeedPure = (props) => {
           setLoading(false);
         })
         .catch((err) => {
-          console.log(err);
           setError(true);
           setLoading(false);
         });
@@ -60,6 +60,14 @@ const ThreadFeedPure = (props) => {
         <LoadingInboxThread />
         <LoadingInboxThread />
         <LoadingInboxThread />
+      </Container>
+    );
+  }
+
+  if (posts.length === 0 && !loading && !error && club) {
+    return (
+      <Container data-cy="thread-feed">
+        <ReactMarkdown source={club.text} />;
       </Container>
     );
   }

@@ -225,7 +225,6 @@ export const ThreadTitle = {
   color: '#16171A',
   whiteSpace: 'pre-wrap',
   wordBreak: 'break-word',
-  minHeight: '34px',
   flex: 'none',
   display: 'inline-block',
   fontFamily:
