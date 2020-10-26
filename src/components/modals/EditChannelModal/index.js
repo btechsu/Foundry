@@ -4,15 +4,13 @@ import Modal from 'react-modal';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
 import slugg from 'slugg';
-import { CHANNEL_SLUG_DENY_LIST } from 'shared/slug-deny-lists';
 import { closeModal } from 'src/actions/modals';
 import { addToastWithTimeout } from 'src/actions/toasts';
-import { throttle } from 'src/helpers/utils';
 import { firestoreConnect } from 'react-redux-firebase';
 
 import ModalContainer from '../modalContainer';
 import { TextButton, PrimaryOutlineButton } from 'src/components/button';
-import { modalStyles, UpsellDescription } from '../styles';
+import { modalStyles } from '../styles';
 import {
   whiteSpaceRegex,
   oddHyphenRegex,
@@ -20,22 +18,24 @@ import {
 import { Input, UnderlineInput, Error } from '../../formElements';
 import { Form, Actions } from './style';
 
-class CreateChannelModal extends React.Component {
+class EditChannelModal extends React.Component {
   constructor() {
     super();
 
     this.state = {
       name: '',
       slug: '',
-      slugTaken: false,
-      slugError: false,
       descriptionError: false,
       nameError: false,
       createError: false,
       loading: false,
     };
+  }
 
-    this.checkSlug = throttle(this.checkSlug, 500);
+  componentDidMount() {
+    const { channel, name } = this.props;
+
+    this.setState({ name: name, slug: channel });
   }
 
   close = () => {
@@ -44,8 +44,6 @@ class CreateChannelModal extends React.Component {
 
   changeName = (e) => {
     const name = e.target.value;
-    let lowercaseName = name.toLowerCase().trim();
-    let slug = slugg(lowercaseName);
 
     let hasInvalidChars = name.search(whiteSpaceRegex) >= 0;
     let hasOddHyphens = name.search(oddHyphenRegex) >= 0;
@@ -59,81 +57,17 @@ class CreateChannelModal extends React.Component {
 
     this.setState({
       name,
-      slug,
       nameError: false,
     });
-
-    this.checkSlug(slug);
   };
 
-  changeSlug = (e) => {
-    let slug = e.target.value;
-    let lowercaseSlug = slug.toLowerCase().trim();
-    slug = slugg(lowercaseSlug);
-
-    if (slug.length >= 24) {
-      return this.setState({
-        slugError: true,
-      });
-    }
-
-    if (CHANNEL_SLUG_DENY_LIST.indexOf(slug) > -1) {
-      return this.setState({
-        slug,
-        slugTaken: true,
-      });
-    }
-
-    this.setState({
-      slug,
-      slugError: false,
-    });
-
-    this.checkSlug(slug);
-  };
-
-  checkSlug = (slug) => {
-    const clubSlug = this.props.id;
-
-    if (CHANNEL_SLUG_DENY_LIST.indexOf(slug) > -1) {
-      return this.setState({
-        slug,
-        slugTaken: true,
-      });
-    } else {
-      // check the db to see if this channel slug exists
-      if (clubSlug.length > 0) {
-        this.props.firestore
-          .collection('clubs')
-          .doc(clubSlug)
-          .collection('channels')
-          .doc(slug)
-          .get()
-          .then((query) => {
-            if (query.exists) {
-              return this.setState({
-                slugTaken: true,
-              });
-            } else {
-              return this.setState({
-                slugTaken: false,
-              });
-            }
-          })
-          .catch(() => {
-            // do nothing
-          });
-      }
-    }
-  };
-
-  create = (e) => {
+  publish = (e) => {
     e.preventDefault();
-    const { name, slug, slugTaken, slugError, nameError } = this.state;
-    const { id, firestore } = this.props;
+    const { name, nameError } = this.state;
+    const { id, firestore, channel } = this.props;
 
     // if an error is present, ensure the client cant submit the form
-    if (slugTaken || nameError || slugError) {
+    if (nameError) {
       this.setState({
         createError: true,
       });
@@ -151,8 +85,8 @@ class CreateChannelModal extends React.Component {
       .collection('clubs')
       .doc(id)
       .collection('channels')
-      .doc(slug)
-      .set({ name: name })
+      .doc(channel)
+      .update({ name: name })
       .then(() => {
         this.close();
         this.props.dispatch(
@@ -172,15 +106,7 @@ class CreateChannelModal extends React.Component {
   render() {
     const { isOpen, id } = this.props;
 
-    const {
-      name,
-      slug,
-      slugTaken,
-      slugError,
-      nameError,
-      createError,
-      loading,
-    } = this.state;
+    const { name, slug, nameError, createError, loading } = this.state;
 
     const styles = modalStyles(420);
 
@@ -217,32 +143,18 @@ class CreateChannelModal extends React.Component {
               </Error>
             )}
 
-            <UnderlineInput defaultValue={slug} onChange={this.changeSlug}>
+            <UnderlineInput defaultValue={slug} disabled>
               {`/${id}/`}
             </UnderlineInput>
-
-            {slugTaken && (
-              <Error>
-                This url is already taken - feel free to change it if you’re set
-                on the name {name}!
-              </Error>
-            )}
-
-            {slugError && <Error>Slugs can be up to 24 characters long.</Error>}
-
-            <UpsellDescription>
-              Channels are useful for notifying your club members on upcoming
-              events or what's happening in your club.
-            </UpsellDescription>
 
             <Actions>
               <TextButton onClick={this.close}>Cancel</TextButton>
               <PrimaryOutlineButton
-                disabled={!name || !slug || slugTaken}
+                disabled={!name || nameError}
                 loading={loading}
-                onClick={this.create}
+                onClick={this.publish}
               >
-                {loading ? 'Creating...' : 'Create Channel'}
+                {loading ? 'Updating...' : 'Update Channel'}
               </PrimaryOutlineButton>
             </Actions>
 
@@ -265,4 +177,4 @@ export default compose(
   firestoreConnect(),
   connect(map),
   withRouter,
-)(CreateChannelModal);
+)(EditChannelModal);

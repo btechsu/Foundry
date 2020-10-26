@@ -35,6 +35,15 @@ import {
 import { RequiredSelector } from 'src/views/newClub/components/submitClubForm/style';
 import { SectionCard, SectionTitle } from 'src/components/settingsViews/style';
 
+export function isSuperAdmin(club, uid) {
+  if (club.superAdmin) {
+    if (club.superAdmin.id === uid) return true;
+    else return false;
+  }
+
+  return false;
+}
+
 class EditForm extends React.Component {
   constructor(props) {
     super(props);
@@ -390,22 +399,40 @@ class EditForm extends React.Component {
             >
               {isLoading ? 'Saving...' : 'Save'}
             </PrimaryOutlineButton>
-            {/* <TertiaryActionContainer>
-              {community.communityPermissions.isOwner && (
+            <TertiaryActionContainer>
+              {isSuperAdmin(club, this.props.auth.uid) && (
                 <Tooltip content={`Delete ${name}`}>
                   <span>
                     <Icon
                       glyph="delete"
                       color="text.placeholder"
                       hoverColor={'warn.alt'}
-                      onClick={(e) =>
-                        this.triggerDeleteCommunity(e, community.id)
+                      onClick={() =>
+                        this.props.dispatch(
+                          openModal('DELETE_DOUBLE_CHECK_MODAL', {
+                            club: id,
+                            entity: 'club',
+                            message: (
+                              <div>
+                                <p>
+                                  Are you sure you want to delete your club,{' '}
+                                  <b>{name}</b>?
+                                </p>
+                                <p>
+                                  All threads, messages, and media shared in
+                                  your club will be deleted.
+                                </p>
+                              </div>
+                            ),
+                            buttonLabel: 'Delete Channel',
+                          }),
+                        )
                       }
                     />
                   </span>
                 </Tooltip>
               )}
-            </TertiaryActionContainer> */}
+            </TertiaryActionContainer>
           </Actions>
         </Form>
       </SectionCard>
@@ -413,4 +440,8 @@ class EditForm extends React.Component {
   }
 }
 
-export default compose(firestoreConnect(), connect(), withRouter)(EditForm);
+export default compose(
+  firestoreConnect(),
+  connect(({ firebase: { auth } }) => ({ auth })),
+  withRouter,
+)(EditForm);

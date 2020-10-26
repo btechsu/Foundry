@@ -53,13 +53,43 @@ const ChannelList = (props) => {
                   channel={channel.data()}
                   id={id}
                 >
-                  <Link to={`/${id}/${channel.id}/settings`}>
+                  <a
+                    onClick={() =>
+                      dispatch(
+                        openModal('DELETE_DOUBLE_CHECK_MODAL', {
+                          club: id,
+                          channel: channel.id,
+                          entity: 'channel',
+                          message:
+                            'Are you sure you want to delete this channel? This action cannot be undone and all the current threads on the channel will be deleted.',
+                          buttonLabel: 'Delete Channel',
+                        }),
+                      )
+                    }
+                  >
+                    <Tooltip content={'Delete channel'}>
+                      <span>
+                        <Icon glyph="delete" />
+                      </span>
+                    </Tooltip>
+                  </a>
+                  <a
+                    onClick={() =>
+                      dispatch(
+                        openModal('EDIT_CHANNEL_MODAL', {
+                          id: id,
+                          channel: channel.id,
+                          name: channel.data().name,
+                        }),
+                      )
+                    }
+                  >
                     <Tooltip content={'Manage channel'}>
                       <span>
                         <Icon glyph="settings" />
                       </span>
                     </Tooltip>
-                  </Link>
+                  </a>
                 </ChannelListItem>
               );
             })}

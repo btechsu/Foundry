@@ -7,6 +7,7 @@ import DeleteDoubleCheckModal from './DeleteDoubleCheckModal';
 import EditClubModal from './EditClubModal';
 import CloseComposerConfirmationModal from './CloseComposerConfirmationModal';
 import CreateChannelModal from './CreateChannelModal';
+import EditChannelModal from './EditChannelModal';
 
 const MODAL_COMPONENTS = {
   SUBMIT_CLUB_MODAL: SubmitClubModal,
@@ -15,6 +16,7 @@ const MODAL_COMPONENTS = {
   EDIT_CLUB_MODAL: EditClubModal,
   CLOSE_COMPOSER_CONFIRMATION_MODAL: CloseComposerConfirmationModal,
   CREATE_CHANNEL_MODAL: CreateChannelModal,
+  EDIT_CHANNEL_MODAL: EditChannelModal,
 };
 
 /*

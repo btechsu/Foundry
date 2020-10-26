@@ -29,7 +29,7 @@ const Channel = (props) => {
           <Tooltip content="Go to settings">
             <span style={{ marginLeft: '8px', display: 'flex' }}>
               <OutlineButton
-                to={`/${club.id || id}/${channel.id}/settings`}
+                to={`/${club.id || id}/settings`}
                 size={'small'}
                 style={{ padding: '4px' }}
               >

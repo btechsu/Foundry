@@ -123,6 +123,51 @@ class DeleteDoubleCheckModal extends React.Component {
             this.setState({ isLoading: false });
           });
       }
+      case 'channel': {
+        const { channel, club, firestore } = this.props;
+
+        this.setState({ isLoading: true });
+        return firestore
+          .collection('clubs')
+          .doc(club)
+          .collection('channels')
+          .doc(channel)
+          .delete()
+          .then(() => {
+            dispatch(
+              addToastWithTimeout('success', `Deleted channel successfully`),
+            );
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+      }
+      case 'club': {
+        const { club, firestore } = this.props;
+
+        this.setState({ isLoading: true });
+        return firestore
+          .collection('clubs')
+          .doc(club)
+          .delete()
+          .then(() => {
+            dispatch(
+              addToastWithTimeout(
+                'success',
+                `We removed your club from Foundry! Sad to see you go...`,
+              ),
+            );
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+      }
       case 'thread': {
         const { id, club, channel, firestore } = this.props;
 
