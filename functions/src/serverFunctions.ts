@@ -117,5 +117,11 @@ export const newUser = functions.auth.user().onCreate((user) => {
     studentId: null,
   };
 
+  const isBtech = user.email?.toLocaleLowerCase().endsWith('@bths.edu');
+
+  if (!isBtech) {
+    return admin.auth().deleteUser(user.uid);
+  }
+
   return admin.firestore().collection('users').doc(user.uid).set(docData);
 });
