@@ -14,7 +14,7 @@ export const IsInClub = (clubsArray, clubID) => {
 export const isAdmin = (club, userID) => {
   if (club.admins || club.superAdmin) {
     const adminArray = club.admins;
-    const superAdmin = club.superAdmin.id;
+    const superAdmin = club.superAdmin && club.superAdmin.id;
     const check = adminArray.filter((admin) => admin.id === userID);
     const check2 = superAdmin === userID;
 

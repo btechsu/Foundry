@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Modal from 'react-modal';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
-import slugg from 'slugg';
 import { closeModal } from 'src/actions/modals';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import { firestoreConnect } from 'react-redux-firebase';

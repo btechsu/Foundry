@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { openModal } from 'src/actions/modals';
@@ -60,8 +59,14 @@ const ChannelList = (props) => {
                           club: id,
                           channel: channel.id,
                           entity: 'channel',
-                          message:
-                            'Are you sure you want to delete this channel? This action cannot be undone and all the current threads on the channel will be deleted.',
+                          message: (
+                            <p>
+                              Are you sure you want to delete the channel{' '}
+                              <b>{channel.data().name}</b>? This action cannot
+                              be undone and all the current threads on the
+                              channel will be deleted.
+                            </p>
+                          ),
                           buttonLabel: 'Delete Channel',
                         }),
                       )

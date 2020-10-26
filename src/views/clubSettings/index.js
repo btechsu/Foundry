@@ -11,7 +11,7 @@ import { ViewGrid } from 'src/components/layout';
 import { setTitlebarProps } from 'src/actions/titlebar';
 import { firestoreConnect } from 'react-redux-firebase';
 import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
-// import Members from '../communityMembers';
+import Members from '../clubMembers';
 import Overview from './components/overview';
 
 const ClubSettings = (props) => {
@@ -59,7 +59,7 @@ const ClubSettings = (props) => {
   const lastIndex = pathname.lastIndexOf('/');
   const activeTab = pathname.substr(lastIndex + 1);
 
-  if (club) {
+  if (club && auth.uid) {
     if (!isAdmin(club.data(), auth.uid)) {
       return <ErrorView />;
     }
@@ -114,9 +114,11 @@ const ClubSettings = (props) => {
             </SegmentedControl>
 
             <Switch>
-              {/* <Route path={`${match.url}/members`}>
-                {() => <Members community={community} history={history} />}
-              </Route> */}
+              <Route path={`${match.url}/members`}>
+                {() => (
+                  <Members club={club.data()} id={club.id} history={history} />
+                )}
+              </Route>
               <Route path={`${match.url}`}>
                 {() => <Overview club={club.data()} id={club.id} />}
               </Route>

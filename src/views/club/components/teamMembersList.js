@@ -33,8 +33,12 @@ class Component extends React.Component {
     }
   }
 
+  componentWillUnmount() {
+
+  }
+
   render() {
-    const { club, id, auth } = this.props;
+    const { club, id, auth, hideTop } = this.props;
     const { users, isLoading, hasError } = this.state;
 
     if (isLoading || !auth.isLoaded)
@@ -51,27 +55,29 @@ class Component extends React.Component {
 
     return (
       <React.Fragment>
-        <SidebarSectionHeader>
-          <SidebarSectionHeading>Team</SidebarSectionHeading>
-          {auth.uid && isAdmin(club, auth.uid) && (
-            <React.Fragment>
-              <Tooltip content={'Manage team'}>
-                <span>
-                  <WhiteIconButton to={`/${id}/settings`}>
-                    <Icon glyph={'settings'} size={24} />
-                  </WhiteIconButton>
-                </span>
-              </Tooltip>
-              <Tooltip content={'View all'}>
-                <span>
-                  <WhiteIconButton to={`/${id}?tab=members`}>
-                    <Icon glyph={'view'} size={24} />
-                  </WhiteIconButton>
-                </span>
-              </Tooltip>
-            </React.Fragment>
-          )}
-        </SidebarSectionHeader>
+        {!hideTop && (
+          <SidebarSectionHeader>
+            <SidebarSectionHeading>Team</SidebarSectionHeading>
+            {auth.uid && isAdmin(club, auth.uid) && (
+              <React.Fragment>
+                <Tooltip content={'Manage team'}>
+                  <span>
+                    <WhiteIconButton to={`/${id}/settings`}>
+                      <Icon glyph={'settings'} size={24} />
+                    </WhiteIconButton>
+                  </span>
+                </Tooltip>
+                <Tooltip content={'View all'}>
+                  <span>
+                    <WhiteIconButton to={`/${id}?tab=members`}>
+                      <Icon glyph={'view'} size={24} />
+                    </WhiteIconButton>
+                  </span>
+                </Tooltip>
+              </React.Fragment>
+            )}
+          </SidebarSectionHeader>
+        )}
 
         <List>
           {users.map((user) => (

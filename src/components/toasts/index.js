@@ -20,9 +20,6 @@ const ToastsPure = ({ toasts }) => {
         switch (kind) {
           case 'error': {
             let cleanedMessage = message;
-            if (message.indexOf('GraphQL error: ') >= 0) {
-              cleanedMessage = message.replace('GraphQL error: ', '');
-            }
             return (
               <ErrorToast data-cy={'toast-error'} key={id} timeout={timeout}>
                 {cleanedMessage}

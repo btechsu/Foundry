@@ -105,7 +105,6 @@ class DeleteDoubleCheckModal extends React.Component {
       }
       case 'kick-user': {
         const firestore = this.props.firestore;
-        firestore.batch();
 
         const removeClub = firestore.collection('clubs').doc(this.props.id);
 
@@ -113,6 +112,35 @@ class DeleteDoubleCheckModal extends React.Component {
           .collection('users')
           .doc(this.props.userId)
           .update({ approved: firestore.FieldValue.arrayRemove(removeClub) })
+          .then(() => {
+            dispatch(addToastWithTimeout('success', `Kicked user.`));
+            this.setState({ isLoading: false });
+            return this.close();
+          })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+      }
+      case 'kick-admin': {
+        const firestore = this.props.firestore;
+
+        const adminDelete = firestore
+          .collection('users')
+          .doc(this.props.userId);
+        const clubRef = firestore.collection('clubs').doc(this.props.id);
+
+        clubRef
+          .update({ admins: firestore.FieldValue.arrayRemove(adminDelete) })
+          .catch((err) => {
+            dispatch(addToastWithTimeout('error', err.message || err));
+            this.setState({ isLoading: false });
+          });
+
+        return adminDelete
+          .update({
+            approved: firestore.FieldValue.arrayRemove(clubRef),
+          })
           .then(() => {
             dispatch(addToastWithTimeout('success', `Kicked user.`));
             this.setState({ isLoading: false });

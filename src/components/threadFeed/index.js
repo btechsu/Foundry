@@ -22,7 +22,7 @@ const ThreadFeedPure = (props) => {
   const { firestore, club, channel, id, viewContext } = props;
   const { ref, inView } = useInView();
 
-  useEffect(() => {
+  useEffect(() => { 
     if (channel && !inView) {
       setLoading(true);
       var unsubscribe = firestore
@@ -47,9 +47,7 @@ const ThreadFeedPure = (props) => {
           },
         );
 
-      return () => {
-        unsubscribe();
-      };
+      return () => unsubscribe();
     }
   }, [channel]);
 

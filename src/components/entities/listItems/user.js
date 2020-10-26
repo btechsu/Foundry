@@ -6,6 +6,7 @@ import { openModal } from 'src/actions/modals';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import { UserAvatar } from 'src/components/avatar';
 import { useFirestore } from 'react-redux-firebase';
+import { isSuperAdmin } from 'src/views/clubSettings/components/editForm';
 import {
   IsInClub,
   isAdmin,
@@ -62,7 +63,7 @@ const User = (props) => {
             `Accepted ${userObject.name || 'user'}.`,
           ),
         );
-        isLoading(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         dispatch(addToastWithTimeout('error', err.message || err));
@@ -90,6 +91,18 @@ const User = (props) => {
           userObject.name || 'this user'
         }?`,
         buttonLabel: 'Kick User',
+      }),
+    );
+  const removeAdmin = () =>
+    dispatch(
+      openModal('DELETE_DOUBLE_CHECK_MODAL', {
+        userId: id,
+        id: club.id || clubId,
+        entity: 'kick-admin',
+        message: `Are you sure you want to remove ${
+          userObject.name || 'this admin'
+        }?`,
+        buttonLabel: 'Remove Admin',
       }),
     );
 
@@ -141,6 +154,21 @@ const User = (props) => {
                   {isLoading ? 'Loading...' : 'Deny'}
                 </OutlineButton>
               </React.Fragment>
+            )}
+          />
+          <ConditionalWrap
+            condition={isSuperAdmin(club, auth.uid) && isAdmin(club, id)}
+            wrap={() => (
+              <OutlineButton
+                data-cy="remove-admin-button"
+                isLoading={isLoading}
+                icon={'door-enter'}
+                size={'small'}
+                onClick={removeAdmin}
+                style={{ marginTop: '6px' }}
+              >
+                {isLoading ? 'Loading...' : 'Remove'}
+              </OutlineButton>
             )}
           />
           <ConditionalWrap

@@ -5,62 +5,75 @@ import { withRouter } from 'react-router';
 import { ErrorBoundary } from 'src/components/error';
 import { useFirestore } from 'react-redux-firebase';
 import { useInView } from 'react-intersection-observer';
+import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
 import { Card } from 'src/components/card';
 import { Loading } from 'src/components/loading';
 import ViewError from 'src/components/viewError';
 import { UserListItem } from 'src/components/entities';
 
 const MembersList = (props) => {
-  const { club, id, profile } = props;
-  const [lastUser, setLastUser] = useState(0);
+  const { club, id, profile, auth, getPending } = props;
+  const [lastUser, setLastUser] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [users, setUsers] = useState([]);
-  const [pending, setPending] = useState([]);
   const [err, setErr] = useState(null);
 
   const firestore = useFirestore();
 
-  const { ref, inView } = useInView({ threshold: 0.8 });
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    async function fetchData() {
+    if (club && !inView) {
       setIsLoading(true);
-      try {
-        const queryUsers = await firestore
-          .collection('users')
-          .where(
-            'approved',
-            'array-contains',
-            firestore.doc(`clubs/${club.id || id}`),
-          )
-          .orderBy('email')
-          .startAfter(lastUser)
-          .limit(10)
-          .get();
+      var unsubscribe = firestore
+        .collection('users')
+        .where(
+          getPending ? 'pending' : 'approved',
+          'array-contains',
+          firestore.doc(`clubs/${club.id || id}`),
+        )
+        .orderBy('email')
+        .limit(20)
+        .onSnapshot(
+          (queryUsers) => {
+            setUsers((prev) => [...prev, ...queryUsers.docs]);
+            setLastUser(queryUsers.docs[queryUsers.docs.length - 1]);
+            setIsLoading(false);
+          },
+          function (error) {
+            console.log(error);
+            setErr(error);
+            setIsLoading(false);
+          },
+        );
 
-        const query2 = await firestore
-          .collection('users')
-          .where(
-            'pending',
-            'array-contains',
-            firestore.doc(`clubs/${club.id || id}`),
-          )
-          .limit(10)
-          .get();
-
-        setUsers((prev) => [...prev, ...queryUsers.docs]);
-        setPending(query2.docs);
-        setLastUser(queryUsers.docs[queryUsers.docs.length - 1]);
-        setIsLoading(false);
-      } catch (err) {
-        setErr(err);
-        setIsLoading(false);
-      }
+      return () => unsubscribe();
     }
+  }, [club, getPending]);
 
-    if (inView) fetchData();
-
-    return;
+  useEffect(() => {
+    if (inView && lastUser && isLoading) {
+      firestore
+        .collection('users')
+        .where(
+          getPending ? 'pending' : 'approved',
+          'array-contains',
+          firestore.doc(`clubs/${club.id || id}`),
+        )
+        .orderBy('email')
+        .startAfter(lastUser)
+        .limit(20)
+        .get()
+        .then((queryUsers) => {
+          setUsers((prev) => [...prev, ...queryUsers.docs]);
+          setLastUser(queryUsers.docs[queryUsers.docs.length - 1]);
+          setIsLoading(false);
+        })
+        .catch((err) => {
+          setErr(err);
+          setIsLoading(false);
+        });
+    }
   }, [inView]);
 
   if (profile.isEmpty) {
@@ -70,25 +83,10 @@ const MembersList = (props) => {
   if (club) {
     return (
       <React.Fragment>
-        {pending.map((user) => {
-          if (!user) return null;
-
-          return (
-            <ErrorBoundary key={user.id}>
-              <UserListItem
-                userObject={user.data()}
-                id={user.id}
-                name={user.data().name}
-                pfp={user.data().pfp}
-                avatarSize={40}
-                club={club}
-                clubId={club.id || id}
-              />
-            </ErrorBoundary>
-          );
-        })}
         {users.map((user) => {
           if (!user) return null;
+          if (user.id === auth.uid) return null;
+          if (isAdmin(club, user.id)) return null;
 
           return (
             <ErrorBoundary key={user.id}>
@@ -129,5 +127,5 @@ const MembersList = (props) => {
 
 export default compose(
   withRouter,
-  connect(({ firebase: { profile } }) => ({ profile })),
+  connect(({ firebase: { profile, auth } }) => ({ profile, auth })),
 )(MembersList);

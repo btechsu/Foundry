@@ -50,6 +50,7 @@
     "slugg": "^1.2.1",
     "striptags": "2.x",
     "styled-components": "^5.1.1",
+    "validator": "^9.4.1",
     "yup": "^0.29.3"
   },
   "resolution": {

@@ -221,7 +221,7 @@ class CreateChannelModal extends React.Component {
               {`/${id}/`}
             </UnderlineInput>
 
-            {slugTaken && (
+            {!loading && slugTaken && (
               <Error>
                 This url is already taken - feel free to change it if you’re set
                 on the name {name}!

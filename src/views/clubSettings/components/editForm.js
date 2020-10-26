@@ -12,15 +12,12 @@ import {
   whiteSpaceRegex,
   oddHyphenRegex,
 } from 'src/views/viewHelpers/textValidationHelper';
-import { Notice } from 'src/components/listItems/style';
 import Icon from 'src/components/icon';
 import {
   Input,
   UnderlineInput,
   TextArea,
-  PhotoInput,
   Error,
-  CoverInput,
 } from 'src/components/formElements';
 import {
   Form,
@@ -28,9 +25,6 @@ import {
   Description,
   Actions,
   TertiaryActionContainer,
-  ImageInputWrapper,
-  DeleteCoverWrapper,
-  DeleteCoverButton,
 } from 'src/components/editForm/style';
 import { RequiredSelector } from 'src/views/newClub/components/submitClubForm/style';
 import { SectionCard, SectionTitle } from 'src/components/settingsViews/style';

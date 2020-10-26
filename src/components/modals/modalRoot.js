@@ -8,6 +8,7 @@ import EditClubModal from './EditClubModal';
 import CloseComposerConfirmationModal from './CloseComposerConfirmationModal';
 import CreateChannelModal from './CreateChannelModal';
 import EditChannelModal from './EditChannelModal';
+import TransferSuperadmin from './TransferSuperadmin';
 
 const MODAL_COMPONENTS = {
   SUBMIT_CLUB_MODAL: SubmitClubModal,
@@ -17,6 +18,7 @@ const MODAL_COMPONENTS = {
   CLOSE_COMPOSER_CONFIRMATION_MODAL: CloseComposerConfirmationModal,
   CREATE_CHANNEL_MODAL: CreateChannelModal,
   EDIT_CHANNEL_MODAL: EditChannelModal,
+  TRANSFER_SUPERADMIN: TransferSuperadmin,
 };
 
 /*
