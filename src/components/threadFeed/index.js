@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useLayoutEffect } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import InboxThread from 'src/components/inboxThread';
@@ -14,21 +14,21 @@ import NullState from './nullState';
 const ThreadFeedPure = (props) => {
   // TODO: ADD INFINITE SCROLL
   const [posts, setPosts] = useState([]);
-  const [lastPost, setLastPost] = useState(0);
+  const [lastPost, setLastPost] = useState(null);
   const [prevChannel, setPrevChannel] = useState(channel);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { firestore, club, channel, id, viewContext } = props;
-  const { ref, inView } = useInView({ threshold: 0.8 });
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (channel) {
+    if (channel && !inView) {
       setLoading(true);
       var unsubscribe = firestore
         .collection(`clubs/${id}/channels/${channel.id}/posts`)
         .orderBy('posted', 'desc')
-        .limit(3)
+        .limit(8)
         .onSnapshot(
           (queryPosts) => {
             if (channel === prevChannel) {
@@ -37,6 +37,7 @@ const ThreadFeedPure = (props) => {
             } else {
               setPrevChannel(channel);
               setPosts(queryPosts.docs);
+              setLastPost(queryPosts.docs[queryPosts.docs.length - 1]);
             }
             setLoading(false);
           },
@@ -50,9 +51,35 @@ const ThreadFeedPure = (props) => {
         unsubscribe();
       };
     }
-  }, [inView, channel]);
+  }, [channel]);
 
-  if (loading) {
+  useEffect(() => {
+    if (inView && lastPost) {
+      setLoading(true);
+      firestore
+        .collection(`clubs/${id}/channels/${channel.id}/posts`)
+        .orderBy('posted', 'desc')
+        .startAfter(lastPost)
+        .limit(8)
+        .get()
+        .then((queryPosts) => {
+          if (channel === prevChannel) {
+            setPosts((prev) => [...prev, ...queryPosts.docs]);
+            setLastPost(queryPosts.docs[queryPosts.docs.length - 1]);
+          } else {
+            setPrevChannel(channel);
+            setPosts(queryPosts.docs);
+          }
+          setLoading(false);
+        })
+        .catch((error) => {
+          setError(error);
+          setLoading(false);
+        });
+    }
+  }, [inView]);
+
+  if (loading && posts.length === 0) {
     return (
       <Container>
         <LoadingInboxThread />
@@ -92,6 +119,7 @@ const ThreadFeedPure = (props) => {
             <InboxThread thread={post} club={club} id={id} channel={channel} />
           </ErrorBoundary>
         ))}
+        <div ref={ref}>{loading && <LoadingInboxThread />}</div>
       </Container>
     );
   }
