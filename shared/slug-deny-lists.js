@@ -54,6 +54,9 @@ var CLUB_SLUG_DENY_LIST = [
   'me',
 ];
 
+var CHANNEL_SLUG_DENY_LIST = ['feed', 'members', 'settings'];
+
 module.exports = {
   CLUB_SLUG_DENY_LIST: CLUB_SLUG_DENY_LIST,
+  CHANNEL_SLUG_DENY_LIST: CHANNEL_SLUG_DENY_LIST,
 };

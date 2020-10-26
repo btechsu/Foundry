@@ -62,7 +62,7 @@ class SubmitClubForm extends React.Component {
       photoSizeError: false,
     };
 
-    this.checkSlug = throttle(this.checkSlug, 3000);
+    this.checkSlug = throttle(this.checkSlug, 1000);
   }
 
   changeName = (e) => {
@@ -101,7 +101,6 @@ class SubmitClubForm extends React.Component {
         slugTaken: false,
       });
 
-      // $FlowIssue
       this.checkSlug(slug);
     }
   };
@@ -194,7 +193,7 @@ class SubmitClubForm extends React.Component {
       agreeCoC: !value,
     });
   };
-
+  
   changeTime = (e) => {
     const time = e.target.value;
 

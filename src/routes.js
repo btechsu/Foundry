@@ -87,7 +87,17 @@ const ChannelView = Loadable({
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
+const ClubSettings = Loadable({
+  loader: () =>
+    import('./views/clubSettings' /* webpackChunkName: "clubSettings" */),
+  loading: ({ isLoading }) => isLoading && <LoadingView />,
+});
+
 const ComposerFallback = signedOutFallback(Composer, () => (
+  <Redirect to="/login" />
+));
+
+const ClubSettingsFallback = signedOutFallback(ClubSettings, () => (
   <Redirect to="/login" />
 ));
 
@@ -157,6 +167,10 @@ class Routes extends React.Component {
                     {/* App Pages */}
                     <Route path="/login" component={LoginFallback} />
                     <Route path="/new/user" component={NewUserFallback} />
+                    <Route
+                      path="/:clubSlug/settings"
+                      component={ClubSettingsFallback}
+                    />
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/admin" component={AdminRedirectFallback} />
                     <Route

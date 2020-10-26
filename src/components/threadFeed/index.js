@@ -25,25 +25,30 @@ const ThreadFeedPure = (props) => {
   useEffect(() => {
     if (channel) {
       setLoading(true);
-      firestore
+      var unsubscribe = firestore
         .collection(`clubs/${id}/channels/${channel.id}/posts`)
         .orderBy('posted', 'desc')
-        .limit(18)
-        .get()
-        .then((queryPosts) => {
-          if (channel === prevChannel) {
-            setPosts((prev) => [...prev, ...queryPosts.docs]);
-            setLastPost(queryPosts.docs[queryPosts.docs.length - 1]);
-          } else {
-            setPrevChannel(channel);
-            setPosts(queryPosts.docs);
-          }
-          setLoading(false);
-        })
-        .catch(() => {
-          setError(true);
-          setLoading(false);
-        });
+        .limit(3)
+        .onSnapshot(
+          (queryPosts) => {
+            if (channel === prevChannel) {
+              setPosts((prev) => [...prev, ...queryPosts.docs]);
+              setLastPost(queryPosts.docs[queryPosts.docs.length - 1]);
+            } else {
+              setPrevChannel(channel);
+              setPosts(queryPosts.docs);
+            }
+            setLoading(false);
+          },
+          function (error) {
+            setError(error);
+            setLoading(false);
+          },
+        );
+
+      return () => {
+        unsubscribe();
+      };
     }
   }, [inView, channel]);
 
@@ -64,7 +69,14 @@ const ThreadFeedPure = (props) => {
     );
   }
 
-  if (posts.length === 0 && !loading && !error && club && club.text) {
+  if (
+    posts.length === 0 &&
+    !loading &&
+    !error &&
+    club &&
+    !channel &&
+    club.text
+  ) {
     return (
       <Container data-cy="thread-feed" style={{ padding: '36px 24px' }}>
         <ThreadRenderer body={JSON.parse(club.text)} />
