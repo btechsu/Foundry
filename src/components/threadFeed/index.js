@@ -77,7 +77,6 @@ const ThreadFeedPure = (props) => {
     }
   }, [inView]);
 
-  console.log(loading);
   if (loading && channel !== prevChannel) {
     return (
       <Container>

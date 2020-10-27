@@ -41,7 +41,6 @@ const MembersList = (props) => {
             setIsLoading(false);
           },
           function (error) {
-            console.log(error);
             setErr(error);
             setIsLoading(false);
           },

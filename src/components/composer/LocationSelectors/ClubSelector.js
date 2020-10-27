@@ -20,7 +20,7 @@ const CommunitySelector = (props) => {
         club
           .get()
           .then((clubDoc) => {
-            if (isAdmin(clubDoc.data(), auth.uid)) {
+            if (clubDoc.data() && isAdmin(clubDoc.data(), auth.uid)) {
               setClubs((prev) => [...prev, clubDoc]);
               setIsLoading(false);
             }

@@ -276,7 +276,6 @@ class SubmissionEditModal extends React.Component {
         return;
       })
       .catch((err) => {
-        console.log(err);
         this.setState({
           loading: false,
         });
