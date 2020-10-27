@@ -12,6 +12,7 @@ import { Container } from './style';
 import NullState from './nullState';
 
 const ThreadFeedPure = (props) => {
+  // TODO: ADD INFINITE SCROLL
   const [posts, setPosts] = useState([]);
   const [lastPost, setLastPost] = useState(null);
   const [prevChannel, setPrevChannel] = useState(props.channel);
@@ -22,7 +23,7 @@ const ThreadFeedPure = (props) => {
   const { ref, inView } = useInView();
 
   useEffect(() => {
-    if (channel && !inView) {
+    if (channel) {
       setLoading(true);
       var unsubscribe = firestore
         .collection(`clubs/${id}/channels/${channel.id}/posts`)
@@ -30,7 +31,7 @@ const ThreadFeedPure = (props) => {
         .limit(8)
         .onSnapshot(
           (queryPosts) => {
-            if (channel === prevChannel) {
+            if (channel.id === prevChannel.id) {
               setPosts((prev) => [...prev, ...queryPosts.docs]);
               setLastPost(queryPosts.docs[queryPosts.docs.length - 1]);
             } else {
@@ -76,7 +77,7 @@ const ThreadFeedPure = (props) => {
     }
   }, [inView]);
 
-  if (loading && posts.length === 0) {
+  if ((loading && channel !== prevChannel) || posts.length === 0) {
     return (
       <Container>
         <LoadingInboxThread />
