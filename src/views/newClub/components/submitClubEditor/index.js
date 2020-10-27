@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import { withFirestore, withFirebase } from 'react-redux-firebase';
+import { withFirestore } from 'react-redux-firebase';
 import { PrimaryOutlineButton } from 'src/components/button';
 import Icon from 'src/components/icon';
 import Tooltip from 'src/components/tooltip';
@@ -49,30 +49,13 @@ class SubmitClubEditor extends React.Component {
   submit = async () => {
     try {
       this.setState({ isLoading: true });
-      const { prevPage, user, firebase, firestore } = this.props;
+      const { prevPage, user, firestore } = this.props;
       const editorText = convertMdToDraft(this.state.content);
-      let coverFile = null;
-      let pfpFile = null;
 
       if (editorText.length > 1010000) {
         return this.setState({
           error: 'The text is too long - trim it up a bit!',
         });
-      }
-
-      if (prevPage.coverFile !== null) {
-        const uploadRef = await firebase.uploadFile(
-          `clubSubmissions/${prevPage.slug}/cover`,
-          prevPage.coverFile,
-        );
-        coverFile = await uploadRef.uploadTaskSnaphot.ref.getDownloadURL();
-      }
-      if (prevPage.file !== null) {
-        const uploadRef = await firebase.uploadFile(
-          `clubSubmissions/${prevPage.slug}/pfp`,
-          prevPage.file,
-        );
-        pfpFile = await uploadRef.uploadTaskSnaphot.ref.getDownloadURL();
       }
 
       await firestore
@@ -88,10 +71,10 @@ class SubmitClubEditor extends React.Component {
           type: prevPage.type,
           credits: prevPage.credits,
           text: JSON.stringify(editorText),
-          cover: coverFile,
-          pfp: pfpFile,
+          cover: prevPage.cover,
+          pfp: prevPage.pfp,
           admins: [],
-          superadmin: firestore.collection('users').doc(auth.uid),
+          superadmin: firestore.collection('users').doc(user.uid),
         });
 
       this.setState({ isLoading: false });
@@ -183,7 +166,6 @@ class SubmitClubEditor extends React.Component {
 }
 
 export default compose(
-  withFirebase,
   withFirestore,
   connect((state) => ({ user: state.firebase.auth })),
 )(SubmitClubEditor);

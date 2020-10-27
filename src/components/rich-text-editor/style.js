@@ -3,27 +3,6 @@ import styled, { css } from 'styled-components';
 import { Transition, zIndex } from 'src/components/globals';
 import { MEDIA_BREAK } from 'src/components/layout';
 
-const UsernameWrapper = styled.span`
-  color: ${(props) =>
-    props.me
-      ? props.theme.special.default
-      : props.theme.space.default}!important;
-  background: ${(props) =>
-    props.me ? props.theme.special.wash : props.theme.space.wash}!important;
-  padding: 0px 4px 1px;
-  border-radius: 4px;
-  position: relative;
-  display: inline-block;
-  line-height: 1.4;
-  &:hover {
-    text-decoration: underline;
-  }
-  a {
-    color: inherit !important;
-    text-decoration: none !important;
-  }
-`;
-
 export const customStyleFn = (style, block) => {
   if (style.first() === 'CODE' && block.getType() === 'unstyled')
     return {

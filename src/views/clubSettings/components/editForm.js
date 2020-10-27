@@ -206,41 +206,6 @@ class EditForm extends React.Component {
       });
   };
 
-  triggerDeleteClub = (e, clubId) => {
-    e.preventDefault();
-    const { community } = this.props;
-    const { name, communityData } = this.state;
-    const message = (
-      <div>
-        <p>
-          Are you sure you want to delete your community, <b>{name}</b>?
-        </p>{' '}
-        <p>
-          <b>{communityData.metaData.members} members</b> will be removed from
-          the community and the channels you’ve created will be deleted.
-        </p>
-        <p>
-          All threads, messages, reactions, and media shared in your community
-          will be deleted.
-        </p>
-        <p>This cannot be undone.</p>
-      </div>
-    );
-
-    return this.props.dispatch(
-      openModal('DELETE_DOUBLE_CHECK_MODAL', {
-        id: communityId,
-        entity: 'community',
-        message,
-      }),
-    );
-  };
-
-  deleteCoverPhoto = (e) => {
-    e.preventDefault();
-    this.setState({ coverPhoto: '', coverFile: null });
-  };
-
   render() {
     const {
       name,

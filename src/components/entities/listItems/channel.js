@@ -7,13 +7,7 @@ import { isAdmin } from '../profileCards/components/clubActions';
 import Icon from 'src/components/icon';
 import { OutlineButton } from 'src/components/button';
 import Tooltip from 'src/components/tooltip';
-import {
-  ChannelRow,
-  ChannelContent,
-  Label,
-  Description,
-  ChannelActions,
-} from './style';
+import { ChannelRow, ChannelContent, Label, ChannelActions } from './style';
 
 const Channel = (props) => {
   const { channel, club, id, auth, name, children, isActive } = props;

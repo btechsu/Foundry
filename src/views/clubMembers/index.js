@@ -10,13 +10,6 @@ import {
   SectionTitle,
   Column,
 } from 'src/components/settingsViews/style';
-import {
-  Form,
-  FormTitle,
-  Description,
-  Actions,
-  TertiaryActionContainer,
-} from 'src/components/editForm/style';
 import { isSuperAdmin } from 'src/views/clubSettings/components/editForm';
 import { ErrorBoundary, SettingsFallback } from 'src/components/error';
 import { ErrorView } from 'src/views/viewHelpers';

@@ -6,7 +6,6 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { SectionCard, SectionTitle } from 'src/components/settingsViews/style';
 import { Filters, Filter } from '../style';
 import { ListContainer } from 'src/components/listItems/style';
-import { isSuperAdmin } from 'src/views/clubSettings/components/editForm';
 import MembersList from 'src/views/club/components/membersList';
 import { TeamMembersList } from 'src/views/club/components/teamMembersList';
 
@@ -39,7 +38,7 @@ class ClubMembers extends React.Component {
 
   render() {
     const { filter } = this.state;
-    const { id, club, auth } = this.props;
+    const { id, club } = this.props;
 
     return (
       <SectionCard>

@@ -10,6 +10,18 @@ import { Container, Heading, Subheading } from './style';
 import ClubList from './components/clubList';
 import Authorized from './components/authorized';
 
+export function isFoundryAdmin(email) {
+  if (
+    email === 'korlov9026@bths.edu' ||
+    email === 'mbilik0726@bths.edu' ||
+    email === 'iakram2586@bths.edu'
+  ) {
+    return true;
+  }
+
+  return false;
+}
+
 class Admin extends React.Component {
   componentDidMount() {
     this.dispatch = this.props.dispatch;

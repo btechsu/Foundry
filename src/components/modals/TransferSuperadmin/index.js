@@ -33,7 +33,7 @@ class TransferSuperadmin extends React.Component {
   submit = (e) => {
     e.preventDefault();
     const { email } = this.state;
-    const { id, club, firestore, auth } = this.props;
+    const { id, club, firestore, auth, dispatch } = this.props;
 
     const validEmail =
       isEmail(email, {
@@ -60,12 +60,14 @@ class TransferSuperadmin extends React.Component {
       .then((userDoc) => {
         if (userDoc.docs[0].empty) {
           this.setState({ isLoading: false });
-          throw `Could not find a user with the email ${email}`;
+          throw new Error(`Could not find a user with the email ${email}`);
         }
 
         if (!isAdmin(club, userDoc.docs[0].id)) {
           this.setState({ isLoading: false });
-          throw `The user with the email ${email} is not already an admin`;
+          throw new Error(
+            `The user with the email ${email} is not already an admin`,
+          );
         }
 
         const currentUserIsAdmin = isAdmin(club, auth.uid);

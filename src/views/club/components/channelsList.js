@@ -17,99 +17,7 @@ import {
   ChannelRow,
   ChannelContent,
   Label,
-  Description,
-  ChannelActions,
 } from 'src/components/entities/listItems/style';
-
-// const ChatTab = ({ location, community, currentUser }) =>
-//   !community.watercoolerId ? null : (
-//     <Route exact path={`/${community.slug}`}>
-//       {({ match }) => {
-//         const isActive = !!match && location.search.indexOf('tab=chat') > -1;
-//         return (
-//           <Link to={`/${community.slug}?tab=chat`}>
-//             <Row isActive={isActive}>
-//               <Content>
-//                 <Label>Chat</Label>
-//               </Content>
-//               <Actions>
-//                 {!currentUser ? (
-//                   <Icon glyph="view-forward" size={24} />
-//                 ) : (
-//                   <Query
-//                     query={getThreadByIdQuery}
-//                     variables={{ id: community.watercoolerId }}
-//                   >
-//                     {({ loading, error, data }) => {
-//                       if (data && data.thread) {
-//                         const showNotificationAction = !!data.thread.community
-//                           .communityPermissions.isMember;
-
-//                         if (!showNotificationAction)
-//                           return <Icon glyph="view-forward" size={24} />;
-
-//                         const tipText = data.thread.receiveNotifications
-//                           ? 'Mute chat notifications'
-//                           : 'Enable chat notifications';
-//                         const glyph = data.thread.receiveNotifications
-//                           ? 'notification'
-//                           : 'mute';
-
-//                         return (
-//                           <Mutation
-//                             mutation={toggleThreadNotificationsMutation}
-//                           >
-//                             {(toggleThreadNotifications, { loading }) => (
-//                               <Tooltip content={tipText}>
-//                                 <span
-//                                   style={{ marginLeft: '8px', display: 'flex' }}
-//                                 >
-//                                   {/* {!newActivity && !isActive && <NewActivityDot />} */}
-//                                   <OutlineButton
-//                                     disabled={loading}
-//                                     onClick={(e: any) => {
-//                                       e &&
-//                                         e.preventDefault() &&
-//                                         e.stopPropogation();
-//                                       toggleThreadNotifications({
-//                                         variables: {
-//                                           threadId: data.thread.id,
-//                                         },
-//                                       });
-//                                     }}
-//                                     style={{ padding: '4px' }}
-//                                     size={'small'}
-//                                   >
-//                                     <Icon
-//                                       style={{
-//                                         marginTop: '-1px',
-//                                       }}
-//                                       glyph={glyph}
-//                                       size={24}
-//                                     />
-//                                   </OutlineButton>
-//                                 </span>
-//                               </Tooltip>
-//                             )}
-//                           </Mutation>
-//                         );
-//                       }
-
-//                       if (loading) return <Spinner color="text.alt" />;
-
-//                       if (error) return <Icon glyph="view-forward" size={24} />;
-
-//                       return null;
-//                     }}
-//                   </Query>
-//                 )}
-//               </Actions>
-//             </Row>
-//           </Link>
-//         );
-//       }}
-//     </Route>
-//   );
 
 class Component extends React.Component {
   state = {
@@ -167,7 +75,7 @@ class Component extends React.Component {
             <ChannelRow>
               <Link to={`/${club.id || id}?tab=posts`}>
                 <ChannelContent>
-                  <Label title={name}># Club description</Label>
+                  <Label title={id}># Club description</Label>
                 </ChannelContent>
               </Link>
             </ChannelRow>

@@ -82,11 +82,13 @@ class EmailInvitationForm extends React.Component {
             this.setState({
               isLoading: false,
             });
-            throw `Could not find a user with the email ${element.email}`;
+            throw new Error(
+              `Could not find a user with the email ${element.email}`,
+            );
           }
 
           if (isAdmin(club, userDoc.docs[0].id)) {
-            throw `${element.email} is already an admin!`;
+            throw new Error(`${element.email} is already an admin!`);
           }
 
           return firestore

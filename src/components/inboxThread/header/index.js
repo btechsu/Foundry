@@ -7,9 +7,6 @@ import {
   MetaTitleText,
   MetaSubtitle,
   Divider,
-  MetaSubtitleLocked,
-  MetaSubtitleWatercooler,
-  MetaSubtitlePinned,
 } from './style';
 import Timestamp from './timestamp';
 

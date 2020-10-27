@@ -55,10 +55,7 @@ class EditClubModal extends React.Component {
   }
 
   render() {
-    const {
-      modalProps: { clubID, club, firestore },
-      isOpen,
-    } = this.props;
+    const { isOpen } = this.props;
 
     const styles = modalStyles(480);
 

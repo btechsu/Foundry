@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useLayoutEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import InboxThread from 'src/components/inboxThread';
@@ -15,14 +15,14 @@ const ThreadFeedPure = (props) => {
   // TODO: ADD INFINITE SCROLL
   const [posts, setPosts] = useState([]);
   const [lastPost, setLastPost] = useState(null);
-  const [prevChannel, setPrevChannel] = useState(channel);
+  const [prevChannel, setPrevChannel] = useState(props.channel);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const { firestore, club, channel, id, viewContext } = props;
   const { ref, inView } = useInView();
 
-  useEffect(() => { 
+  useEffect(() => {
     if (channel && !inView) {
       setLoading(true);
       var unsubscribe = firestore

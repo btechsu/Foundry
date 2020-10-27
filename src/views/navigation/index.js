@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
 import Tooltip from 'src/components/tooltip';
 import { isViewingMarketingPage } from 'src/helpers/is-viewing-marketing-page';
+import { isFoundryAdmin } from '../admin';
 import {
   Overlay,
   NavigationWrapper,
@@ -18,20 +19,20 @@ import {
 } from './style';
 import Icon from 'src/components/icon';
 import NavHead from './navHead';
-import NotificationsTab from './notificationsTab';
+// import NotificationsTab from './notificationsTab';
 import { Skip, getAccessibilityActiveState } from './accessibility';
 import ClubList from './clubList';
 import { NavigationContext } from 'src/helpers/navigation-context';
 import { MIN_WIDTH_TO_EXPAND_NAVIGATION } from 'src/components/layout';
 
 const Navigation = (props) => {
-  const { authed, isLoaded, history } = props;
-  const isMarketingPage = isViewingMarketingPage(history, authed);
+  const { auth, isLoaded, history } = props;
+  const isMarketingPage = isViewingMarketingPage(history, auth.uid);
   if (isMarketingPage) return null;
   const isWideViewport =
     window && window.innerWidth > MIN_WIDTH_TO_EXPAND_NAVIGATION;
 
-  if (isLoaded && !authed) {
+  if (isLoaded && !auth.uid) {
     return (
       <NavigationContext.Consumer>
         {({ navigationIsOpen, setNavigationIsOpen }) => (
@@ -102,7 +103,7 @@ const Navigation = (props) => {
     );
   }
 
-  if (isLoaded && authed) {
+  if (isLoaded && auth.uid) {
     return (
       <NavigationContext.Consumer>
         {({ navigationIsOpen, setNavigationIsOpen }) => (
@@ -117,9 +118,50 @@ const Navigation = (props) => {
 
             <NavigationGrid isOpen={navigationIsOpen}>
               <DesktopMenuIconsCover />
-              <Route path="/notifications">
+
+              {isFoundryAdmin(auth.email) && (
+                <React.Fragment>
+                  <Route path="/submissions">
+                    {({ match }) => (
+                      <Tooltip
+                        content="Submissions"
+                        placement={'left'}
+                        isEnabled={!isWideViewport}
+                      >
+                        <AvatarGrid
+                          isActive={
+                            match &&
+                            match.url === '/submissions' &&
+                            match.isExact
+                          }
+                        >
+                          <AvatarLink
+                            to={'/submissions'}
+                            data-cy="navigation-submissions"
+                            onClick={() => setNavigationIsOpen(false)}
+                            {...getAccessibilityActiveState(
+                              match &&
+                                match.url === '/submissions' &&
+                                match.isExact,
+                            )}
+                          >
+                            <IconWrapper>
+                              <Icon glyph="send" />
+                            </IconWrapper>
+
+                            <Label>Submissions</Label>
+                          </AvatarLink>
+                        </AvatarGrid>
+                      </Tooltip>
+                    )}
+                  </Route>
+                  <Divider />
+                </React.Fragment>
+              )}
+
+              {/* <Route path="/notifications">
                 {({ match }) => <NotificationsTab isActive={!!match} />}
-              </Route>
+              </Route> */}
 
               <Route path="/clubs">
                 {({ match }) => (
@@ -204,8 +246,7 @@ const Navigation = (props) => {
 export default compose(
   connect(({ firebase: { auth } }) => ({
     isLoaded: auth.isLoaded,
-    authed: auth.uid || false,
-    // logout: actions.signOut,
+    auth: auth,
   })),
   withRouter,
 )(Navigation);

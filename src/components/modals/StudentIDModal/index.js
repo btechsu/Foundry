@@ -109,8 +109,8 @@ class StudentIDModal extends React.Component {
         <ModalContainer title={'Set a student ID'} closeModal={this.close}>
           <Form>
             <Input
-              id="name"
-              defaultValue={name}
+              id="id"
+              defaultValue={id}
               onChange={this.changeID}
               autoFocus={true}
             >

@@ -28,7 +28,6 @@ class ThreadTimestamp extends React.Component {
     const { thread } = this.props;
 
     const now = new Date().getTime();
-    const then = thread.lastActive || thread.createdAt;
     let timestamp = timeDifferenceShort(now, thread.posted.toDate());
     if (timestamp.slice(-1) === 's') {
       timestamp = 'Just now';

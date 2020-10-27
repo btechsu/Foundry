@@ -1,6 +1,5 @@
 import React from 'react';
 import { useFirestore } from 'react-redux-firebase';
-import { openModal } from 'src/actions/modals';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import {
