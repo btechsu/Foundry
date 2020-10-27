@@ -12,7 +12,6 @@ import { Container } from './style';
 import NullState from './nullState';
 
 const ThreadFeedPure = (props) => {
-  // TODO: ADD INFINITE SCROLL
   const [posts, setPosts] = useState([]);
   const [lastPost, setLastPost] = useState(null);
   const [prevChannel, setPrevChannel] = useState(props.channel);
