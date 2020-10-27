@@ -31,11 +31,9 @@ const Component = (props) => {
       }),
     );
 
-  if (
-    !IsInClub(profile.approved, club.id || id) &&
-    !isAdmin(club, auth.uid)
-  )
+  if (!IsInClub(profile.approved, club.id || id) && !isAdmin(club, auth.uid)) {
     return null;
+  }
 
   return (
     <React.Fragment>

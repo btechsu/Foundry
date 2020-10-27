@@ -10,6 +10,7 @@ import CreateChannelModal from './CreateChannelModal';
 import EditChannelModal from './EditChannelModal';
 import TransferSuperadmin from './TransferSuperadmin';
 import StudentIDModal from './StudentIDModal';
+import SubmissionEditModal from './SubmissionEditModal';
 
 const MODAL_COMPONENTS = {
   SUBMIT_CLUB_MODAL: SubmitClubModal,
@@ -21,6 +22,7 @@ const MODAL_COMPONENTS = {
   EDIT_CHANNEL_MODAL: EditChannelModal,
   TRANSFER_SUPERADMIN: TransferSuperadmin,
   STUDENT_ID_MODAL: StudentIDModal,
+  SUBMISSION_EDIT_MODAL: SubmissionEditModal,
 };
 
 /*

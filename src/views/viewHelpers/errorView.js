@@ -21,7 +21,7 @@ export const ErrorView = (props) => {
           <Heading>{heading}</Heading>
           <Description>{subheading}</Description>
           <ActionsRow>
-            <OutlineButton href={'mailto:help@bths.social'}>
+            <OutlineButton href={'mailto:help@bths.live'}>
               Contact us
             </OutlineButton>
             <PrimaryButton to={'/'}>Go home</PrimaryButton>

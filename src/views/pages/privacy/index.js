@@ -26,7 +26,7 @@ class Terms extends React.Component {
 
           <Section>
             <SectionDescription>
-              At Foundry, accessible from https://bths.social, one of our main
+              At Foundry, accessible from https://bths.live, one of our main
               priorities is the privacy of our visitors. This Privacy Policy
               document contains types of information that is collected and
               recorded by Foundry and how we use it.

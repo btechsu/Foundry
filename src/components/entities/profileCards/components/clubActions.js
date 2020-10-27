@@ -6,6 +6,7 @@ import JoinClub from 'src/components/joinClubWrapper';
 import { ActionsRowContainer } from '../style';
 
 export const IsInClub = (clubsArray, clubID) => {
+  if (!clubsArray) return null;
   const check = clubsArray.filter((club) => club.id === clubID);
 
   if (check.length === 0) return false;
@@ -27,7 +28,7 @@ export const isAdmin = (club, userID) => {
 };
 
 export const UnconnectedClubActions = (props) => {
-  const { club, id, profile, auth, dispatch } = props;
+  const { club, id, profile, auth, dispatch, adminFeatures } = props;
 
   const [isHovering, setHover] = useState(false);
   const onMouseEnter = () => setHover(true);
@@ -43,7 +44,6 @@ export const UnconnectedClubActions = (props) => {
         buttonLabel: 'Leave Club',
       }),
     );
-
   const retractApplication = () =>
     dispatch(
       openModal('DELETE_DOUBLE_CHECK_MODAL', {
@@ -54,6 +54,24 @@ export const UnconnectedClubActions = (props) => {
         buttonLabel: 'Retract Application',
       }),
     );
+  const editClub = () =>
+    dispatch(
+      openModal('SUBMISSION_EDIT_MODAL', {
+        club: club,
+        id: id,
+        auth: auth,
+      }),
+    );
+
+  if (adminFeatures) {
+    return (
+      <ActionsRowContainer>
+        <PrimaryButton onClick={editClub} data-cy="pending-club-button">
+          Check club
+        </PrimaryButton>
+      </ActionsRowContainer>
+    );
+  }
 
   if (
     profile.isLoaded &&

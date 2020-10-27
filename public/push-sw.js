@@ -74,13 +74,13 @@ self.addEventListener('push', function(event) {
           includeUncontrolled: true,
         })
         .then(function(clientList) {
-          // If there is an open bths.social window navigate to the notification href
+          // If there is an open bths.live window navigate to the notification href
           if (clientList.length > 0) {
             return clientList[0]
               .focus()
               .then(client => client.navigate(urlToOpen));
           }
-          // If there's no open bths.social window open a new one
+          // If there's no open bths.live window open a new one
           // eslint-disable-next-line
           return self.clients.openWindow(urlToOpen);
         })

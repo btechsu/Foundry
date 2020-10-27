@@ -174,9 +174,21 @@ class DeleteDoubleCheckModal extends React.Component {
           });
       }
       case 'club': {
-        const { club, firestore } = this.props;
+        const { club, clubDoc, firestore } = this.props;
 
         this.setState({ isLoading: true });
+
+        clubDoc.admins.forEach((userDoc) => {
+          firestore
+            .collection('users')
+            .doc(userDoc.id)
+            .update({
+              approved: firestore.FieldValue.arrayRemove(
+                firestore.collection('clubs').doc(club),
+              ),
+            });
+        });
+
         return firestore
           .collection('clubs')
           .doc(club)

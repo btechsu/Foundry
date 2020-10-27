@@ -27,19 +27,18 @@ class Component extends React.Component {
             }));
           })
           .catch((err) => {
-            this.setState({ hasError: true, isLoading: false });
+            this.setState({ isLoading: false });
+            this.setState({ hasError: true });
           });
       });
     }
   }
 
-  componentWillUnmount() {
-
-  }
-
   render() {
     const { club, id, auth, hideTop } = this.props;
     const { users, isLoading, hasError } = this.state;
+
+    if (hasError) return null;
 
     if (isLoading || !auth.isLoaded)
       return (
@@ -50,8 +49,6 @@ class Component extends React.Component {
           <Loading style={{ padding: '32px' }} />
         </React.Fragment>
       );
-
-    if (hasError) return null;
 
     return (
       <React.Fragment>

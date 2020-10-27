@@ -55,11 +55,11 @@ const Feeds = (props) => {
         return (
           <InfoContainer>
             <SidebarSection style={{ paddingBottom: '16px' }}>
-              <ClubMeta club={club} id={club.id || id} />
+              <ClubMeta club={club} id={id} />
             </SidebarSection>
 
             <SidebarSection>
-              <ChannelsList id={club.id || id} club={club} />
+              <ChannelsList id={ id} club={club} />
             </SidebarSection>
 
             <SidebarSection>

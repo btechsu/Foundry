@@ -74,7 +74,7 @@ class SubmitClubEditor extends React.Component {
           cover: prevPage.cover,
           pfp: prevPage.pfp,
           admins: [],
-          superadmin: firestore.collection('users').doc(user.uid),
+          superAdmin: firestore.collection('users').doc(user.uid),
         });
 
       this.setState({ isLoading: false });

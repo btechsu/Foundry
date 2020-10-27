@@ -10,25 +10,44 @@ import {
 } from '../style';
 
 export const ClubMeta = (props) => {
-  const { club, id } = props;
+  const { club, id, adminFeatures } = props;
 
   return (
     <MetaContainer>
-      <Link to={`/${club.id || id}`}>
+      {adminFeatures ? (
         <Name>{club.name}</Name>
-      </Link>
+      ) : (
+        <Link to={`/${club.id || id}`}>
+          <Name>{club.name}</Name>
+        </Link>
+      )}
 
       {club.description && <Description>{club.description}</Description>}
 
       <MetaLinksContainer>
         {club.room && club.time && (
           <React.Fragment>
-            <MetaRow as={Link} to={`/${club.id || id}`}>
-              <Icon glyph={'home'} size={20} /> {club.room}
-            </MetaRow>
-            <MetaRow as={Link} to={`/${club.id || id}`}>
-              <Icon glyph={'pin'} size={20} /> {`${club.days} @ ${club.time}`}
-            </MetaRow>
+            {adminFeatures ? (
+              <React.Fragment>
+                <MetaRow>
+                  <Icon glyph={'home'} size={20} /> {club.room}
+                </MetaRow>
+                <MetaRow>
+                  <Icon glyph={'pin'} size={20} />{' '}
+                  {`${club.days} @ ${club.time}`}
+                </MetaRow>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                <MetaRow as={Link} to={`/${club.id || id}`}>
+                  <Icon glyph={'home'} size={20} /> {club.room}
+                </MetaRow>
+                <MetaRow as={Link} to={`/${club.id || id}`}>
+                  <Icon glyph={'pin'} size={20} />{' '}
+                  {`${club.days} @ ${club.time}`}
+                </MetaRow>
+              </React.Fragment>
+            )}
           </React.Fragment>
         )}
       </MetaLinksContainer>

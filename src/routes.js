@@ -40,7 +40,7 @@ const Pages = Loadable({
 
 const Submissions = Loadable({
   loader: () =>
-    import('src/views/submissions' /* webpackChunkName: "Submissions" */),
+    import('src/views/submissionsProto' /* webpackChunkName: "Submissions" */),
   loading: ({ isLoading }) => isLoading && <LoadingView />,
 });
 
@@ -167,15 +167,15 @@ class Routes extends React.Component {
                     {/* App Pages */}
                     <Route path="/login" component={LoginFallback} />
                     <Route path="/new/user" component={NewUserFallback} />
-                    <Route
-                      path="/:clubSlug/settings"
-                      component={ClubSettingsFallback}
-                    />
                     <Route path="/clubs" component={Clubs} />
                     <Route path="/admin" component={AdminRedirectFallback} />
                     <Route
                       path="/submissions"
                       component={SubmissionsRedirectFallback}
+                    />
+                    <Route
+                      path="/:clubSlug/settings"
+                      component={ClubSettingsFallback}
                     />
                     <Route path="/new/club" component={SubmitClubFallback} />
                     <Route path="/new/thread" component={ComposerFallback} />

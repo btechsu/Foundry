@@ -12,6 +12,7 @@ class Avatar extends React.Component {
       mobilesize,
       style,
       id,
+      adminFeatures,
     } = this.props;
 
     const src = club.pfp;
@@ -27,7 +28,7 @@ class Avatar extends React.Component {
         type={'club'}
       >
         <ConditionalWrap
-          condition={isClickable}
+          condition={adminFeatures ? false : isClickable}
           wrap={(children) => (
             <AvatarLink to={`/${club.id || id}`}>{children}</AvatarLink>
           )}

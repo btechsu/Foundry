@@ -272,11 +272,11 @@ class EditForm extends React.Component {
             Name
           </Input>
           <UnderlineInput defaultValue={slug} disabled>
-            bths.social/
+            bths.live/
           </UnderlineInput>
 
           {nameError && (
-            <Error>Community names can be up to 20 characters long.</Error>
+            <Error>Club names can be up to 20 characters long.</Error>
           )}
 
           <TextArea
@@ -370,6 +370,7 @@ class EditForm extends React.Component {
                         this.props.dispatch(
                           openModal('DELETE_DOUBLE_CHECK_MODAL', {
                             club: id,
+                            clubDoc: club,
                             entity: 'club',
                             message: (
                               <div>
@@ -383,7 +384,7 @@ class EditForm extends React.Component {
                                 </p>
                               </div>
                             ),
-                            buttonLabel: 'Delete Channel',
+                            buttonLabel: 'Delete Club',
                           }),
                         )
                       }

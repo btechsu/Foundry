@@ -359,7 +359,7 @@ class SubmitClubForm extends React.Component {
             onChange={this.changeSlug}
             dataCy="club-slug-input"
           >
-            bths.social/
+            bths.live/
           </UnderlineInput>
 
           {slugTaken && (
