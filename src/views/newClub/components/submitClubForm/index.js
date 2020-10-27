@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { withFirestore } from 'react-redux-firebase';
 import slugg from 'slugg';
-import { Notice } from 'src/components/listItems/style';
 import { throttle } from 'src/helpers/utils';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import { CLUB_SLUG_DENY_LIST } from 'shared/slug-deny-lists';
@@ -13,25 +12,15 @@ import {
   whiteSpaceRegex,
   oddHyphenRegex,
 } from 'src/views/viewHelpers/textValidationHelper';
-import Icon from 'src/components/icon';
 import { StyledLabel } from 'src/components/formElements/style';
 import {
   Input,
   UnderlineInput,
   TextArea,
-  PhotoInput,
-  CoverInput,
   Error,
   Checkbox,
 } from 'src/components/formElements';
-import {
-  ImageInputWrapper,
-  Spacer,
-  DeleteCoverWrapper,
-  DeleteCoverButton,
-  MetaWrapper,
-  RequiredSelector,
-} from './style';
+import { Spacer, MetaWrapper, RequiredSelector } from './style';
 import { FormContainer, Form, Actions } from '../../style';
 
 class SubmitClubForm extends React.Component {
@@ -47,10 +36,10 @@ class SubmitClubForm extends React.Component {
       days: '',
       time: '',
       type: '',
-      image: '',
-      coverPhoto: '',
-      file: null,
-      coverFile: null,
+      pfp: '',
+      cover: '',
+      pfpError: null,
+      coverError: null,
       slugTaken: false,
       slugError: false,
       descriptionError: false,
@@ -59,7 +48,6 @@ class SubmitClubForm extends React.Component {
       nameError: false,
       createError: false,
       agreeCoC: false,
-      photoSizeError: false,
     };
 
     this.checkSlug = throttle(this.checkSlug, 1000);
@@ -193,7 +181,7 @@ class SubmitClubForm extends React.Component {
       agreeCoC: !value,
     });
   };
-  
+
   changeTime = (e) => {
     const time = e.target.value;
 
@@ -229,61 +217,24 @@ class SubmitClubForm extends React.Component {
     else return this.setState({ creditsError: true });
   };
 
-  setClubPhoto = (e) => {
-    let reader = new FileReader();
-    let file = e.target.files[0];
+  changePfp = (e) => {
+    const url = e.target.value;
 
-    if (!file) return;
+    const urlRegex = /(?:(?:https?:\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/=]*(\.jpg|\.png|\.jpeg))/g;
+    const isValid = urlRegex.test(url);
 
-    if (file.size > 3000000) {
-      return this.setState({
-        photoSizeError: true,
-      });
-    }
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        // $FlowFixMe
-        image: reader.result,
-        photoSizeError: false,
-      });
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    if (isValid) return this.setState({ pfpError: false, pfp: url });
+    else return this.setState({ pfpError: true });
   };
 
-  setClubCover = (e) => {
-    let reader = new FileReader();
-    let file = e.target.files[0];
+  changeCover = (e) => {
+    const url = e.target.value;
 
-    if (!file) return;
+    const urlRegex = /(?:(?:https?:\/\/))[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,4}\b(?:[-a-zA-Z0-9@:%_\+.~#?&\/=]*(\.jpg|\.png|\.jpeg))/g;
+    const isValid = urlRegex.test(url);
 
-    if (file.size > 3000000) {
-      return this.setState({
-        photoSizeError: true,
-      });
-    }
-
-    reader.onloadend = () => {
-      this.setState({
-        coverFile: file,
-        // $FlowFixMe
-        coverPhoto: reader.result,
-        photoSizeError: false,
-      });
-    };
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
-  };
-
-  deleteCoverPhoto = (e) => {
-    e.preventDefault();
-    this.setState({ coverPhoto: '', coverFile: null });
+    if (isValid) return this.setState({ coverError: false, cover: url });
+    else return this.setState({ coverError: true });
   };
 
   create = (e) => {
@@ -301,7 +252,6 @@ class SubmitClubForm extends React.Component {
       creditsError,
       timeError,
       descriptionError,
-      photoSizeError,
       createError,
       agreeCoC,
     } = this.state;
@@ -315,7 +265,6 @@ class SubmitClubForm extends React.Component {
       descriptionError ||
       timeError ||
       creditsError ||
-      photoSizeError ||
       !room ||
       !days ||
       !time ||
@@ -350,8 +299,10 @@ class SubmitClubForm extends React.Component {
       days,
       time,
       type,
-      image,
-      coverPhoto,
+      pfp,
+      pfpError,
+      cover,
+      coverError,
       slugTaken,
       slugError,
       descriptionError,
@@ -360,39 +311,30 @@ class SubmitClubForm extends React.Component {
       nameError,
       createError,
       agreeCoC,
-      photoSizeError,
     } = this.state;
 
     return (
       <FormContainer>
         <Form>
-          <ImageInputWrapper>
-            {coverPhoto && !/default_images/.test(coverPhoto) && (
-              <DeleteCoverWrapper>
-                <DeleteCoverButton onClick={(e) => this.deleteCoverPhoto(e)}>
-                  <Icon glyph="view-close-small" size={'16'} />
-                </DeleteCoverButton>
-              </DeleteCoverWrapper>
-            )}
-            <CoverInput
-              onChange={this.setClubCover}
-              defaultValue={coverPhoto}
-              preview={true}
-              allowGif
-            />
+          <MetaWrapper half>
+            <Input
+              defaultValue={pfp}
+              onChange={this.changePfp}
+              dataCy="club-pfp-input"
+            >
+              Club profile picture
+            </Input>
+            <Input
+              defaultValue={cover}
+              onChange={this.changeCover}
+              dataCy="club-cover-input"
+            >
+              Cover picture
+            </Input>
+          </MetaWrapper>
 
-            <PhotoInput
-              type={'club'}
-              onChange={this.setClubPhoto}
-              defaultValue={image}
-            />
-          </ImageInputWrapper>
-
-          {photoSizeError && (
-            <Notice style={{ marginTop: '32px' }}>
-              Photo uploads should be less than 3mb
-            </Notice>
-          )}
+          {pfpError && <Error>Invalid profile picture url</Error>}
+          {coverError && <Error>Invalid cover picture url</Error>}
 
           <Spacer height={8} />
 

@@ -149,13 +149,13 @@ export const PrivacyOptionText = styled.p`
 
 export const MetaWrapper = styled.div`
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: ${props => props.half ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)'};
   grid-template-rows: 1fr;
   grid-gap: 10px;
 
   @media (max-width: ${MEDIA_BREAK - 300}px) {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, 1fr);
+    grid-template-rows: ${props => props.half ? 'repeat(2, 1fr)' : 'repeat(5, 1fr)'};
   }
 `;
 
