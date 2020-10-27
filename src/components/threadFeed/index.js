@@ -77,7 +77,8 @@ const ThreadFeedPure = (props) => {
     }
   }, [inView]);
 
-  if ((loading && channel !== prevChannel) || posts.length === 0) {
+  console.log(loading);
+  if (loading && channel !== prevChannel) {
     return (
       <Container>
         <LoadingInboxThread />
@@ -94,14 +95,7 @@ const ThreadFeedPure = (props) => {
     );
   }
 
-  if (
-    posts.length === 0 &&
-    !loading &&
-    !error &&
-    club &&
-    !channel &&
-    club.text
-  ) {
+  if (!loading && !error && !channel && club.text) {
     return (
       <Container data-cy="thread-feed" style={{ padding: '36px 24px' }}>
         <ThreadRenderer body={JSON.parse(club.text)} />
