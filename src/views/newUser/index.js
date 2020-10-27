@@ -35,7 +35,8 @@ class NewUser extends React.Component {
           <LargeTitle>Sign up</LargeTitle>
           <LargeSubtitle>
             New accounts on Foundry can only be created by signing up with your
-            Brooklyn Tech email.
+            Brooklyn Tech email. Please use your @bths.edu email, otherwise your
+            account will be deleted.
           </LargeSubtitle>
 
           <LoginButtonSet newUser onClick={signUp} loading={loading} />

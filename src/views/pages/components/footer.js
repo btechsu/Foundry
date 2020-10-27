@@ -28,13 +28,6 @@ export default () => {
             >
               <Icon glyph="github" hoverColor={'text.reverse'} />
             </a>
-            <a
-              href="https://twitter.com/btechsu"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Icon glyph="twitter" hoverColor={'text.reverse'} />
-            </a>
           </SocialLinks>
         </Masthead>
         <Apps>
@@ -49,20 +42,26 @@ export default () => {
           <a
             target="_blank"
             rel="noopener noreferrer"
-            href="http://mattbilik.tech/"
+            href="https://ismaeelakram.com"
+          >
+            Ismaeel Akram
+          </a>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="http://mattbilik.tech"
           >
             Matthew Bilik
           </a>
         </Apps>
         <Support>
           <span>Support</span>
-          <Link to={`/clubs`}>Community</Link>
+          <Link to={`/clubs`}>Clubs</Link>
           <a href="mailto:brooklyntechfoundry@gmail.com">Email support</a>
         </Support>
         <Safety>
           <span>Safety</span>
           <Link to={`/privacy`}>Privacy Statement</Link>
-          <Link to={`/terms`}>Terms of Service</Link>
         </Safety>
       </FooterGrid>
     </Footer>

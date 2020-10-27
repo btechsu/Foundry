@@ -389,4 +389,6 @@ export const ProfileCardWrapper = styled.section`
   border: 1px solid ${theme.bg.border};
   border-radius: 4px;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 `;
