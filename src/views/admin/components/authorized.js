@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getFirebase } from 'react-redux-firebase';
 import { Container, Heading, Subheading } from '../style';
+import { isFoundryAdmin } from '../index';
 
 export default function Authorized(props) {
   let unauthorized = (
@@ -27,15 +28,8 @@ export default function Authorized(props) {
         if (currentUser === null) {
           setContent(notLoggedIn);
         } else {
-          if (
-            currentUser.email === 'korlov9026@bths.edu' ||
-            currentUser.email === 'mbilik0726@bths.edu' ||
-            currentUser.email === 'iakram2586@bths.edu'
-          ) {
-            setContent(props.children);
-          } else {
-            setContent(unauthorized);
-          }
+          if (isFoundryAdmin(currentUser.email)) setContent(props.children);
+          else setContent(unauthorized);
         }
       });
   }, []);
