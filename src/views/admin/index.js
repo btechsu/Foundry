@@ -14,7 +14,8 @@ export function isFoundryAdmin(email) {
   if (
     email === 'korlov9026@bths.edu' ||
     email === 'mbilik0726@bths.edu' ||
-    email === 'iakram2586@bths.edu'
+    email === 'iakram2586@bths.edu' ||
+    email === 'aseylanov9340@bths.edu'
   ) {
     return true;
   }
