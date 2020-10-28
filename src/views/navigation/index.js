@@ -1,5 +1,4 @@
 import React from 'react';
-// import * as actions from 'src/actions/auth';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
