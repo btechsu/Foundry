@@ -6,7 +6,7 @@ import { ErrorBoundary } from 'src/components/error';
 import { Loading } from 'src/components/loading';
 import { UserListItem } from 'src/components/entities';
 import Icon from 'src/components/icon';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Tooltip from 'src/components/tooltip';
 import { WhiteIconButton } from 'src/components/button';
 import { List, SidebarSectionHeader, SidebarSectionHeading } from '../style';

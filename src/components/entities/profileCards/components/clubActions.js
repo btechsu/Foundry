@@ -4,28 +4,7 @@ import { PrimaryButton, OutlineButton } from 'src/components/button';
 import { openModal } from 'src/actions/modals';
 import JoinClub from 'src/components/joinClubWrapper';
 import { ActionsRowContainer } from '../style';
-
-export const IsInClub = (clubsArray, clubID) => {
-  if (!clubsArray) return null;
-  const check = clubsArray.filter((club) => club.id === clubID);
-
-  if (check.length === 0) return false;
-  else return true;
-};
-export const isAdmin = (club, userID) => {
-  if (club.admins || club.superAdmin) {
-    const adminArray = club.admins;
-    const superAdmin = club.superAdmin && club.superAdmin.id;
-    const check = adminArray.filter((admin) => admin.id === userID);
-    const check2 = superAdmin === userID;
-
-    if (check.length > 0) return true;
-    else if (check2) return true;
-    else return false;
-  }
-
-  return false;
-};
+import {isInClub, isAdmin} from 'src/helpers/permissions'
 
 export const UnconnectedClubActions = (props) => {
   const { club, id, profile, auth, dispatch, adminFeatures } = props;
@@ -77,7 +56,7 @@ export const UnconnectedClubActions = (props) => {
     profile.isLoaded &&
     !profile.isEmpty &&
     profile.approved &&
-    IsInClub(profile.approved, club.id || id)
+    isInClub(profile.approved, club.id || id)
   ) {
     return (
       <ActionsRowContainer>
@@ -103,7 +82,7 @@ export const UnconnectedClubActions = (props) => {
     profile.isLoaded &&
     !profile.isEmpty &&
     profile.pending &&
-    IsInClub(profile.pending, club.id || id)
+    isInClub(profile.pending, club.id || id)
   ) {
     return (
       <ActionsRowContainer>

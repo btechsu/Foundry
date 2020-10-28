@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter, Route } from 'react-router-dom';
 import Tooltip from 'src/components/tooltip';
 import { isViewingMarketingPage } from 'src/helpers/is-viewing-marketing-page';
-import { isFoundryAdmin } from '../admin';
+import { isFoundryAdmin } from 'src/helpers/permissions';
 import {
   Overlay,
   NavigationWrapper,

@@ -3,7 +3,7 @@ import { Manager, Reference, Popper } from 'react-popper';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { openModal } from 'src/actions/modals';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Flyout from 'src/components/flyout';
 import OutsideClickHandler from 'src/components/outsideClickHandler';
 import Icon from 'src/components/icon';

@@ -7,10 +7,7 @@ import { addToastWithTimeout } from 'src/actions/toasts';
 import { UserAvatar } from 'src/components/avatar';
 import { useFirestore } from 'react-redux-firebase';
 import { isSuperAdmin } from 'src/views/clubSettings/components/editForm';
-import {
-  IsInClub,
-  isAdmin,
-} from 'src/components/entities/profileCards/components/clubActions';
+import { isInClub, isAdmin } from 'src/helpers/permissions';
 import ConditionalWrap from 'src/components/conditionalWrap';
 import { OutlineButton, PrimaryButton } from 'src/components/button';
 import {
@@ -130,7 +127,7 @@ const User = (props) => {
         <Actions>
           <ConditionalWrap
             condition={
-              isAdmin(club, auth.uid) && IsInClub(userObject.pending, clubId)
+              isAdmin(club, auth.uid) && isInClub(userObject.pending, clubId)
             }
             wrap={() => (
               <React.Fragment>
@@ -174,7 +171,7 @@ const User = (props) => {
           <ConditionalWrap
             condition={
               isAdmin(club, auth.uid) &&
-              IsInClub(userObject.approved, clubId) &&
+              isInClub(userObject.approved, clubId) &&
               !isAdmin(club, id)
             }
             wrap={() => (

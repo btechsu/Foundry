@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import compose from 'recompose/compose';
 import { withRouter } from 'react-router';
 import isEmail from 'validator/lib/isEmail';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import { closeModal } from 'src/actions/modals';
 import { addToastWithTimeout } from 'src/actions/toasts';
 import { firestoreConnect } from 'react-redux-firebase';

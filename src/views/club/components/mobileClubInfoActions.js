@@ -5,8 +5,8 @@ import { openModal } from 'src/actions/modals';
 import Icon from 'src/components/icon';
 import {
   isAdmin,
-  IsInClub,
-} from 'src/components/entities/profileCards/components/clubActions';
+  isInClub,
+} from 'src/helpers/permissions';
 import {
   SidebarSectionHeader,
   SidebarSectionHeading,
@@ -31,7 +31,7 @@ const Component = (props) => {
       }),
     );
 
-  if (!IsInClub(profile.approved, club.id || id) && !isAdmin(club, auth.uid)) {
+  if (!isInClub(profile.approved, club.id || id) && !isAdmin(club, auth.uid)) {
     return null;
   }
 

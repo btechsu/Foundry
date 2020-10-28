@@ -8,19 +8,7 @@ import { ViewGrid } from 'src/components/layout';
 import { setTitlebarProps } from 'src/actions/titlebar';
 import { Container, Heading, Subheading } from './style';
 import ClubList from './components/clubList';
-
-export function isFoundryAdmin(email) {
-  if (
-    email === 'korlov9026@bths.edu' ||
-    email === 'mbilik0726@bths.edu' ||
-    email === 'iakram2586@bths.edu' ||
-    email === 'aseylanov9340@bths.edu'
-  ) {
-    return true;
-  }
-
-  return false;
-}
+import { isFoundryAdmin } from 'src/helpers/permissions';
 
 class Admin extends React.Component {
   componentDidMount() {
@@ -38,7 +26,7 @@ class Admin extends React.Component {
         <Head title={title} description={description} />
         <ViewGrid data-cy="admin-page">
           <ErrorBoundary>
-            {isFoundryAdmin(this.props.auth.uid) && (
+            {isFoundryAdmin(this.props.auth.email) && (
               <Container>
                 <Heading>Admin</Heading>
                 <Subheading>Panel to manage clubs.</Subheading>

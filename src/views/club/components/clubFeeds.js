@@ -8,7 +8,7 @@ import { MobileClubInfoActions } from './mobileClubInfoActions';
 import { ChannelsList } from './channelsList';
 import { ClubMeta } from 'src/components/entities/profileCards/components/clubMeta';
 import { PostsFeeds } from './postsFeeds';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import { SegmentedControl, Segment } from 'src/components/segmentedControl';
 import { useAppScroller } from 'src/hooks/useAppScroller';
 import usePrevious from 'src/hooks/usePrevious';
@@ -59,7 +59,7 @@ const Feeds = (props) => {
             </SidebarSection>
 
             <SidebarSection>
-              <ChannelsList id={ id} club={club} />
+              <ChannelsList id={id} club={club} />
             </SidebarSection>
 
             <SidebarSection>

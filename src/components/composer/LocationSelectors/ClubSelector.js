@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import compose from 'recompose/compose';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import AvailableClubsDropdown from './AvailableClubDropdown';
 
 const CommunitySelector = (props) => {

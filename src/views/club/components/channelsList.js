@@ -5,7 +5,7 @@ import compose from 'recompose/compose';
 import { Link } from 'react-router-dom';
 import { firestoreConnect } from 'react-redux-firebase';
 import { ErrorBoundary } from 'src/components/error';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Icon from 'src/components/icon';
 import { Loading } from 'src/components/loading';
 import Tooltip from 'src/components/tooltip';

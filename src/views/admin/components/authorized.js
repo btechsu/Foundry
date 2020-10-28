@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getFirebase } from 'react-redux-firebase';
 import { Container, Heading, Subheading } from '../style';
-import { isFoundryAdmin } from '../index';
+import { isFoundryAdmin } from 'src/helpers/permissions';
 
 export default function Authorized(props) {
   let unauthorized = (

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { PrimaryButton, OutlineButton } from 'src/components/button';
-import { IsInClub } from 'src/components/entities/profileCards/components/clubActions';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isInClub } from 'src/helpers/permissions';
+import { isAdmin } from 'src/helpers/permissions';
 import getComposerLink from 'src/helpers/get-composer-link';
 import JoinClub from 'src/components/joinClubWrapper';
 
@@ -14,7 +14,7 @@ const MobileClub = (props) => {
     profile.isLoaded &&
     !profile.isEmpty &&
     profile.approved &&
-    IsInClub(profile.approved, club.id || id)
+    isInClub(profile.approved, club.id || id)
   ) {
     if (isAdmin(club, auth.uid)) {
       return (
@@ -37,7 +37,7 @@ const MobileClub = (props) => {
     profile.isLoaded &&
     !profile.isEmpty &&
     profile.pending &&
-    IsInClub(profile.pending, club.id || id)
+    isInClub(profile.pending, club.id || id)
   ) {
     return null;
   }

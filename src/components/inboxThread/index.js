@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Header from './header';
 import {
   InboxThreadItem,
@@ -60,7 +60,12 @@ const InboxThread = (props) => {
         </Column>
 
         {auth.uid && isAdmin(club, auth.uid) && (
-          <ThreadControls thread={thread} club={club} id={id} channel={channel} />
+          <ThreadControls
+            thread={thread}
+            club={club}
+            id={id}
+            channel={channel}
+          />
         )}
       </InboxThreadContent>
     </InboxThreadItem>

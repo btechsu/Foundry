@@ -1,7 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import SubmitClubModal from './submitClub';
 import LoginModal from './LoginModal';
 import DeleteDoubleCheckModal from './DeleteDoubleCheckModal';
 import EditClubModal from './EditClubModal';
@@ -13,7 +12,6 @@ import StudentIDModal from './StudentIDModal';
 import SubmissionEditModal from './SubmissionEditModal';
 
 const MODAL_COMPONENTS = {
-  SUBMIT_CLUB_MODAL: SubmitClubModal,
   LOGIN_MODAL: LoginModal,
   DELETE_DOUBLE_CHECK_MODAL: DeleteDoubleCheckModal,
   EDIT_CLUB_MODAL: EditClubModal,

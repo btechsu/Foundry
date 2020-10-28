@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import compose from 'recompose/compose';
 import { Loading } from 'src/components/loading';
 import { ErrorView } from 'src/views/viewHelpers';
-import { isFoundryAdmin } from 'src/views/admin';
+import { isFoundryAdmin } from 'src/helpers/permissions';
 import { SubmissionList } from './components/list';
 
 const SubmissionsProto = (props) => {

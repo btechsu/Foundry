@@ -3,7 +3,7 @@ import compose from 'recompose/compose';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ThreadFeed from 'src/components/threadFeed';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import MiniComposer from 'src/components/composerMini';
 
 const Posts = (props) => {

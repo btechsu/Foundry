@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import querystring from 'query-string';
 import { firestoreConnect } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import { MobileClubInfoActions } from 'src/views/club/components/mobileClubInfoActions';
 import { ChannelsList } from 'src/views/club/components/channelsList';
 import { ClubMeta } from 'src/components/entities/profileCards/components/clubMeta';

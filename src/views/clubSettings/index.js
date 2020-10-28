@@ -10,7 +10,7 @@ import { ErrorView, LoadingView } from 'src/views/viewHelpers';
 import { ViewGrid } from 'src/components/layout';
 import { setTitlebarProps } from 'src/actions/titlebar';
 import { firestoreConnect } from 'react-redux-firebase';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Members from '../clubMembers';
 import Overview from './components/overview';
 

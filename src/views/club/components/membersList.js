@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import { ErrorBoundary } from 'src/components/error';
 import { useFirestore } from 'react-redux-firebase';
 import { useInView } from 'react-intersection-observer';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import { Card } from 'src/components/card';
 import { Loading } from 'src/components/loading';
 import ViewError from 'src/components/viewError';

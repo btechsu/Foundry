@@ -7,7 +7,7 @@ import isEmail from 'validator/lib/isEmail';
 import { OutlineButton } from 'src/components/button';
 import { Error } from '../formElements';
 import { SectionCardFooter } from 'src/components/settingsViews/style';
-import { isAdmin } from 'src/components/entities/profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import { firestoreConnect } from 'react-redux-firebase';
 import { EmailInviteForm, EmailInviteInput, Action, RemoveRow } from './style';
 

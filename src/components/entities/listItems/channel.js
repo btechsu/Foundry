@@ -3,7 +3,7 @@ import compose from 'recompose/compose';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { ErrorBoundary } from 'src/components/error';
-import { isAdmin } from '../profileCards/components/clubActions';
+import { isAdmin } from 'src/helpers/permissions';
 import Icon from 'src/components/icon';
 import { OutlineButton } from 'src/components/button';
 import Tooltip from 'src/components/tooltip';
