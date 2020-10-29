@@ -19,8 +19,15 @@ import {
   TextArea,
   Error,
   Checkbox,
+  CoverInput,
+  PhotoInput,
 } from 'src/components/formElements';
-import { Spacer, MetaWrapper, RequiredSelector } from './style';
+import {
+  Spacer,
+  MetaWrapper,
+  RequiredSelector,
+  ImageInputWrapper,
+} from './style';
 import { FormContainer, Form, Actions } from '../../style';
 
 class SubmitClubForm extends React.Component {
@@ -317,20 +324,22 @@ class SubmitClubForm extends React.Component {
       <FormContainer>
         <Form>
           <MetaWrapper half>
-            <Input
-              defaultValue={pfp}
-              onChange={this.changePfp}
-              dataCy="club-pfp-input"
-            >
-              Club profile picture
-            </Input>
-            <Input
-              defaultValue={cover}
-              onChange={this.changeCover}
-              dataCy="club-cover-input"
-            >
-              Cover picture
-            </Input>
+            <ImageInputWrapper>
+              <CoverInput defaultValue={this.state.cover} />
+              <PhotoInput defaultValue={this.state.pfp} />
+            </ImageInputWrapper>
+            <div>
+              <Input
+                autoFocus={!(window.innerWidth < 768)}
+                onChange={this.changeCover}
+                dataCy="club-cover-input"
+              >
+                Cover picture
+              </Input>
+              <Input onChange={this.changePfp} dataCy="club-pfp-input">
+                Profile picture
+              </Input>
+            </div>
           </MetaWrapper>
 
           {pfpError && <Error>Invalid profile picture url</Error>}
@@ -341,7 +350,6 @@ class SubmitClubForm extends React.Component {
           <Input
             defaultValue={name}
             onChange={this.changeName}
-            autoFocus={!(window.innerWidth < 768)}
             dataCy="club-name-input"
           >
             What is your club called?

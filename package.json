@@ -17,7 +17,6 @@
     "draft-js-markdown-plugin": "^3.0.5",
     "draft-js-plugins-editor": "^2.1.1",
     "firebase": "^7.18.0",
-    "formik": "^2.1.5",
     "history": "^4.6.1",
     "markdown-draft-js": "^2.2.1",
     "offline-plugin": "^5.0.5",
@@ -50,8 +49,7 @@
     "slugg": "^1.2.1",
     "striptags": "2.x",
     "styled-components": "^5.1.1",
-    "validator": "^9.4.1",
-    "yup": "^0.29.3"
+    "validator": "^9.4.1"
   },
   "resolution": {
     "draft-js": "npm:draft-js-fork-mxstbr"

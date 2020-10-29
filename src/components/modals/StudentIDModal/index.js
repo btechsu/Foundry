@@ -107,7 +107,7 @@ class StudentIDModal extends React.Component {
           the action to the 'close' icon in the top right corner of all modals
         */}
         <ModalContainer title={'Set a student ID'} closeModal={this.close}>
-          <Form>
+          <Form onSubmit={this.submit}>
             <Input
               id="id"
               defaultValue={id}
@@ -129,6 +129,7 @@ class StudentIDModal extends React.Component {
                 disabled={!id || idError}
                 loading={loading}
                 onClick={this.submit}
+                type="submit"
               >
                 {loading ? 'Updating...' : 'Set student ID'}
               </PrimaryOutlineButton>

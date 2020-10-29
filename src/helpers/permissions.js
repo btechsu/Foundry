@@ -24,7 +24,6 @@ export function isAdmin(club, userID) {
 }
 
 export function isFoundryAdmin(email) {
-  console.log(email);
   if (
     email === 'korlov9026@bths.edu' ||
     email === 'mbilik0726@bths.edu' ||

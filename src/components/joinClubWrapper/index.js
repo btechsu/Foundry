@@ -16,34 +16,33 @@ const JoinClub = (props) => {
     }
 
     if (!profile.studentId) {
-      dispatch(
+      await dispatch(
         openModal('STUDENT_ID_MODAL', {
           auth: auth,
         }),
       );
-    } else {
-      try {
-        profile.pending
-          ? await firebase.updateProfile({
-              pending: [
-                ...profile.pending,
-                firestore.doc(`clubs/${club.id || id}`),
-              ],
-            })
-          : await firebase.updateProfile({
-              pending: [firestore.doc(`clubs/${club.id || id}`)],
-            });
+    }
+    try {
+      profile.pending
+        ? await firebase.updateProfile({
+            pending: [
+              ...profile.pending,
+              firestore.doc(`clubs/${club.id || id}`),
+            ],
+          })
+        : await firebase.updateProfile({
+            pending: [firestore.doc(`clubs/${club.id || id}`)],
+          });
 
-        dispatch(
-          addToastWithTimeout(
-            'success',
-            `You have submitted an application for ${club.name}!`,
-          ),
-        );
-      } catch (err) {
-        dispatch(addToastWithTimeout('error', err.message));
-        return setIsLoading(false);
-      }
+      dispatch(
+        addToastWithTimeout(
+          'success',
+          `You have submitted an application for ${club.name}!`,
+        ),
+      );
+    } catch (err) {
+      dispatch(addToastWithTimeout('error', err.message));
+      return setIsLoading(false);
     }
   };
 

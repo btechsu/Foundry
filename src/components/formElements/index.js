@@ -50,9 +50,9 @@ export const PhotoInput = (props) => {
 
   return (
     <PhotoInputLabel type={type} size={size}>
-      <InputOverlay type={type} size={size} visible={visible}>
+      {/* <InputOverlay type={type} size={size} visible={visible}>
         <Icon glyph="photo" />
-      </InputOverlay>
+      </InputOverlay> */}
 
       <PhotoInputImage
         type={type}
@@ -61,7 +61,7 @@ export const PhotoInput = (props) => {
         size={size}
       />
 
-      <StyledHiddenInput
+      {/* <StyledHiddenInput
         type="file"
         id="file"
         name="file"
@@ -69,7 +69,7 @@ export const PhotoInput = (props) => {
         multiple={false}
         onChange={onChange}
         data-cy={dataCy}
-      />
+      /> */}
     </PhotoInputLabel>
   );
 };
@@ -77,16 +77,16 @@ export const PhotoInput = (props) => {
 export const CoverInput = (props) => {
   return (
     <CoverInputLabel>
-      <InputOverlay
+      {/* <InputOverlay
         visible={!props.defaultValue || props.defaultValue.length === 1}
       >
         <WhiteOutlineButton as={'div'}>Add Cover Photo</WhiteOutlineButton>
-      </InputOverlay>
+      </InputOverlay> */}
       <CoverImage
         src={props.defaultValue ? `${props.defaultValue}` : ''}
         role="presentation"
       />
-      <StyledHiddenInput
+      {/* <StyledHiddenInput
         type="file"
         id="file"
         name="file"
@@ -96,7 +96,7 @@ export const CoverInput = (props) => {
         multiple={false}
         onChange={props.onChange}
         data-cy={props.dataCy}
-      />
+      /> */}
     </CoverInputLabel>
   );
 };
@@ -114,14 +114,14 @@ export const Checkbox = (props) => {
         }
       >
         {props.checked ? <Icon glyph="checkmark" /> : <Icon glyph="checkbox" />}
-        <StyledHiddenInput
+        {/* <StyledHiddenInput
           type="checkbox"
           id={props.id}
           checked={props.checked}
           disabled={props.disabled || false}
           onChange={props.onChange}
           data-cy={props.dataCy}
-        />
+        /> */}
         {props.children}
       </StyledCheckboxWrapper>
     </StyledLabel>
